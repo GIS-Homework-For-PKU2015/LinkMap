@@ -82,6 +82,7 @@
     <Compile Include="GUI\Search.Designer.cs">
       <DependentUpon>Search.cs</DependentUpon>
     </Compile>
+    <Compile Include="readWshapefile.cs" />
     <EmbeddedResource Include="GUI\AddAttribute.resx">
       <DependentUpon>AddAttribute.cs</DependentUpon>
     </EmbeddedResource>

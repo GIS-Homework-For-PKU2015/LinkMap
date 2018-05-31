@@ -22,7 +22,7 @@ namespace LinkMapObject
         private List<Polygon> _Polygon = new List<Polygon>();       //多边形集合
         private double _DisplayScale = 1D;       //显示比例尺倒数
         private List<Polygon> _SelectedPolygons = new List<Polygon>(); //选中多边形集合
-
+        private List<string> _str;
 
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
