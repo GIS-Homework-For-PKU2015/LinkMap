@@ -50,6 +50,12 @@
     <Compile Include="GUI\AddAttribute.Designer.cs">
       <DependentUpon>AddAttribute.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\AddLayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\AddLayer.Designer.cs">
+      <DependentUpon>AddLayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\AddPoint.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,9 @@
     <Compile Include="readWshapefile.cs" />
     <EmbeddedResource Include="GUI\AddAttribute.resx">
       <DependentUpon>AddAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\AddLayer.resx">
+      <DependentUpon>AddLayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AddPoint.resx">
       <DependentUpon>AddPoint.cs</DependentUpon>

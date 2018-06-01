@@ -29,294 +29,294 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Linkmenu = new System.Windows.Forms.MenuStrip();
+            this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导入ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinkEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.开始编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.结束编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.在选定位置添加点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinkLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinkSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.依据属性查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.依据几何查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.ScripLink = new System.Windows.Forms.ToolStrip();
+            this.btnLinkIdentity = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkZoomIn = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkZoomOut = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkPan = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkSelcet = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkDrawPoints = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkDrawPolyline = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkDrawPolygon = new System.Windows.Forms.ToolStripButton();
+            this.btnLinkDelete = new System.Windows.Forms.ToolStripButton();
+            this.LinkLayerBox = new System.Windows.Forms.TreeView();
             this.linkMapControl1 = new LinkMapObject.LinkMapControl();
-            this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
+            this.Linkmenu.SuspendLayout();
+            this.ScripLink.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // Linkmenu
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem,
-            this.编辑ToolStripMenuItem,
-            this.图层ToolStripMenuItem,
-            this.查询ToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(575, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.Linkmenu.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.Linkmenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LinkFileToolStripMenuItem,
+            this.LinkEditToolStripMenuItem,
+            this.LinkLayerToolStripMenuItem,
+            this.LinkSearchToolStripMenuItem});
+            this.Linkmenu.Location = new System.Drawing.Point(0, 0);
+            this.Linkmenu.Name = "Linkmenu";
+            this.Linkmenu.Size = new System.Drawing.Size(1150, 39);
+            this.Linkmenu.TabIndex = 0;
+            this.Linkmenu.Text = "menuStrip1";
             // 
-            // 文件ToolStripMenuItem
+            // LinkFileToolStripMenuItem
             // 
-            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LinkFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.新建ToolStripMenuItem,
             this.导入ToolStripMenuItem,
             this.导入ToolStripMenuItem1,
             this.保存ToolStripMenuItem,
             this.导出ToolStripMenuItem});
-            this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
-            this.文件ToolStripMenuItem.Text = "文件";
+            this.LinkFileToolStripMenuItem.Name = "LinkFileToolStripMenuItem";
+            this.LinkFileToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.LinkFileToolStripMenuItem.Text = "文件";
             // 
             // 新建ToolStripMenuItem
             // 
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(160, 38);
             this.新建ToolStripMenuItem.Text = "新建";
             this.新建ToolStripMenuItem.Click += new System.EventHandler(this.新建ToolStripMenuItem_Click);
             // 
             // 导入ToolStripMenuItem
             // 
             this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
-            this.导入ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.导入ToolStripMenuItem.Size = new System.Drawing.Size(160, 38);
             this.导入ToolStripMenuItem.Text = "打开";
             this.导入ToolStripMenuItem.Click += new System.EventHandler(this.导入ToolStripMenuItem_Click);
             // 
             // 导入ToolStripMenuItem1
             // 
             this.导入ToolStripMenuItem1.Name = "导入ToolStripMenuItem1";
-            this.导入ToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.导入ToolStripMenuItem1.Size = new System.Drawing.Size(160, 38);
             this.导入ToolStripMenuItem1.Text = "导入";
             this.导入ToolStripMenuItem1.Click += new System.EventHandler(this.导入ToolStripMenuItem1_Click);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(160, 38);
             this.保存ToolStripMenuItem.Text = "保存";
             // 
             // 导出ToolStripMenuItem
             // 
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(160, 38);
             this.导出ToolStripMenuItem.Text = "导出";
             // 
-            // 编辑ToolStripMenuItem
+            // LinkEditToolStripMenuItem
             // 
-            this.编辑ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LinkEditToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.开始编辑ToolStripMenuItem,
             this.结束编辑ToolStripMenuItem,
             this.在选定位置添加点ToolStripMenuItem});
-            this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
-            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
-            this.编辑ToolStripMenuItem.Text = "编辑";
+            this.LinkEditToolStripMenuItem.Name = "LinkEditToolStripMenuItem";
+            this.LinkEditToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.LinkEditToolStripMenuItem.Text = "编辑";
             // 
             // 开始编辑ToolStripMenuItem
             // 
             this.开始编辑ToolStripMenuItem.Name = "开始编辑ToolStripMenuItem";
-            this.开始编辑ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.开始编辑ToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
             this.开始编辑ToolStripMenuItem.Text = "开始编辑";
             // 
             // 结束编辑ToolStripMenuItem
             // 
             this.结束编辑ToolStripMenuItem.Name = "结束编辑ToolStripMenuItem";
-            this.结束编辑ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.结束编辑ToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
             this.结束编辑ToolStripMenuItem.Text = "结束编辑";
             // 
             // 在选定位置添加点ToolStripMenuItem
             // 
             this.在选定位置添加点ToolStripMenuItem.Name = "在选定位置添加点ToolStripMenuItem";
-            this.在选定位置添加点ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.在选定位置添加点ToolStripMenuItem.Size = new System.Drawing.Size(304, 38);
             this.在选定位置添加点ToolStripMenuItem.Text = "在选定位置添加点";
             this.在选定位置添加点ToolStripMenuItem.Click += new System.EventHandler(this.在选定位置添加点ToolStripMenuItem_Click);
             // 
-            // 图层ToolStripMenuItem
+            // LinkLayerToolStripMenuItem
             // 
-            this.图层ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LinkLayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.添加图层ToolStripMenuItem,
             this.删除图层ToolStripMenuItem});
-            this.图层ToolStripMenuItem.Name = "图层ToolStripMenuItem";
-            this.图层ToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
-            this.图层ToolStripMenuItem.Text = "图层";
+            this.LinkLayerToolStripMenuItem.Name = "LinkLayerToolStripMenuItem";
+            this.LinkLayerToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.LinkLayerToolStripMenuItem.Text = "图层";
             // 
             // 添加图层ToolStripMenuItem
             // 
             this.添加图层ToolStripMenuItem.Name = "添加图层ToolStripMenuItem";
-            this.添加图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.添加图层ToolStripMenuItem.Size = new System.Drawing.Size(208, 38);
             this.添加图层ToolStripMenuItem.Text = "添加图层";
             this.添加图层ToolStripMenuItem.Click += new System.EventHandler(this.添加图层ToolStripMenuItem_Click);
             // 
             // 删除图层ToolStripMenuItem
             // 
             this.删除图层ToolStripMenuItem.Name = "删除图层ToolStripMenuItem";
-            this.删除图层ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.删除图层ToolStripMenuItem.Size = new System.Drawing.Size(208, 38);
             this.删除图层ToolStripMenuItem.Text = "删除图层";
             this.删除图层ToolStripMenuItem.Click += new System.EventHandler(this.删除图层ToolStripMenuItem_Click);
             // 
-            // 查询ToolStripMenuItem
+            // LinkSearchToolStripMenuItem
             // 
-            this.查询ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.LinkSearchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.依据属性查询ToolStripMenuItem,
             this.依据几何查询ToolStripMenuItem});
-            this.查询ToolStripMenuItem.Name = "查询ToolStripMenuItem";
-            this.查询ToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
-            this.查询ToolStripMenuItem.Text = "查询";
+            this.LinkSearchToolStripMenuItem.Name = "LinkSearchToolStripMenuItem";
+            this.LinkSearchToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.LinkSearchToolStripMenuItem.Text = "查询";
             // 
             // 依据属性查询ToolStripMenuItem
             // 
             this.依据属性查询ToolStripMenuItem.Name = "依据属性查询ToolStripMenuItem";
-            this.依据属性查询ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.依据属性查询ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
             this.依据属性查询ToolStripMenuItem.Text = "依据属性查询";
             this.依据属性查询ToolStripMenuItem.Click += new System.EventHandler(this.依据属性查询ToolStripMenuItem_Click);
             // 
             // 依据几何查询ToolStripMenuItem
             // 
             this.依据几何查询ToolStripMenuItem.Name = "依据几何查询ToolStripMenuItem";
-            this.依据几何查询ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.依据几何查询ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
             this.依据几何查询ToolStripMenuItem.Text = "依据几何查询";
             // 
-            // toolStrip1
+            // ScripLink
             // 
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip1.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton3,
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton10,
-            this.toolStripButton9,
-            this.toolStripButton5,
-            this.toolStripButton6,
-            this.toolStripButton7,
-            this.toolStripButton8,
-            this.toolStripButton4});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
-            this.toolStrip1.Size = new System.Drawing.Size(575, 39);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.ScripLink.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.ScripLink.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.ScripLink.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnLinkIdentity,
+            this.btnLinkZoomIn,
+            this.btnLinkZoomOut,
+            this.btnLinkPan,
+            this.btnLinkSelcet,
+            this.btnLinkEdit,
+            this.btnLinkDrawPoints,
+            this.btnLinkDrawPolyline,
+            this.btnLinkDrawPolygon,
+            this.btnLinkDelete});
+            this.ScripLink.Location = new System.Drawing.Point(0, 39);
+            this.ScripLink.Name = "ScripLink";
+            this.ScripLink.Padding = new System.Windows.Forms.Padding(0);
+            this.ScripLink.Size = new System.Drawing.Size(1150, 39);
+            this.ScripLink.TabIndex = 1;
+            this.ScripLink.Text = "toolStrip1";
             // 
-            // toolStripButton3
+            // btnLinkIdentity
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton3.Text = "toolStripButton3";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.btnLinkIdentity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkIdentity.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkIdentity.Image")));
+            this.btnLinkIdentity.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkIdentity.Name = "btnLinkIdentity";
+            this.btnLinkIdentity.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkIdentity.Text = "toolStripButton3";
+            this.btnLinkIdentity.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
-            // toolStripButton1
+            // btnLinkZoomIn
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.btnLinkZoomIn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkZoomIn.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkZoomIn.Image")));
+            this.btnLinkZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkZoomIn.Name = "btnLinkZoomIn";
+            this.btnLinkZoomIn.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkZoomIn.Text = "toolStripButton1";
             // 
-            // toolStripButton2
+            // btnLinkZoomOut
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton2.Text = "toolStripButton2";
+            this.btnLinkZoomOut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkZoomOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkZoomOut.Image")));
+            this.btnLinkZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkZoomOut.Name = "btnLinkZoomOut";
+            this.btnLinkZoomOut.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkZoomOut.Text = "toolStripButton2";
             // 
-            // toolStripButton10
+            // btnLinkPan
             // 
-            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton10.Text = "toolStripButton10";
+            this.btnLinkPan.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkPan.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkPan.Image")));
+            this.btnLinkPan.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkPan.Name = "btnLinkPan";
+            this.btnLinkPan.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkPan.Text = "toolStripButton10";
             // 
-            // toolStripButton9
+            // btnLinkSelcet
             // 
-            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton9.Text = "toolStripButton9";
+            this.btnLinkSelcet.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkSelcet.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkSelcet.Image")));
+            this.btnLinkSelcet.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkSelcet.Name = "btnLinkSelcet";
+            this.btnLinkSelcet.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkSelcet.Text = "toolStripButton9";
             // 
-            // toolStripButton5
+            // btnLinkEdit
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton5.Text = "toolStripButton5";
+            this.btnLinkEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkEdit.Image")));
+            this.btnLinkEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkEdit.Name = "btnLinkEdit";
+            this.btnLinkEdit.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkEdit.Text = "toolStripButton5";
             // 
-            // toolStripButton6
+            // btnLinkDrawPoints
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.btnLinkDrawPoints.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkDrawPoints.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkDrawPoints.Image")));
+            this.btnLinkDrawPoints.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkDrawPoints.Name = "btnLinkDrawPoints";
+            this.btnLinkDrawPoints.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkDrawPoints.Text = "toolStripButton6";
             // 
-            // toolStripButton7
+            // btnLinkDrawPolyline
             // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton7.Text = "toolStripButton7";
+            this.btnLinkDrawPolyline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkDrawPolyline.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkDrawPolyline.Image")));
+            this.btnLinkDrawPolyline.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkDrawPolyline.Name = "btnLinkDrawPolyline";
+            this.btnLinkDrawPolyline.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkDrawPolyline.Text = "toolStripButton7";
             // 
-            // toolStripButton8
+            // btnLinkDrawPolygon
             // 
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton8.Text = "toolStripButton8";
+            this.btnLinkDrawPolygon.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkDrawPolygon.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkDrawPolygon.Image")));
+            this.btnLinkDrawPolygon.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkDrawPolygon.Name = "btnLinkDrawPolygon";
+            this.btnLinkDrawPolygon.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkDrawPolygon.Text = "toolStripButton8";
             // 
-            // toolStripButton4
+            // btnLinkDelete
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(36, 36);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.btnLinkDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnLinkDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkDelete.Image")));
+            this.btnLinkDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnLinkDelete.Name = "btnLinkDelete";
+            this.btnLinkDelete.Size = new System.Drawing.Size(36, 36);
+            this.btnLinkDelete.Text = "toolStripButton4";
             // 
-            // treeView1
+            // LinkLayerBox
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 76);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(2);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(90, 302);
-            this.treeView1.TabIndex = 3;
+            this.LinkLayerBox.CheckBoxes = true;
+            this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
+            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4);
+            this.LinkLayerBox.Name = "LinkLayerBox";
+            this.LinkLayerBox.Size = new System.Drawing.Size(176, 600);
+            this.LinkLayerBox.TabIndex = 3;
             // 
             // linkMapControl1
             // 
@@ -325,34 +325,34 @@
             this.linkMapControl1.BoundaryColor = System.Drawing.Color.Black;
             this.linkMapControl1.DisplayScale = 1D;
             this.linkMapControl1.FillColor = System.Drawing.Color.Tomato;
-            this.linkMapControl1.Location = new System.Drawing.Point(132, 80);
-            this.linkMapControl1.Margin = new System.Windows.Forms.Padding(1);
+            this.linkMapControl1.Location = new System.Drawing.Point(256, 152);
+            this.linkMapControl1.Margin = new System.Windows.Forms.Padding(2);
             this.linkMapControl1.Name = "linkMapControl1";
             this.linkMapControl1.Polygon = new LinkMapObject.Polygon[0];
             this.linkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
             this.linkMapControl1.SelfMouseWheel = true;
-            this.linkMapControl1.Size = new System.Drawing.Size(402, 298);
+            this.linkMapControl1.Size = new System.Drawing.Size(800, 600);
             this.linkMapControl1.TabIndex = 4;
             this.linkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
             // 
             // FrmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 366);
+            this.ClientSize = new System.Drawing.Size(1150, 797);
             this.Controls.Add(this.linkMapControl1);
-            this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.LinkLayerBox);
+            this.Controls.Add(this.ScripLink);
+            this.Controls.Add(this.Linkmenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MainMenuStrip = this.Linkmenu;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmMain";
             this.Text = "LinkMap";
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.Linkmenu.ResumeLayout(false);
+            this.Linkmenu.PerformLayout();
+            this.ScripLink.ResumeLayout(false);
+            this.ScripLink.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -360,24 +360,24 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip Linkmenu;
+        private System.Windows.Forms.ToolStripMenuItem LinkFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 新建ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 导入ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 编辑ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 图层ToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton9;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton10;
-        private System.Windows.Forms.ToolStripMenuItem 查询ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LinkEditToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem LinkLayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStrip ScripLink;
+        private System.Windows.Forms.ToolStripButton btnLinkZoomIn;
+        private System.Windows.Forms.ToolStripButton btnLinkZoomOut;
+        private System.Windows.Forms.ToolStripButton btnLinkIdentity;
+        private System.Windows.Forms.ToolStripButton btnLinkEdit;
+        private System.Windows.Forms.ToolStripButton btnLinkSelcet;
+        private System.Windows.Forms.ToolStripButton btnLinkDrawPoints;
+        private System.Windows.Forms.ToolStripButton btnLinkDrawPolyline;
+        private System.Windows.Forms.ToolStripButton btnLinkDrawPolygon;
+        private System.Windows.Forms.ToolStripButton btnLinkDelete;
+        private System.Windows.Forms.ToolStripButton btnLinkPan;
+        private System.Windows.Forms.ToolStripMenuItem LinkSearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 导入ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 导出ToolStripMenuItem;
@@ -388,7 +388,7 @@
         private System.Windows.Forms.ToolStripMenuItem 在选定位置添加点ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 依据属性查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 依据几何查询ToolStripMenuItem;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView LinkLayerBox;
         private LinkMapObject.LinkMapControl linkMapControl1;
     }
 }

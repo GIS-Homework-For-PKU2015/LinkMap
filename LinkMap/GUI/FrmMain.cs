@@ -11,6 +11,10 @@ namespace LinkMap
 {
     public partial class FrmMain : Form
     {
+
+
+        public string LinkLayerName = "";
+
         public FrmMain()
         {
             InitializeComponent();
@@ -68,7 +72,10 @@ namespace LinkMap
 
         private void 添加图层ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            GUI.AddLayer al = new GUI.AddLayer();
+            al.ShowDialog();
+            string LinkLayerName = al.LinkLayerName;
+            LinkLayerBox.Nodes.Add(LinkLayerName);
         }
 
         private void 删除图层ToolStripMenuItem_Click(object sender, EventArgs e)
