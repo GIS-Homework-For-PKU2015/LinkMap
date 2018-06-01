@@ -50,6 +50,7 @@ namespace LinkMap
 
         private void 导入ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            /*
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "位图文件(*.bmp)|*.bmp";
@@ -59,6 +60,10 @@ namespace LinkMap
             {
                 
             }
+            */
+            readWshapefile rwshp = new readWshapefile();
+            rwshp.readShp();
+
         }
 
         private void 添加图层ToolStripMenuItem_Click(object sender, EventArgs e)

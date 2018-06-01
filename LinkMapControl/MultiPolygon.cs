@@ -9,8 +9,8 @@ namespace LinkMapObject {
     public class MultiPolygon {
         #region 字段
         private List<PointD> _Points = new List<PointD>();
-        private List<Polygon> _innerPoly = new List<Polygon>();
-        private List<Polygon> _outerPoly = new List<Polygon>();
+        private List<Polygon> _innerPoly = new List<Polygon>();//内部多边形，参考kml的多多边形组织方式
+        private List<Polygon> _outerPoly = new List<Polygon>();//
 
         #endregion
         #region 构造函数
