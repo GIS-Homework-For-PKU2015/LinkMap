@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapLayer.cs" />
     <Compile Include="MapTools.cs" />
     <Compile Include="MultiPolygon.cs" />
     <Compile Include="PointD.cs" />
@@ -59,6 +60,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RectangleD.cs" />
+    <Compile Include="TypeEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="LinkMapControl.resx">

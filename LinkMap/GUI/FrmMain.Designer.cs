@@ -214,7 +214,7 @@
             this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0);
             this.toolStrip1.Size = new System.Drawing.Size(575, 39);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
@@ -313,7 +313,7 @@
             // treeView1
             // 
             this.treeView1.Location = new System.Drawing.Point(12, 76);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(2);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(90, 302);
             this.treeView1.TabIndex = 3;
@@ -326,7 +326,7 @@
             this.linkMapControl1.DisplayScale = 1D;
             this.linkMapControl1.FillColor = System.Drawing.Color.Tomato;
             this.linkMapControl1.Location = new System.Drawing.Point(132, 80);
-            this.linkMapControl1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.linkMapControl1.Margin = new System.Windows.Forms.Padding(1);
             this.linkMapControl1.Name = "linkMapControl1";
             this.linkMapControl1.Polygon = new LinkMapObject.Polygon[0];
             this.linkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
@@ -346,7 +346,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmMain";
             this.Text = "LinkMap";
             this.menuStrip1.ResumeLayout(false);

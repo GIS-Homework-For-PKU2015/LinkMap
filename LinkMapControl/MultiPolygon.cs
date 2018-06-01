@@ -1,11 +1,11 @@
-﻿using LinkMapObject;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 //目前这个类还不是特别完善
-namespace LinkMapControl {
+namespace LinkMapObject {
     public class MultiPolygon {
         #region 字段
         private List<PointD> _Points = new List<PointD>();
@@ -13,6 +13,13 @@ namespace LinkMapControl {
         private List<Polygon> _outerPoly = new List<Polygon>();
 
         #endregion
+        #region 构造函数
+        public MultiPolygon () {
+
+        }
+
+#endregion
+
         #region 属性
 
         /// <summary>
