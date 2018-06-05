@@ -26,6 +26,7 @@ namespace LinkMapObject
         }
         #endregion
 
+
         #region  属性
 
         /// <summary>

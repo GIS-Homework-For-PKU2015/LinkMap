@@ -51,13 +51,15 @@ namespace LinkMapObject
 
         #endregion
 
+
         #region 构造函数
         public LinkMapControl()
         {
             InitializeComponent();
-            this.MouseWheel += MapControl_MouseWheel;           //创建一个新的mousewheel事件
+            //this.MouseWheel += MapControl_MouseWheel;           //创建一个新的mousewheel事件
         }
         #endregion
+
 
         #region 属性
 
@@ -239,7 +241,7 @@ namespace LinkMapObject
         public void TrackPolygon()
         {
             mMapOpStyle = 4;
-            //this.Cursor = mCur_Cross;
+            this.Cursor = Cursors.Cross;
         }
 
         /// <summary>
@@ -309,7 +311,7 @@ namespace LinkMapObject
 
         #region 控件母版事件处理
 
-        private void MapControl_Paint(object sender, PaintEventArgs e)
+        private void LinkMapControl_Paint(object sender, PaintEventArgs e)
         {
             //绘制所有多边形    另外，这里面自带了一个e作为绘图用的对象。
             DrawPolygons(e.Graphics);
@@ -318,7 +320,7 @@ namespace LinkMapObject
         }
 
         //鼠标按下事件
-        private void MapControl_MouseDown(object sender, MouseEventArgs e)  //sender判断触发事件的是谁。e是包含了与事件有关的参数。
+        private void LinkMapControl_MouseDown(object sender, MouseEventArgs e)  //sender判断触发事件的是谁。e是包含了与事件有关的参数。
         {
             switch (mMapOpStyle)
             {
@@ -371,7 +373,7 @@ namespace LinkMapObject
         }
 
         //鼠标移动
-        private void MapControl_MouseMove(object sender, MouseEventArgs e)
+        private void LinkMapControl_MouseMove(object sender, MouseEventArgs e)
         {
             switch (mMapOpStyle)
             {
@@ -420,7 +422,7 @@ namespace LinkMapObject
         }
 
         //鼠标松开
-        private void MapControl_MouseUp(object sender, MouseEventArgs e)
+        private void LinkMapControl_MouseUp(object sender, MouseEventArgs e)
         {
             switch (mMapOpStyle)
             {
@@ -456,7 +458,7 @@ namespace LinkMapObject
         }
 
         //鼠标双击
-        private void MapControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LinkMapControl_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             switch (mMapOpStyle)
             {
@@ -488,7 +490,7 @@ namespace LinkMapObject
         }
 
         //鼠标滑轮事件
-        private void MapControl_MouseWheel(object sender, MouseEventArgs e)
+        private void LinkMapControl_MouseWheel(object sender, MouseEventArgs e)
         {
             //throw new NotImplementedException();
             if (_SelfMouseWheel == true)
@@ -537,7 +539,7 @@ namespace LinkMapObject
                     sScreenPoints[j].Y = (float)sScreenPoint.Y;
                 }
                 //绘制多边形
-                g.DrawPolygon(sPolygonPen, sScreenPoints);          //似乎在这里画不出来
+                g.DrawPolygon(sPolygonPen, sScreenPoints);          
                 g.FillPolygon(sPolygonBrush, sScreenPoints);
 
             }
@@ -604,7 +606,9 @@ namespace LinkMapObject
                 g.DrawPolygon(sPolygonPen, sScreenPoints);
             }
         }
+
         #endregion
+
 
     }
 }

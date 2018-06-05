@@ -58,7 +58,7 @@
             this.btnLinkDrawPolygon = new System.Windows.Forms.ToolStripButton();
             this.btnLinkDelete = new System.Windows.Forms.ToolStripButton();
             this.LinkLayerBox = new System.Windows.Forms.TreeView();
-            this.linkMapControl1 = new LinkMapObject.LinkMapControl();
+            this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
             this.Linkmenu.SuspendLayout();
             this.ScripLink.SuspendLayout();
             this.SuspendLayout();
@@ -236,6 +236,7 @@
             this.btnLinkZoomIn.Name = "btnLinkZoomIn";
             this.btnLinkZoomIn.Size = new System.Drawing.Size(36, 36);
             this.btnLinkZoomIn.Text = "toolStripButton1";
+            this.btnLinkZoomIn.Click += new System.EventHandler(this.btnLinkZoomIn_Click);
             // 
             // btnLinkZoomOut
             // 
@@ -245,6 +246,7 @@
             this.btnLinkZoomOut.Name = "btnLinkZoomOut";
             this.btnLinkZoomOut.Size = new System.Drawing.Size(36, 36);
             this.btnLinkZoomOut.Text = "toolStripButton2";
+            this.btnLinkZoomOut.Click += new System.EventHandler(this.btnLinkZoomOut_Click);
             // 
             // btnLinkPan
             // 
@@ -254,6 +256,7 @@
             this.btnLinkPan.Name = "btnLinkPan";
             this.btnLinkPan.Size = new System.Drawing.Size(36, 36);
             this.btnLinkPan.Text = "toolStripButton10";
+            this.btnLinkPan.Click += new System.EventHandler(this.btnLinkPan_Click);
             // 
             // btnLinkSelcet
             // 
@@ -263,6 +266,7 @@
             this.btnLinkSelcet.Name = "btnLinkSelcet";
             this.btnLinkSelcet.Size = new System.Drawing.Size(36, 36);
             this.btnLinkSelcet.Text = "toolStripButton9";
+            this.btnLinkSelcet.Click += new System.EventHandler(this.btnLinkSelcet_Click);
             // 
             // btnLinkEdit
             // 
@@ -272,6 +276,7 @@
             this.btnLinkEdit.Name = "btnLinkEdit";
             this.btnLinkEdit.Size = new System.Drawing.Size(36, 36);
             this.btnLinkEdit.Text = "toolStripButton5";
+            this.btnLinkEdit.Click += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // btnLinkDrawPoints
             // 
@@ -318,29 +323,30 @@
             this.LinkLayerBox.Size = new System.Drawing.Size(176, 600);
             this.LinkLayerBox.TabIndex = 3;
             // 
-            // linkMapControl1
+            // LinkMapControl1
             // 
-            this.linkMapControl1.BackColor = System.Drawing.Color.White;
-            this.linkMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.linkMapControl1.BoundaryColor = System.Drawing.Color.Black;
-            this.linkMapControl1.DisplayScale = 1D;
-            this.linkMapControl1.FillColor = System.Drawing.Color.Tomato;
-            this.linkMapControl1.Location = new System.Drawing.Point(256, 152);
-            this.linkMapControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.linkMapControl1.Name = "linkMapControl1";
-            this.linkMapControl1.Polygon = new LinkMapObject.Polygon[0];
-            this.linkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
-            this.linkMapControl1.SelfMouseWheel = true;
-            this.linkMapControl1.Size = new System.Drawing.Size(800, 600);
-            this.linkMapControl1.TabIndex = 4;
-            this.linkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
+            this.LinkMapControl1.BackColor = System.Drawing.Color.White;
+            this.LinkMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.LinkMapControl1.BoundaryColor = System.Drawing.Color.Black;
+            this.LinkMapControl1.DisplayScale = 1D;
+            this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
+            this.LinkMapControl1.Location = new System.Drawing.Point(256, 152);
+            this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.LinkMapControl1.Name = "LinkMapControl1";
+            this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.SelfMouseWheel = true;
+            this.LinkMapControl1.Size = new System.Drawing.Size(800, 600);
+            this.LinkMapControl1.TabIndex = 4;
+            this.LinkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
+            this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1150, 797);
-            this.Controls.Add(this.linkMapControl1);
+            this.Controls.Add(this.LinkMapControl1);
             this.Controls.Add(this.LinkLayerBox);
             this.Controls.Add(this.ScripLink);
             this.Controls.Add(this.Linkmenu);
@@ -389,7 +395,7 @@
         private System.Windows.Forms.ToolStripMenuItem 依据属性查询ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 依据几何查询ToolStripMenuItem;
         private System.Windows.Forms.TreeView LinkLayerBox;
-        private LinkMapObject.LinkMapControl linkMapControl1;
+        private LinkMapObject.LinkMapControl LinkMapControl1;
     }
 }
 

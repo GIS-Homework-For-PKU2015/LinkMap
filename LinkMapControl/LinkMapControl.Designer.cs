@@ -38,7 +38,12 @@
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.DoubleBuffered = true;
             this.Name = "LinkMapControl";
-            this.Size = new System.Drawing.Size(146, 146);
+            this.Size = new System.Drawing.Size(394, 370);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.LinkMapControl_Paint);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl_MouseDoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl_MouseUp);
             this.ResumeLayout(false);
 
         }

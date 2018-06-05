@@ -15,11 +15,19 @@ namespace LinkMap
 
         public string LinkLayerName = "";
 
+        #region 构造函数
         public FrmMain()
         {
             InitializeComponent();
         }
 
+        private void LinkMapControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region 窗体和控件的事件处理
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreatMap cm = new CreatMap();
@@ -100,5 +108,35 @@ namespace LinkMap
             Search sch = new Search();
             sch.ShowDialog();
         }
+
+        private void btnLinkZoomIn_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.ZoomIn();
+        }
+
+        private void btnLinkZoomOut_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.ZoomOut();
+        }
+
+        private void btnLinkPan_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.Pan();
+        }
+
+
+        #endregion
+
+        private void btnLinkEdit_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.TrackPolygon();
+        }
+
+        private void btnLinkSelcet_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.Select();
+        }
+
+
     }
 }

@@ -47,6 +47,7 @@ namespace LinkMapObject {
             }
         }
 
+
         public int Count {
             get {
                 return _items.Count;
@@ -62,7 +63,37 @@ namespace LinkMapObject {
 
 
         #region 方法
-        
+        /// <summary>
+        /// 获取该图层的要素类型
+        /// </summary>
+        /// <param name="slayer"></param>
+        /// <returns></returns>
+        public iType LayerGetVectorPorperties()
+        {
+            return mapType;
+        }
+
+        public int LayerIdentifyVector(PointD spoint)
+        {
+            //遍历item
+            for(int i=0;i< _items.Count; i++)
+            {
+                //for(int j=0;j< _items[i].Count) //这里面发现object类可能有问题
+                if (_items[i] == spoint)
+                    return i;
+            }
+            return -1;
+        }
+
+
+
+        //显示注记（吉梁部分）
+        public void LayerShowLabel()
+        {
+
+        }
+
+
 
 
         #endregion
