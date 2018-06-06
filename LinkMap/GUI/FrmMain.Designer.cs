@@ -59,6 +59,7 @@
             this.btnLinkDelete = new System.Windows.Forms.ToolStripButton();
             this.LinkLayerBox = new System.Windows.Forms.TreeView();
             this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
+            this.LinkPointLocation = new System.Windows.Forms.Label();
             this.Linkmenu.SuspendLayout();
             this.ScripLink.SuspendLayout();
             this.SuspendLayout();
@@ -339,13 +340,25 @@
             this.LinkMapControl1.Size = new System.Drawing.Size(800, 600);
             this.LinkMapControl1.TabIndex = 4;
             this.LinkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
+            this.LinkMapControl1.TrackingFinshed += new LinkMapObject.LinkMapControl.TrackingFinishedHandle(this.LinkMapControl1_TrackingFinshed);
+            this.LinkMapControl1.SelectingFinshed += new LinkMapObject.LinkMapControl.SelectingFinishedHandle(this.LinkMapControl1_SelectingFinshed);
             this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
+            this.LinkMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl1_MouseMove);
+            // 
+            // LinkPointLocation
+            // 
+            this.LinkPointLocation.AutoSize = true;
+            this.LinkPointLocation.Location = new System.Drawing.Point(256, 760);
+            this.LinkPointLocation.Name = "LinkPointLocation";
+            this.LinkPointLocation.Size = new System.Drawing.Size(0, 24);
+            this.LinkPointLocation.TabIndex = 5;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1150, 797);
+            this.Controls.Add(this.LinkPointLocation);
             this.Controls.Add(this.LinkMapControl1);
             this.Controls.Add(this.LinkLayerBox);
             this.Controls.Add(this.ScripLink);
@@ -396,6 +409,7 @@
         private System.Windows.Forms.ToolStripMenuItem 依据几何查询ToolStripMenuItem;
         private System.Windows.Forms.TreeView LinkLayerBox;
         private LinkMapObject.LinkMapControl LinkMapControl1;
+        private System.Windows.Forms.Label LinkPointLocation;
     }
 }
 

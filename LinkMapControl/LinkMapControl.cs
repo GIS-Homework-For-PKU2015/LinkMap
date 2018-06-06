@@ -56,7 +56,7 @@ namespace LinkMapObject
         public LinkMapControl()
         {
             InitializeComponent();
-            //this.MouseWheel += MapControl_MouseWheel;           //创建一个新的mousewheel事件
+            this.MouseWheel += LinkMapControl_MouseWheel;           //创建一个新的mousewheel事件
         }
         #endregion
 
@@ -232,7 +232,7 @@ namespace LinkMapObject
         public void Pan()
         {
             mMapOpStyle = 3;
-            //this.Cursor = mCur_PangUp;
+            this.Cursor = Cursors.Hand;
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace LinkMapObject
                             mTrackingPolygon.Clear();
                             if (TrackingFinshed != null)
                             {
-                                TrackingFinshed(this, sTrackingPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                              TrackingFinshed(this, sTrackingPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
                             }
                         }
                     }

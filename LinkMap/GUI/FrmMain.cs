@@ -129,14 +129,40 @@ namespace LinkMap
 
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
+
             LinkMapControl1.TrackPolygon();
         }
 
         private void btnLinkSelcet_Click(object sender, EventArgs e)
         {
-            LinkMapControl1.Select();
+            LinkMapControl1.SelcetFeature();
         }
 
+        private void LinkMapControl1_TrackingFinshed(object sender, LinkMapObject.Polygon polygon)
+        {
+            LinkMapControl1.AddPolygon(polygon);
+            LinkMapControl1.Refresh();
+        }
+
+        private void LinkMapControl1_SelectingFinshed(object sender, LinkMapObject.RectangleD box)
+        {
+            LinkMapObject.Polygon[] sPolygons = LinkMapControl1.SelcetByBox(box);
+            LinkMapControl1.SelectedPolygon = sPolygons;
+            LinkMapControl1.Refresh();
+        }
+
+        private void LinkMapControl1_MouseMove(object sender, MouseEventArgs e)
+        {
+            ShowCoordinates(e.Location);
+
+        }
+
+        private void ShowCoordinates(PointF mouseLocation)
+        {
+            LinkMapObject.PointD sMouseLocation = new LinkMapObject.PointD(mouseLocation.X, mouseLocation.Y);
+            LinkMapObject.PointD sPointOnMap = LinkMapControl1.ToMapPoint(sMouseLocation);
+            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
+        }
 
     }
 }
