@@ -13,7 +13,7 @@ namespace LinkMapObject
         #endregion
 
 
-        #region 
+        #region 构造函数
         public Polygon()            //默认什么都没有
         { }
 
