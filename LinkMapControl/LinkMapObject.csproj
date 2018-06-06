@@ -41,8 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapLayer.cs" />
-    <Compile Include="MapTools.cs" />
+    <Compile Include="LinkLayer.cs" />
+    <Compile Include="LinkMap.cs" />
+    <Compile Include="LinkMapTools.cs" />
     <Compile Include="MultiPolygon.cs" />
     <Compile Include="PointD.cs" />
     <Compile Include="LinkMapControl.cs">
