@@ -75,7 +75,8 @@ namespace LinkMap
             */
             readWshapefile rwshp = new readWshapefile();
             rwshp.readShp();
-
+            LinkMapControl1.AddLayer(rwshp.GetShpLayer);
+            LinkLayerBox.Nodes.Add(rwshp.LayerName);//这个应该由LinkMapControl管理吧
         }
 
         private void 添加图层ToolStripMenuItem_Click(object sender, EventArgs e)

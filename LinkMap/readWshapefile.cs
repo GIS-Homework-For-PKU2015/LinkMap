@@ -12,10 +12,11 @@ namespace LinkMap {
         #region 字段
         private string _filePath = "";//单纯路径，没有名字
         private string _fname = "";//单纯名字
-        private string _fileShp = "";//路径加名字
+        private string _fileShp = @"D:\GeoData\测试用数据\twoTestPolygonNotAtt.shp";//路径加名字
         //private string _savefile = "";
-        private MapLayer _layer = new MapLayer(); //要素变图层
+        private LinkLayer _layer = new LinkLayer(); //要素变图层
         private DataTable _dt = new DataTable();//属性数据
+        //private bool readDone = false;
 
         #endregion
         #region 构造函数
@@ -48,6 +49,19 @@ namespace LinkMap {
                 return _dt;
             }
         }
+        /// <summary>
+        /// 获取或设置图层名称
+        /// </summary>
+        public string LayerName  {
+            get {
+               return _layer.Name;
+            }
+            set {
+                _layer.Name = value;
+            }
+
+
+        }
 
         #endregion
         #region 方法
@@ -55,10 +69,15 @@ namespace LinkMap {
         /// 读入shp，并生成一个图层
         /// </summary>
         public void readShp () {
+            ReadToLayer();
             //ReadToText();
-            readDbfToText();
+            //readDbfToText();
         }
-
+        public LinkLayer GetShpLayer {
+            get {
+                return _layer;
+            }
+        }
         // 写入shp 不去实现了
 
         public void readShpToTxt () {
@@ -71,17 +90,212 @@ namespace LinkMap {
         #endregion
 
         #region 私有函数
-        private void ReadToText () {
-            string _sw = "";
+        private void ReadToLayer () {
             //1，读入
-            string shpPath = @"D:\GeoData\测试用数据\twoTestPolygonNotAtt.shp";
             OpenFileDialog openShpFD = new OpenFileDialog();
             openShpFD.Filter = "shapefile(*.shp)|*.shp|All files(*.*)|*.*";
             openShpFD.InitialDirectory = "D://";
             if (openShpFD.ShowDialog() == DialogResult.OK) {
-                shpPath = openShpFD.FileName;
+                _fileShp = openShpFD.FileName;
+                splitPathToName();
             }
-            FileStream fs = new FileStream(shpPath, FileMode.Open);
+            FileStream fs = new FileStream(_fileShp, FileMode.Open);
+            BinaryReader brShp = new BinaryReader(fs);
+            //读取文件过程
+            brShp.ReadBytes(24);
+            int FileLength = brShp.ReadInt32(); // <0代表数据长度未知
+            int FileBanben = brShp.ReadInt32();
+            int ShapeType = brShp.ReadInt32();
+            double xmin, ymin, xmax, ymax;
+            xmin = brShp.ReadDouble();
+            ymax = brShp.ReadDouble();
+            xmax = brShp.ReadDouble();
+            ymin = brShp.ReadDouble();
+            double width = xmax - xmin;
+            double height = ymax - ymin;
+
+            brShp.ReadBytes(32);
+
+            switch (ShapeType) {
+                case 0://null type
+                    break;
+                case 1://point
+                    List<PointD> plst = new List<PointD>();
+                    while (brShp.PeekChar() != -1) {//Peek只是看没有真正取出来
+                        uint recordNum = brShp.ReadUInt32();
+                        int dataLen = brShp.ReadInt32();
+                        brShp.ReadInt32(); //??
+                        PointD point = new PointD(brShp.ReadDouble(), brShp.ReadDouble());
+                        plst.Add(point);
+
+                    }
+                    LinkLayer poiLayer = new LinkLayer(plst);
+                    if (_fname != "") {
+                        poiLayer.Name = _fname;
+                    }
+                    else {
+                        poiLayer.Name ="fromShp";
+                    }
+                    poiLayer.Description = "from shapefile";
+                    //mapControl1.AddPoiList(plst);
+                    //mapControl1.Refresh();
+                    _layer = poiLayer;
+
+                    break;
+
+                case 3://polyline
+                    //先以保存到文件为宗旨
+                    //List<PointD> plst2 = new List<PointD>();
+                    //StreamWriter swline = new StreamWriter(@"E:\ComputerGraphicsProj\GISdesign\lineOut02.txt");
+                    Polyline pline = new Polyline();
+                    //string lineDescri = "";
+                    while (brShp.PeekChar() != -1) {
+
+                        uint recordNum = brShp.ReadUInt32();
+                        int dataLen = brShp.ReadInt32();
+                        brShp.ReadInt32();
+                        double box0x = brShp.ReadDouble();
+                        double box0y = brShp.ReadDouble();
+                        double box1x = brShp.ReadDouble();
+                        double box1y = brShp.ReadDouble();
+                        //swline.WriteLine("box:{0},{1},{2},{3}; recordNum={4},datalen={5}", box0x, box0y, box1x, box1y, recordNum, dataLen);
+                        //lineDescri += "box:";
+                        int numParts = brShp.ReadInt32();
+                        int numPoints = brShp.ReadInt32();
+                        //swline.WriteLine("numParts:{0}; numPoints:{1}\n parts:", numParts, numPoints);
+                        List<int> parts = new List<int>();
+                        for (int i = 0; i < numParts; i++) {
+                            int p = brShp.ReadInt32();
+                            parts.Add(p);
+                            //swline.WriteLine("{0}", p);
+                        }
+                        //swline.WriteLine("line:");
+                        for (int i = 0; i < numPoints; i++) {
+                            double px1 = brShp.ReadDouble();
+                            double px2 = brShp.ReadDouble();
+                            //swline.Write("[{0},{1}],", px1, px2);
+                            //循环一次产生一条polyline
+                            PointD pd1 = new PointD(px1, px2);
+                            pline.AddPoint(pd1);
+                            //plst2.Add(pd1);
+                        }
+
+                    }
+
+                    //swline.Close();
+                    LinkLayer lineLayer = new LinkLayer(pline);
+                    if (_fname != "") {
+                        lineLayer.Name = _fname;
+                    }
+                    else {
+                        lineLayer.Name = "fromShp";
+                    }
+                    lineLayer.Description = "from shapefile";
+                    //mapControl1.AddPoiList(plst);
+                    //mapControl1.Refresh();
+                    _layer = lineLayer;
+
+                    break;
+                case 5://polygon
+                       //先以保存到文件为宗旨
+                       //List<PointD> plst3 = new List<PointD>();
+                       //StreamWriter swline2 = new StreamWriter(@"E:\ComputerGraphicsProj\GISdesign\polygonOut01.txt");
+                    Polygon mpoly = new Polygon();
+                    while (brShp.PeekChar() != -1) {
+
+                        uint recordNum = brShp.ReadUInt32();
+                        int dataLen = brShp.ReadInt32();
+                        brShp.ReadInt32();
+                        double box0x = brShp.ReadDouble();
+                        double box0y = brShp.ReadDouble();
+                        double box1x = brShp.ReadDouble();
+                        double box1y = brShp.ReadDouble();
+                        ///swline2.WriteLine("box:{0},{1},{2},{3}; recordNum={4},datalen={5}", box0x, box0y, box1x, box1y, recordNum, dataLen);
+                        int numParts = brShp.ReadInt32();
+                        int numPoints = brShp.ReadInt32();
+                        //swline2.WriteLine("numParts:{0}; numPoints:{1}\n parts:", numParts, numPoints);
+                        List<int> parts = new List<int>();
+                        for (int i = 0; i < numParts; i++) {
+                            int p = brShp.ReadInt32();
+                            parts.Add(p);
+                            //swline2.WriteLine("{0}", p);
+                        }
+                        //swline2.WriteLine("line:");
+                        for (int i = 0; i < numPoints; i++) {
+                            double px1 = brShp.ReadDouble();
+                            double px2 = brShp.ReadDouble();
+                            //swline2.Write("[{0},{1}], ", px1, px2);
+                            PointD pd1 = new PointD(px1, px2);
+                            //plst3.Add(pd1);
+                            mpoly.AddPoint(pd1);
+                        }
+
+                        //还应该拆子多边形出来；
+
+                        //运行到这里生成一个多边形
+
+                    }
+
+                    //swline2.Close();
+                    LinkLayer polyLayer = new LinkLayer(mpoly);
+                    if (_fname != "") {
+                        polyLayer.Name = _fname;
+                    }
+                    else {
+                        polyLayer.Name = "fromShp";
+                    }
+                    polyLayer.Description = "from shapefile";
+                    //mapControl1.AddPoiList(plst);
+                    //mapControl1.Refresh();
+                    _layer = polyLayer;
+
+
+                    break;
+                case 8://multipoint
+                    Polyline sq = new Polyline();
+                    //PointD pw1 = new PointD();
+
+                    break;
+                case 11://pointZ
+                    break;
+                case 13:
+                    break;
+                case 15:
+                    break;
+                case 18:
+                    break;
+                case 21:
+                    break;
+                case 23:
+                    break;
+                case 25:
+                    break;
+                case 28:
+                    break;
+                case 31://multipatch 复合要素
+                    break;
+
+            }
+
+
+
+
+            //2，展示到mapControl上   应该是生成一个新图层
+
+        }
+
+
+        private void ReadToText () {
+            string _sw = "";
+            //1，读入
+            OpenFileDialog openShpFD = new OpenFileDialog();
+            openShpFD.Filter = "shapefile(*.shp)|*.shp|All files(*.*)|*.*";
+            openShpFD.InitialDirectory = "D://";
+            if (openShpFD.ShowDialog() == DialogResult.OK) {
+                _fileShp = openShpFD.FileName;
+                splitPathToName();
+            }
+            FileStream fs = new FileStream(_fileShp, FileMode.Open);
             BinaryReader brShp = new BinaryReader(fs);
             //读取文件过程
             brShp.ReadBytes(24);
@@ -352,6 +566,18 @@ namespace LinkMap {
 
 
         }
+
+
+        private void splitPathToName () {
+            try {
+                int sidx = _fileShp.LastIndexOf("\\");
+                _filePath = _fileShp.Substring(0, sidx);
+                _fname = _fileShp.Substring(sidx + 1, _fileShp.Length - sidx - 1 - 4);//除去 .shp
+            }catch (Exception  exp){
+
+            }
+        }
+
 
         #endregion
 

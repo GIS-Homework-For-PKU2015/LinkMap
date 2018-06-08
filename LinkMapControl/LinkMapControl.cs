@@ -17,12 +17,17 @@ namespace LinkMapObject
         private Color _BoundaryColor = Color.Black; //多边形边界色
         private Color _TrackingColor = Color.DarkGreen; //
         private bool _SelfMouseWheel = true;    //接受鼠标滚轮事件时是否自动缩放  
-
         //运行时属性变量
+
+        private LinkMap wholeMap = new LinkMap();//整个mapControl 顶层元素应该是map，之后的操作是针对这个mao进行操作
+        //不要单独对polygon操作，但是外包矩形可以有
+        private int _curLayerIdx = 0;//当前图层索引 这个可能用不上，直接操作_curLayer
+        private LinkLayer _curLayer; // = new LinkLayer();//当前图层
+        
         private List<Polygon> _Polygon = new List<Polygon>();       //多边形集合
         private double _DisplayScale = 1D;       //显示比例尺倒数
         private List<Polygon> _SelectedPolygons = new List<Polygon>(); //选中多边形集合
-        private List<string> _str;
+        private List<string> _str;//?
 
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
@@ -281,6 +286,11 @@ namespace LinkMapObject
             return sSels.ToArray();
         }
         #endregion
+        public void AddLayer (LinkLayer alayer) {
+            wholeMap.AddLayer(alayer);
+        }
+
+
 
 
         #region 事件
@@ -317,6 +327,7 @@ namespace LinkMapObject
             DrawPolygons(e.Graphics);
             DrawSelectedPolygons(e.Graphics);
             DrawTrackingPolygon(e.Graphics);
+            DrawMap(e.Graphics);
         }
 
         //鼠标按下事件
@@ -521,6 +532,50 @@ namespace LinkMapObject
 
         #region 私有函数
 
+        //重绘地图，按道理说这个把DrawPolygons DrawTrackingPolygon 等囊括了
+        private void DrawMap (Graphics g) {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            List<int> aw = new List<int>();
+
+            SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+            Pen sPolygonPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+
+            foreach (LinkLayer elay in wholeMap) {
+                //默认顺序就是idx=0在最下面，加图层是加到后面
+                switch (elay.mapType) {
+                    case iType.PointD:
+                        foreach (PointD pd in elay) {
+                            PointD sScreenPoint = FromMapPoint(pd);    //用变量存储转换后的点
+                            RectangleF rect = new RectangleF((float)pd.X, (float)pd.Y, 2f, 2f);
+                            //目前写死了，之后做渲染的时候要改这里
+                            g.FillEllipse(Brushes.Black, rect);
+                        }
+                        break;
+                    case iType.MultiPoint:
+                        break;
+                    case iType.Polyline:
+                        break;
+                    case iType.Polygon:
+                        foreach (Polygon pg in elay) {
+                            int sPointCount = pg.PointCount;  //由于绘图必须要用vs自带的PointF，所以要进行转换。
+                            PointF[] sScreenPoints = new PointF[sPointCount];   //新建点数组
+                            for (int j = 0; j < sPointCount; j++) {
+                                PointD sScreenPoint = FromMapPoint(pg.GetPoint(j));    //用变量存储转换后的点
+                                sScreenPoints[j].X = (float)sScreenPoint.X;         //将转换后的点输入数组
+                                sScreenPoints[j].Y = (float)sScreenPoint.Y;
+                            }
+                            //绘制多边形
+                            g.DrawPolygon(sPolygonPen, sScreenPoints);
+                            g.FillPolygon(sPolygonBrush, sScreenPoints);
+                        }
+                        break;
+                    case iType.MultiPolygon:
+                        break;
+                    case iType.Null:
+                        break;
+                }
+            }
+        }
         private void DrawPolygons(Graphics g)
         {
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -607,8 +662,14 @@ namespace LinkMapObject
             }
         }
 
+
+
         #endregion
 
+        #region 对地图(Map)的处理
+
+
+#endregion
 
     }
 }
