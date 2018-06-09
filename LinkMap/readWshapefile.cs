@@ -14,7 +14,7 @@ namespace LinkMap {
         private string _fname = "";//单纯名字
         private string _fileShp = "";//路径加名字
         //private string _savefile = "";
-        private MapLayer _layer = new MapLayer(); //要素变图层
+        private LinkLayer _layer = new LinkLayer(); //要素变图层
         private DataTable _dt = new DataTable();//属性数据
 
         #endregion

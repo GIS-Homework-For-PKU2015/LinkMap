@@ -13,6 +13,7 @@ namespace LinkMapObject
         private iType _type = iType.PointD;//图层中数据类型 枚举
         private string _name;
         #endregion
+
         #region 构造函数
         public LinkLayer() {
 

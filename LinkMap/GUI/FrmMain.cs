@@ -130,7 +130,6 @@ namespace LinkMap
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
 
-            LinkMapControl1.TrackPolygon();
         }
 
         private void btnLinkSelcet_Click(object sender, EventArgs e)
@@ -164,5 +163,10 @@ namespace LinkMap
             LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
         }
 
+        private void btnLinkDrawPolygon_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.TrackPolygon();
+
+        }
     }
 }
