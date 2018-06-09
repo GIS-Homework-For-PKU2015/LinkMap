@@ -9,12 +9,13 @@ namespace LinkMapObject
     {
         #region 字段
         private List<LinkLayer> _items = new List<LinkLayer>();//图层内的数据
-        private string _name;
-
+        private string _name="";
+        private string _descript = "";
+        //图层顺序在LinkMap里控制
         #endregion
 
         #region 构造函数
-        public LinkMap()            //默认什么都没有
+        public LinkMap ()            //默认什么都没有
         { }
 
         public LinkMap(LinkLayer[] Map )     //输入函数,输入接口采取数组而不是list，为了让别的开发环境也能通用。
@@ -39,7 +40,17 @@ namespace LinkMapObject
             }
         }
 
-        //地图图层数目
+        public string MapDescription {
+            get {
+                return _descript;
+            }
+            set {
+                _descript = value;
+            }
+        }
+        /// <summary>
+        /// 地图图层的数目，=Count 
+        /// </summary>
         public int LayerNum
         {
             get
@@ -47,10 +58,39 @@ namespace LinkMapObject
                 return _items.Count;
             }
         }
+        //这一句很值得学习 不包含“GetEnumerator”的公共定义，因此 foreach 语句不能作用于“LinkMap
+        public IEnumerator<LinkLayer> GetEnumerator () {
+            return _items.GetEnumerator();
+        }
+        /// <summary>
+        /// 获取当前图层，最上面的图层
+        /// </summary>
+        public LinkLayer GetCurLayer {
+            get {
+                return _items.Last();
+            }
+        }
+        /// <summary>
+        /// 通过索引获取图层
+        /// </summary>
+        /// <param name="idx"></param>
+        /// <returns>a LinkLayer</returns>
+        public LinkLayer GetLayerByIndex (int idx) {
+            return _items[idx];//不在这里进行idx是否超出的判断
+        }
 
         #endregion
 
         #region 方法
+        /// <summary>
+        /// 加图层
+        /// </summary>
+        /// <param name="lay"></param>
+        public void AddLayer (LinkLayer lay) {
+            _items.Add(lay);
+        }
+        
+
         //改变可视状态的方法
         public void MapChangeSelectedLayerVisible(int sLayerIndex)
         {

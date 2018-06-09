@@ -10,6 +10,7 @@ namespace LinkMapObject {
         MultiPoint=1, //
         Polyline=2, //
         Polygon=3, //
-        MultiPolygon=4 //
+        MultiPolygon=4, //
+        Null=5 //空图层，没有要素
     }
 }
