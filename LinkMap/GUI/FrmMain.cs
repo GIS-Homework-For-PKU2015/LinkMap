@@ -164,6 +164,11 @@ namespace LinkMap
             LinkMapObject.PointD sPointOnMap = LinkMapControl1.ToMapPoint(sMouseLocation);
             LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
         }
-
+        //输出png
+        private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
+            int mc_w = LinkMapControl1.Width;
+            int mc_h = LinkMapControl1.Height;
+            LinkMapControl1.outMapToPng(mc_w,mc_h);
+        }
     }
 }
