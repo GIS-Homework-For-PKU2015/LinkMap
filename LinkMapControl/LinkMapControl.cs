@@ -27,12 +27,13 @@ namespace LinkMapObject
         
         private List<Polygon> _Polygon = new List<Polygon>();       //多边形集合
         private double _DisplayScale = 1D;       //显示比例尺倒数
-        private List<Polygon> _SelectedPolygons = new List<Polygon>(); //选中多边形集合
+        private List<object> _SelectedVector = new List<object>(); //选中要素集合
         private List<string> _str;//?
 
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
-        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择
+        private int mMapOpStyle = 0;
+        //当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6画点  7画多点 8画线 9 画多线 10 画多多边形
         private Polygon mTrackingPolygon = new Polygon();  //用户正在绘制的的多边形
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
@@ -108,31 +109,33 @@ namespace LinkMapObject
             get { return _SelfMouseWheel; }
             set { _SelfMouseWheel = value; }
         }
+        /*
         /// <summary>
         /// 获取或设置多边形数组
         /// </summary>
         [Browsable(false)]
         public Polygon[] Polygon
         {
-            get { return _SelectedPolygons.ToArray(); }
+            get { return _SelectedVector.ToArray(); }
             set
             {
                 _Polygon.Clear();
                 _Polygon.AddRange(value);
             }
         }
+        */
         /// <summary>
         /// 
         /// </summary>
         [Browsable(false)]
 
-        public Polygon[] SelectedPolygon
+        public object[] SelectedVec
         {
-            get { return _SelectedPolygons.ToArray(); }
+            get { return _SelectedVector.ToArray(); }
             set
             {
-                _SelectedPolygons.Clear();
-                _SelectedPolygons.AddRange(value);
+                _SelectedVector.Clear();
+                _SelectedVector.AddRange(value);
             }
         }
 
@@ -160,12 +163,21 @@ namespace LinkMapObject
         //区别在于私有函数是只能在本代码中使用，无法在类的外部调用
         //而方法是可以在类的外部调用的。
 
+        /// <summary>
+        /// 获取图层名称列表，用来更新和设置treeview
+        /// </summary>
+        /// <returns></returns>
+        public List<string> layerNameLst () {
+            List<string> l_name = new List<string>();
+            foreach(LinkLayer lay in wholeMap) {
+                l_name.Add(lay.Name);
+            }
+            return l_name;
+        }
 
         /// <summary>
         /// 将地图坐标转换为屏幕坐标
         /// </summary>
-        /// 
-
         public PointD FromMapPoint(PointD point)
         {
             PointD sPoint = new PointD();
@@ -178,8 +190,6 @@ namespace LinkMapObject
         /// <summary>
         /// 将屏幕坐标转换为地图坐标
         /// </summary>
-        /// 
-
         public PointD ToMapPoint(PointD point)
         {
             PointD sPoint = new PointD();
@@ -258,9 +268,41 @@ namespace LinkMapObject
             mMapOpStyle = 5;
             this.Cursor = Cursors.Arrow;
         }
+        /// <summary>
+        /// 画点
+        /// </summary>
+        public void DrawPoint () {
+            mMapOpStyle = 6;
+
+        }
+        /// <summary>
+        /// 画多点
+        /// </summary>
+        public void DrawMultiPoint () {
+            mMapOpStyle = 7;
+
+        }
+        /// <summary>
+        /// 画线
+        /// </summary>
+        public void DrawPolyline () {
+            mMapOpStyle = 8;
+        }
+        /// <summary>
+        /// 画多条线，但属于同一要素
+        /// </summary>
+        public void DrawMPolyline () {
+            mMapOpStyle = 9;
+        }
+        /// <summary>
+        /// 画多多边形
+        /// </summary>
+        public void DrawMPolygon () {
+            mMapOpStyle = 10;
+        }
 
         /// <summary>
-        /// 增加一个多边形
+        /// 增加一个多边形 这个要指定加到哪个图层里，默认为当前图层
         /// </summary>
         public void AddPolygon(Polygon polygon)
         {
@@ -296,7 +338,7 @@ namespace LinkMapObject
 
         #region 事件
 
-        public delegate void TrackingFinishedHandle(object sender, Polygon polygon);            //delegate是什么？
+        public delegate void TrackingFinishedHandle(object sender, Polygon polygon);            //delegate 委托
         /// <summary>
         /// 用户输入多边形完毕
         /// </summary>
@@ -378,6 +420,36 @@ namespace LinkMapObject
                         mStartPoint = e.Location;
                     }
 
+                    break;
+                case 6:          //draw point
+                    if (e.Button == MouseButtons.Left) {
+                        if (_curLayer.mapType == iType.PointD) {
+                            PointD npd = new PointD(e.Location.X, e.Location.Y);
+                            _curLayer.AddPoint(npd);
+                        }
+                        else {
+                            MessageBox.Show("当前图层非点图层，无法画点，请先选择或新建一个点图层！");
+                        }
+                        
+                    }
+                    break;
+                case 7://draw multipoint
+                    break;
+                case 8://draw polyline
+                    if (e.Button == MouseButtons.Left) {
+                        if (_curLayer.mapType == iType.Polyline) {//按画多边形去改，加一个委托
+                            //PointD npd = new PointD(e.Location.X, e.Location.Y);
+                            //_curLayer.AddPoint(npd);
+                        }
+                        else {
+                            MessageBox.Show("当前图层非线图层，无法画线，请先选择或新建一个线图层！");
+                        }
+
+                    }
+                    break;
+                case 9://draw multiline
+                    break;
+                case 10://draw multipolygon
                     break;
             }
 
@@ -486,9 +558,28 @@ namespace LinkMapObject
                     if (e.Button == MouseButtons.Left)
                     {
                         if (mTrackingPolygon.PointCount >= 3)  //顶点个数必须大于等于3
-                        {
-                            LinkMapObject.Polygon sTrackingPolygon = mTrackingPolygon.Clone();
+                        {//输入多边形结束
+                            Polygon sTrackingPolygon = mTrackingPolygon.Clone();
                             mTrackingPolygon.Clear();
+                            //把输入的多边形放到图层里管理
+                            if (wholeMap.LayerNum == 0) {
+                                _curLayer = new LinkLayer(sTrackingPolygon);
+                                _curLayer.Name = "图层0";
+                                wholeMap.AddLayer(_curLayer);
+                            }
+                            else {
+                                _curLayer = wholeMap.GetCurLayer;
+                                if (_curLayer.mapType == iType.Polygon) {
+                                    _curLayer.AddPolygon(sTrackingPolygon);
+                                }
+                                else {//当前图层不是多边形要素图层，新建一个图层.
+                                    LinkLayer nlayer = new LinkLayer(sTrackingPolygon);
+                                    wholeMap.AddLayer(nlayer);
+                                    _curLayer = wholeMap.GetCurLayer;//_curLayer=nlayer;
+                                }
+                            }
+
+
                             if (TrackingFinshed != null)
                             {
                               TrackingFinshed(this, sTrackingPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
@@ -533,8 +624,8 @@ namespace LinkMapObject
 
         #region 私有函数
 
-        //重绘地图，按道理说这个把DrawPolygons DrawTrackingPolygon 等囊括了
-        private void DrawMap (Graphics g) {
+        //重绘地图，按道理说这个把DrawPolygons  等囊括了
+        private void DrawMap (Graphics g) {//改渲染时也改一下这里面的一些参数
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             List<int> aw = new List<int>();
 
@@ -555,6 +646,18 @@ namespace LinkMapObject
                     case iType.MultiPoint:
                         break;
                     case iType.Polyline:
+                        foreach (Polyline pg in elay) {
+                            int sPointCount = pg.PointCount;  //由于绘图必须要用vs自带的PointF，所以要进行转换。
+                            PointF[] sScreenPoints = new PointF[sPointCount];   //新建点数组
+                            for (int j = 0; j < sPointCount; j++) {
+                                PointD sScreenPoint = FromMapPoint(pg.GetPoint(j));    //用变量存储转换后的点
+                                sScreenPoints[j].X = (float)sScreenPoint.X;         //将转换后的点输入数组
+                                sScreenPoints[j].Y = (float)sScreenPoint.Y;
+                            }
+                            //绘制
+                            g.DrawLines(sPolygonPen, sScreenPoints);
+                            //g.FillPolygon(sPolygonBrush, sScreenPoints);
+                        }
                         break;
                     case iType.Polygon:
                         foreach (Polygon pg in elay) {
@@ -644,25 +747,42 @@ namespace LinkMapObject
             sVertexBrush.Dispose();
         }
 
-        private void DrawSelectedPolygons(Graphics g)
-        {
-            int sPolygonCount = _SelectedPolygons.Count;
-            Pen sPolygonPen = new Pen(mcSelectingColor, 2);
-            for (int i = 0; i < sPolygonCount; i++)
-            {
-                int sPointCount = _SelectedPolygons[i].PointCount;
-                PointF[] sScreenPoints = new PointF[sPointCount];
-                for (int j = 0; j < sPointCount; j++)
-                {
-                    PointD sScreenPoint = FromMapPoint(_SelectedPolygons[i].Points[j]);
-                    sScreenPoints[j].X = (float)sScreenPoint.X;
-                    sScreenPoints[j].Y = (float)sScreenPoint.Y;
-
-                }
+        private void DrawSelectedPolygons (Graphics g) {
+            if (_curLayer.mapType == iType.Polygon) { 
+                int sPolygonCount = _SelectedVector.Count;
+                Pen sPolygonPen = new Pen(mcSelectingColor, 2);
+                for (int i = 0; i < sPolygonCount; i++) {
+                    Polygon pwPoly = (Polygon)_SelectedVector[i];
+                    int sPointCount = pwPoly.PointCount;
+                    PointF[] sScreenPoints = new PointF[sPointCount];
+                    for (int j = 0; j < sPointCount; j++) {
+                        PointD sScreenPoint = FromMapPoint(pwPoly.Points[j]);
+                        sScreenPoints[j].X = (float)sScreenPoint.X;
+                        sScreenPoints[j].Y = (float)sScreenPoint.Y;
+                    }
                 g.DrawPolygon(sPolygonPen, sScreenPoints);
+                }
+            }else if(_curLayer.mapType == iType.Polyline) {
+
             }
         }
 
+
+
+        #endregion
+
+        #region 要素的处理
+        //增加要素，删除要素，编辑要素
+        private bool addPointToLayer (PointD p) {
+            if (_curLayer.mapType == iType.PointD) {
+                _curLayer.AddPoint(p);
+                return true;
+            }//我觉得这个函数没有多少必要
+            return false;
+        }
+
+#endregion
+        #region 图层的处理
 
 
         #endregion
@@ -674,15 +794,16 @@ namespace LinkMapObject
         /// <summary>
         /// 输出地图到bitmap
         /// </summary>
-        public void outMapToPng (int w,int h) {
+        public bool outMapToPng (string png_path,int w,int h) {
             //思路：把地图在bitmap上再画一遍； （注意要是全图），允许修改参数
-            string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
+            //string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
             
             Image img = new Bitmap(w, h);
             Graphics gpng = Graphics.FromImage(img);
             DrawMap(gpng);
 
             img.Save(png_path);
+            return true;
         }
 
 #endregion

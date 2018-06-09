@@ -80,10 +80,11 @@ namespace LinkMap
         }
 
         private void 添加图层ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+        {//这部分的交互你去完善吧，需要图层名称类型，然后在mapcontrol的wholemap里加一个特定类型的图层
             GUI.AddLayer al = new GUI.AddLayer();
             al.ShowDialog();
             string LinkLayerName = al.LinkLayerName;
+            string newLayType = al.layerType;
             LinkLayerBox.Nodes.Add(LinkLayerName);
         }
 
@@ -128,6 +129,23 @@ namespace LinkMap
 
         #endregion
 
+        #region 图层管理 
+        //这部分 陈玄同 负责，包括treeview的刷新（在加新图层时，改变图层顺序后），图层顺序改变的方式，图层显隐的控制
+
+
+
+        public void updateTreeView () {
+            LinkLayerBox.Nodes.Clear();
+            foreach (string ln in LinkMapControl1.layerNameLst()) {
+                LinkLayerBox.Nodes.Add(ln);//按道理是先清空再重新add进去的
+            }
+            
+
+        }
+
+        #endregion
+
+        #region 按钮事件
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
 
@@ -137,17 +155,38 @@ namespace LinkMap
         {
             LinkMapControl1.SelcetFeature();
         }
+        //画点
+        private void btnLinkDrawPoints_Click (object sender, EventArgs e) {
+
+        }
+        //画线
+        private void btnLinkDrawPolyline_Click (object sender, EventArgs e) {
+
+        }
+        //画多边形
+        private void btnLinkDrawPolygon_Click (object sender, EventArgs e) {
+            //当目前没有图层时，先生成新图层再画，已有图层，会是在现有图层上画
+            LinkMapControl1.TrackPolygon();
+
+        }
+        //删除要素 
+        //其交互逻辑是，选中了一个图形之后，点删除按钮，会弹出是否删除的msgbox
+
+        private void btnLinkDelete_Click (object sender, EventArgs e) {
+
+        }
 
         private void LinkMapControl1_TrackingFinshed(object sender, LinkMapObject.Polygon polygon)
         {
             LinkMapControl1.AddPolygon(polygon);
             LinkMapControl1.Refresh();
+            updateTreeView();
         }
 
         private void LinkMapControl1_SelectingFinshed(object sender, LinkMapObject.RectangleD box)
         {
             LinkMapObject.Polygon[] sPolygons = LinkMapControl1.SelcetByBox(box);
-            LinkMapControl1.SelectedPolygon = sPolygons;
+            LinkMapControl1.SelectedVec = sPolygons;
             LinkMapControl1.Refresh();
         }
 
@@ -164,10 +203,23 @@ namespace LinkMap
             LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
         }
 
-        private void btnLinkDrawPolygon_Click(object sender, EventArgs e)
-        {
-            LinkMapControl1.TrackPolygon();
+
+        private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
+            int mc_w = LinkMapControl1.Width;
+            int mc_h = LinkMapControl1.Height;
+            SaveFileDialog pngsavef = new SaveFileDialog();
+            pngsavef.Filter = "png文件(*.png)|*.png";
+            pngsavef.Title = "保存地图为bitmap";
+            if (pngsavef.ShowDialog() == DialogResult.OK) {
+                string spng_n = pngsavef.FileName;
+                if (LinkMapControl1.outMapToPng(spng_n,mc_w, mc_h)) {
+                    MessageBox.Show("保存成功!");
+                }
+            }
+#endregion
 
         }
+
+
     }
 }
