@@ -228,7 +228,7 @@
             this.btnLinkIdentity.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkIdentity.Name = "btnLinkIdentity";
             this.btnLinkIdentity.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkIdentity.Text = "toolStripButton3";
+            this.btnLinkIdentity.Text = "Identity";
             this.btnLinkIdentity.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // btnLinkZoomIn
@@ -238,7 +238,7 @@
             this.btnLinkZoomIn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkZoomIn.Name = "btnLinkZoomIn";
             this.btnLinkZoomIn.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkZoomIn.Text = "toolStripButton1";
+            this.btnLinkZoomIn.Text = "ZoomIn";
             this.btnLinkZoomIn.Click += new System.EventHandler(this.btnLinkZoomIn_Click);
             // 
             // btnLinkZoomOut
@@ -248,7 +248,7 @@
             this.btnLinkZoomOut.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkZoomOut.Name = "btnLinkZoomOut";
             this.btnLinkZoomOut.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkZoomOut.Text = "toolStripButton2";
+            this.btnLinkZoomOut.Text = "ZoomOut";
             this.btnLinkZoomOut.Click += new System.EventHandler(this.btnLinkZoomOut_Click);
             // 
             // btnLinkPan
@@ -258,7 +258,7 @@
             this.btnLinkPan.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkPan.Name = "btnLinkPan";
             this.btnLinkPan.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkPan.Text = "toolStripButton10";
+            this.btnLinkPan.Text = "Pan";
             this.btnLinkPan.Click += new System.EventHandler(this.btnLinkPan_Click);
             // 
             // btnLinkSelcet
@@ -268,7 +268,7 @@
             this.btnLinkSelcet.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkSelcet.Name = "btnLinkSelcet";
             this.btnLinkSelcet.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkSelcet.Text = "toolStripButton9";
+            this.btnLinkSelcet.Text = "Select";
             this.btnLinkSelcet.Click += new System.EventHandler(this.btnLinkSelcet_Click);
             // 
             // btnLinkEdit
@@ -278,7 +278,7 @@
             this.btnLinkEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkEdit.Name = "btnLinkEdit";
             this.btnLinkEdit.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkEdit.Text = "toolStripButton5";
+            this.btnLinkEdit.Text = "Edit";
             this.btnLinkEdit.Click += new System.EventHandler(this.btnLinkEdit_Click);
             // 
             // btnLinkDrawPoints
@@ -288,7 +288,7 @@
             this.btnLinkDrawPoints.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkDrawPoints.Name = "btnLinkDrawPoints";
             this.btnLinkDrawPoints.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkDrawPoints.Text = "toolStripButton6";
+            this.btnLinkDrawPoints.Text = "AddPoint";
             // 
             // btnLinkDrawPolyline
             // 
@@ -297,7 +297,7 @@
             this.btnLinkDrawPolyline.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkDrawPolyline.Name = "btnLinkDrawPolyline";
             this.btnLinkDrawPolyline.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkDrawPolyline.Text = "toolStripButton7";
+            this.btnLinkDrawPolyline.Text = "AddPolyline";
             // 
             // btnLinkDrawPolygon
             // 
@@ -306,7 +306,8 @@
             this.btnLinkDrawPolygon.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkDrawPolygon.Name = "btnLinkDrawPolygon";
             this.btnLinkDrawPolygon.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkDrawPolygon.Text = "toolStripButton8";
+            this.btnLinkDrawPolygon.Text = "AddPolygon";
+            this.btnLinkDrawPolygon.Click += new System.EventHandler(this.btnLinkDrawPolygon_Click);
             // 
             // btnLinkDelete
             // 
@@ -315,7 +316,7 @@
             this.btnLinkDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnLinkDelete.Name = "btnLinkDelete";
             this.btnLinkDelete.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkDelete.Text = "toolStripButton4";
+            this.btnLinkDelete.Text = "Delete";
             // 
             // LinkLayerBox
             // 

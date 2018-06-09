@@ -14,6 +14,7 @@ namespace LinkMapObject
         private string _name="";
         private string _descript = "";//图层描述信息
         #endregion
+
         #region 构造函数
         public LinkLayer() {
 

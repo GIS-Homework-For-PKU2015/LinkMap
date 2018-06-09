@@ -136,6 +136,22 @@ namespace LinkMapObject
         //    return<-1,-1>;
         //}
 
+        public void MapAddLayer(string LayerName)
+        {
+            //_items.Add();
+        }
+
+        //删除特定索引号的图层
+        public void MapRemoveLayer(int sindex)
+        {
+            _items.RemoveAt(sindex);
+        }
+
+        public iType MapGetDataProperties(int sindex)
+        {
+            return _items[sindex].mapType;
+        }
+
 
         #endregion
     }
