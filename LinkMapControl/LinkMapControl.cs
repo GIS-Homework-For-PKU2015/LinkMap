@@ -674,16 +674,15 @@ namespace LinkMapObject
         /// <summary>
         /// 输出地图到bitmap
         /// </summary>
-        public bool outMapToPng (string png_path,int w,int h) {
+        public void outMapToPng (int w,int h) {
             //思路：把地图在bitmap上再画一遍； （注意要是全图），允许修改参数
-            //string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
+            string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
             
             Image img = new Bitmap(w, h);
             Graphics gpng = Graphics.FromImage(img);
             DrawMap(gpng);
             DrawPolygons(gpng);
             img.Save(png_path);
-            return true;
         }
 
 #endregion
