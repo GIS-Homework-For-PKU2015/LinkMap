@@ -340,7 +340,7 @@
             this.LinkMapControl1.Location = new System.Drawing.Point(105, 77);
             this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(1);
             this.LinkMapControl1.Name = "LinkMapControl1";
-            //this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
             this.LinkMapControl1.SelectedVec = new LinkMapObject.Polygon[0];
             this.LinkMapControl1.SelfMouseWheel = true;
             this.LinkMapControl1.Size = new System.Drawing.Size(459, 302);
