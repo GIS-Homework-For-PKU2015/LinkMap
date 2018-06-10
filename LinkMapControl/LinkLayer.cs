@@ -122,8 +122,6 @@ namespace LinkMapObject
             return mapType;
         }
 
-
-
         //ublic int LayerIdentifyVector(PointD spoint)
         //
         //   //遍历item
@@ -149,30 +147,7 @@ namespace LinkMapObject
 
         #endregion
 
-        #region 给图层加要素
-        ///注：在这里不进行类型检验了，在mapcontrol里加元素的时候一定要检验，不要在线图层里加点或多边形
-        
 
-        public void AddPoint (PointD poi) {
-            _items.Add(poi);
-        }
-        public void AddMultiPoint (PointD[] pos) {
-          
-        }
-        public void AddPolyline (Polyline pli) {
-            _items.Add(pli);
-        }
-        public void AddPolygon (Polygon poly) {
-            _items.Add(poly);
-        }
-        public void AddMultiPolygon (MultiPolygon mpoly) {
-            _items.Add(mpoly);
-        }
-        public void addVector (object vec) {
-            _items.Add(vec);//能不用就不用这个
-        }
-
-#endregion
 
     }
 }

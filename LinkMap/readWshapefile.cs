@@ -97,9 +97,9 @@ namespace LinkMap {
             openShpFD.InitialDirectory = "D://";
             if (openShpFD.ShowDialog() == DialogResult.OK) {
                 _fileShp = openShpFD.FileName;
+                splitPathToName();
             }
             FileStream fs = new FileStream(_fileShp, FileMode.Open);
-            splitPathToName();
             BinaryReader brShp = new BinaryReader(fs);
             //读取文件过程
             brShp.ReadBytes(24);

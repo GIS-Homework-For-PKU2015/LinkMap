@@ -289,7 +289,6 @@
             this.btnLinkDrawPoints.Name = "btnLinkDrawPoints";
             this.btnLinkDrawPoints.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDrawPoints.Text = "AddPoint";
-            this.btnLinkDrawPoints.Click += new System.EventHandler(this.btnLinkDrawPoints_Click);
             // 
             // btnLinkDrawPolyline
             // 
@@ -299,7 +298,6 @@
             this.btnLinkDrawPolyline.Name = "btnLinkDrawPolyline";
             this.btnLinkDrawPolyline.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDrawPolyline.Text = "AddPolyline";
-            this.btnLinkDrawPolyline.Click += new System.EventHandler(this.btnLinkDrawPolyline_Click);
             // 
             // btnLinkDrawPolygon
             // 
@@ -319,7 +317,6 @@
             this.btnLinkDelete.Name = "btnLinkDelete";
             this.btnLinkDelete.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDelete.Text = "Delete";
-            this.btnLinkDelete.Click += new System.EventHandler(this.btnLinkDelete_Click);
             // 
             // LinkLayerBox
             // 
@@ -341,7 +338,7 @@
             this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(1);
             this.LinkMapControl1.Name = "LinkMapControl1";
             this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
-            this.LinkMapControl1.SelectedVec = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
             this.LinkMapControl1.SelfMouseWheel = true;
             this.LinkMapControl1.Size = new System.Drawing.Size(459, 302);
             this.LinkMapControl1.TabIndex = 4;

@@ -12,7 +12,7 @@ namespace LinkMap.GUI
     public partial class AddLayer : Form
     {
         public string LinkLayerName="";
-        public string layerType = "";
+
         public AddLayer()
         {
             InitializeComponent();
@@ -21,8 +21,6 @@ namespace LinkMap.GUI
         private void btnGetLayerName_Click(object sender, EventArgs e)
         {
             LinkLayerName=this.LinkLayerNameBox.Text;
-            layerType = featypeCBox.Text;
-            
             this.Close();
         }
 
