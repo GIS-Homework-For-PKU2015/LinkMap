@@ -169,5 +169,9 @@ namespace LinkMap
             LinkMapControl1.TrackPolygon();
 
         }
+
+        private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
+            MessageBox.Show("1222");
+        }
     }
 }
