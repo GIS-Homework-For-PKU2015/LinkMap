@@ -33,7 +33,7 @@ namespace LinkMap
             CreatMap cm = new CreatMap();
             cm.ShowDialog();
         }
-        //这个应该不用了
+
         private void 导入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //OpenFileDialog dlg = new OpenFileDialog();
@@ -128,23 +128,15 @@ namespace LinkMap
 
         #endregion
 
-#region 按钮事件
-        //编辑结点事件 按钮
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
 
         }
-        //选择按钮 目前只有框选
+
         private void btnLinkSelcet_Click(object sender, EventArgs e)
         {
             LinkMapControl1.SelcetFeature();
         }
-        //画多边形按钮
-        private void btnLinkDrawPolygon_Click (object sender, EventArgs e) {
-            LinkMapControl1.TrackPolygon();
-
-        }
-
 
         private void LinkMapControl1_TrackingFinshed(object sender, LinkMapObject.Polygon polygon)
         {
@@ -172,21 +164,9 @@ namespace LinkMap
             LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
         }
 
-
-        private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
-            SaveFileDialog pngOFD = new SaveFileDialog();
-            pngOFD.Filter = "png文件(*.png)|*.png";
-            if (pngOFD.ShowDialog() == DialogResult.OK) {
-                int w = LinkMapControl1.Width;
-                int h = LinkMapControl1.Height;
-                if (LinkMapControl1.outMapToPng(pngOFD.FileName, w, h)) {
-                    MessageBox.Show("保存成功！");
-                }
-            }
-#endregion
-        }
-
-        private void btnLinkDrawPoints_Click (object sender, EventArgs e) {
+        private void btnLinkDrawPolygon_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.TrackPolygon();
 
         }
     }
