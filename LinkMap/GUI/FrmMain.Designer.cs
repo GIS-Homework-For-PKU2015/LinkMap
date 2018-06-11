@@ -122,6 +122,7 @@
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
             this.导出ToolStripMenuItem.Size = new System.Drawing.Size(160, 38);
             this.导出ToolStripMenuItem.Text = "导出";
+            this.导出ToolStripMenuItem.Click += new System.EventHandler(this.导出ToolStripMenuItem_Click);
             // 
             // LinkEditToolStripMenuItem
             // 
@@ -319,8 +320,10 @@
             // LinkLayerBox
             // 
             this.LinkLayerBox.CheckBoxes = true;
+
             this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+
             this.LinkLayerBox.Name = "LinkLayerBox";
             this.LinkLayerBox.Size = new System.Drawing.Size(176, 600);
             this.LinkLayerBox.TabIndex = 3;
@@ -335,8 +338,10 @@
             this.LinkMapControl1.BoundaryColor = System.Drawing.Color.Black;
             this.LinkMapControl1.DisplayScale = 1D;
             this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
+
             this.LinkMapControl1.Location = new System.Drawing.Point(210, 154);
             this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+
             this.LinkMapControl1.Name = "LinkMapControl1";
             this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
             this.LinkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
@@ -370,7 +375,9 @@
             this.Controls.Add(this.Linkmenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
+
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+
             this.Name = "FrmMain";
             this.Text = "LinkMap";
             this.Linkmenu.ResumeLayout(false);
