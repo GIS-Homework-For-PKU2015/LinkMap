@@ -23,7 +23,7 @@ namespace LinkMap
 
         private void LinkMapControl1_Load(object sender, EventArgs e)
         {
-
+            
         }
         #endregion
 
@@ -77,6 +77,7 @@ namespace LinkMap
             rwshp.readShp();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes.Add(rwshp.LayerName);//这个应该由LinkMapControl管理吧
+            LinkMapControl1.Refresh();
         }
 
         private void 添加图层ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,6 +168,22 @@ namespace LinkMap
         private void btnLinkDrawPolygon_Click(object sender, EventArgs e)
         {
             LinkMapControl1.TrackPolygon();
+
+        }
+
+        private void LinkLayerBox_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        private void LinkLayerBox_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        {
+            LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
+            Refresh();
+        }
+
+        private void LinkLayerBox_AfterCheck(object sender, TreeViewEventArgs e)
+        {
 
         }
     }

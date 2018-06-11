@@ -79,6 +79,9 @@ namespace LinkMapObject
             return _items[idx];//不在这里进行idx是否超出的判断
         }
 
+
+
+
         #endregion
 
         #region 方法
@@ -90,15 +93,10 @@ namespace LinkMapObject
             _items.Add(lay);
         }
         
+        
 
-        //改变可视状态的方法
-        public void MapChangeSelectedLayerVisible(int sLayerIndex)
-        {
-            if(_items[sLayerIndex].IsVisble)
-                _items[sLayerIndex].IsVisble = false;
-            else
-                _items[sLayerIndex].IsVisble = true;
-        }
+
+
 
         //设置指定索引号index图层的显示样式style与显示颜色color
         //等待吉梁部分的样式和颜色类
