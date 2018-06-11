@@ -128,7 +128,11 @@ namespace LinkMap
             LinkMapControl1.Pan();
         }
 
+        private void LinkMapControl1_DispalyCsaleChanged(object sender)
+        {
+            tss2.Text = "1:" + LinkMapControl1.DisplayScale.ToString("0.00");
 
+        }
         #endregion
 
         #region 按钮事件
@@ -171,19 +175,12 @@ namespace LinkMap
         }
 
 
-        private void LinkLayerBox_AfterSelect(object sender, TreeViewEventArgs e)
-        {
 
-        }
 
-        private void LinkLayerBox_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        private void LinkLayerBox_AfterCheck (object sender, TreeViewEventArgs e)
         {
             LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
             Refresh();
-        }
-
-        private void LinkLayerBox_AfterCheck (object sender, TreeViewEventArgs e) {
-
         }
         private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
             SaveFileDialog pngSave = new SaveFileDialog();
@@ -222,6 +219,9 @@ namespace LinkMap
 
         }
 
-#endregion
+
+        #endregion
+
+
     }
 }
