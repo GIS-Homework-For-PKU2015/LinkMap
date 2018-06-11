@@ -9,7 +9,7 @@ namespace LinkMapObject
     {
         #region 字段
         private List<object> _items = new List<object>();//图层内的数据(但是这object是不是有问题) 啥问题？？
-        private bool _isVisble = true; //图层可见性
+        private bool _isVisble = false; //图层可见性
         private iType _type = iType.Null;//图层中数据类型 枚举
         private string _name="";
         private string _descript = "";//图层描述信息
@@ -132,7 +132,7 @@ namespace LinkMapObject
         //           return i;
         //   }
         //   return -1;
-        
+
 
 
 
