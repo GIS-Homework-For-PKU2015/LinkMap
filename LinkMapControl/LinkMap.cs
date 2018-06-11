@@ -71,6 +71,16 @@ namespace LinkMapObject
             }
         }
         /// <summary>
+        /// 更新当前图层
+        /// </summary>
+        /// <param name="lay"></param>
+        public void RefreshCurLayer (LinkLayer lay) {
+            _items.RemoveAt(_items.Count-1);
+            _items.Add(lay);
+        }
+
+
+        /// <summary>
         /// 通过索引获取图层
         /// </summary>
         /// <param name="idx"></param>

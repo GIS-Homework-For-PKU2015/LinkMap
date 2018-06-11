@@ -125,8 +125,8 @@ namespace LinkMap {
                         uint recordNum = brShp.ReadUInt32();
                         int dataLen = brShp.ReadInt32();
                         brShp.ReadInt32(); //??
-                        PointD point = new PointD(brShp.ReadDouble(), brShp.ReadDouble());
-                        plst.Add(point);
+                        PointD point = new PointD(brShp.ReadDouble(), -brShp.ReadDouble());
+                        plst.Add(point);//需要时删掉上面一句里的负号
 
                     }
                     LinkLayer poiLayer = new LinkLayer(plst);
@@ -147,10 +147,11 @@ namespace LinkMap {
                     //先以保存到文件为宗旨
                     //List<PointD> plst2 = new List<PointD>();
                     //StreamWriter swline = new StreamWriter(@"E:\ComputerGraphicsProj\GISdesign\lineOut02.txt");
-                    Polyline pline = new Polyline();
+                    LinkLayer lineLayer = new LinkLayer(iType.Polyline);
+                    
                     //string lineDescri = "";
                     while (brShp.PeekChar() != -1) {
-
+                        Polyline pline = new Polyline();
                         uint recordNum = brShp.ReadUInt32();
                         int dataLen = brShp.ReadInt32();
                         brShp.ReadInt32();
@@ -175,15 +176,15 @@ namespace LinkMap {
                             double px2 = brShp.ReadDouble();
                             //swline.Write("[{0},{1}],", px1, px2);
                             //循环一次产生一条polyline
-                            PointD pd1 = new PointD(px1, px2);
+                            PointD pd1 = new PointD(px1, -px2);
                             pline.AddPoint(pd1);
                             //plst2.Add(pd1);
                         }
-
+                        lineLayer.AddPolyline(pline);
                     }
 
                     //swline.Close();
-                    LinkLayer lineLayer = new LinkLayer(pline);
+                    
                     if (_fname != "") {
                         lineLayer.Name = _fname;
                     }
@@ -197,11 +198,14 @@ namespace LinkMap {
 
                     break;
                 case 5://polygon
-                       //先以保存到文件为宗旨
-                       //List<PointD> plst3 = new List<PointD>();
-                       //StreamWriter swline2 = new StreamWriter(@"E:\ComputerGraphicsProj\GISdesign\polygonOut01.txt");
-                    Polygon mpoly = new Polygon();
+
+                    //List<PointD> plst3 = new List<PointD>();
+                    //StreamWriter swline2 = new StreamWriter(@"E:\ComputerGraphicsProj\GISdesign\polygonOut01.txt");
+                    LinkLayer polyLayer = new LinkLayer(iType.Polygon);
+                    //poiLayer.mapType =iType.Polygon;//需要补上set
+                    
                     while (brShp.PeekChar() != -1) {
+                        Polygon mpoly = new Polygon();
 
                         uint recordNum = brShp.ReadUInt32();
                         int dataLen = brShp.ReadInt32();
@@ -222,22 +226,22 @@ namespace LinkMap {
                         }
                         //swline2.WriteLine("line:");
                         for (int i = 0; i < numPoints; i++) {
-                            double px1 = brShp.ReadDouble();
-                            double px2 = brShp.ReadDouble();
+                            double px1 = brShp.ReadDouble();//x
+                            double px2 = brShp.ReadDouble();//y
                             //swline2.Write("[{0},{1}], ", px1, px2);
-                            PointD pd1 = new PointD(px1, px2);
+                            PointD pd1 = new PointD(px1, -px2);
                             //plst3.Add(pd1);
                             mpoly.AddPoint(pd1);
                         }
 
                         //还应该拆子多边形出来；
-
+                        polyLayer.AddPolygon(mpoly);
                         //运行到这里生成一个多边形
 
                     }
 
                     //swline2.Close();
-                    LinkLayer polyLayer = new LinkLayer(mpoly);
+                    
                     if (_fname != "") {
                         polyLayer.Name = _fname;
                     }
@@ -321,7 +325,7 @@ namespace LinkMap {
                         uint recordNum = brShp.ReadUInt32();
                         int dataLen = brShp.ReadInt32();
                         brShp.ReadInt32(); //??
-                        PointD point = new PointD(brShp.ReadDouble(), brShp.ReadDouble());
+                        PointD point = new PointD(brShp.ReadDouble(), -brShp.ReadDouble());
                         plst.Add(point);
 
                     }

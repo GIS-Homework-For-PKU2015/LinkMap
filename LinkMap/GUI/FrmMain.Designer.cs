@@ -75,7 +75,9 @@
             this.Linkmenu.Location = new System.Drawing.Point(0, 0);
             this.Linkmenu.Name = "Linkmenu";
             this.Linkmenu.Padding = new System.Windows.Forms.Padding(3, 1, 0, 1);
-            this.Linkmenu.Size = new System.Drawing.Size(569, 24);
+
+            this.Linkmenu.Size = new System.Drawing.Size(576, 24);
+
             this.Linkmenu.TabIndex = 0;
             this.Linkmenu.Text = "menuStrip1";
             // 
@@ -94,34 +96,44 @@
             // 新建ToolStripMenuItem
             // 
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+
             this.新建ToolStripMenuItem.Text = "新建";
             this.新建ToolStripMenuItem.Click += new System.EventHandler(this.新建ToolStripMenuItem_Click);
             // 
             // 导入ToolStripMenuItem
             // 
             this.导入ToolStripMenuItem.Name = "导入ToolStripMenuItem";
-            this.导入ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+
+            this.导入ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+
             this.导入ToolStripMenuItem.Text = "打开";
             this.导入ToolStripMenuItem.Click += new System.EventHandler(this.导入ToolStripMenuItem_Click);
             // 
             // 导入ToolStripMenuItem1
             // 
             this.导入ToolStripMenuItem1.Name = "导入ToolStripMenuItem1";
-            this.导入ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+
+            this.导入ToolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+
             this.导入ToolStripMenuItem1.Text = "导入";
             this.导入ToolStripMenuItem1.Click += new System.EventHandler(this.导入ToolStripMenuItem1_Click);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+
             this.保存ToolStripMenuItem.Text = "保存";
             // 
             // 导出ToolStripMenuItem
             // 
             this.导出ToolStripMenuItem.Name = "导出ToolStripMenuItem";
-            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+
+            this.导出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+
             this.导出ToolStripMenuItem.Text = "导出";
 
             this.导出ToolStripMenuItem.Click += new System.EventHandler(this.导出ToolStripMenuItem_Click);
@@ -220,7 +232,9 @@
             this.ScripLink.Location = new System.Drawing.Point(0, 24);
             this.ScripLink.Name = "ScripLink";
             this.ScripLink.Padding = new System.Windows.Forms.Padding(0);
-            this.ScripLink.Size = new System.Drawing.Size(569, 39);
+
+            this.ScripLink.Size = new System.Drawing.Size(576, 39);
+
             this.ScripLink.TabIndex = 1;
             this.ScripLink.Text = "toolStrip1";
             // 
@@ -292,6 +306,7 @@
             this.btnLinkDrawPoints.Name = "btnLinkDrawPoints";
             this.btnLinkDrawPoints.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDrawPoints.Text = "AddPoint";
+            this.btnLinkDrawPoints.Click += new System.EventHandler(this.btnLinkDrawPoints_Click);
             // 
             // btnLinkDrawPolyline
             // 
@@ -301,6 +316,7 @@
             this.btnLinkDrawPolyline.Name = "btnLinkDrawPolyline";
             this.btnLinkDrawPolyline.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDrawPolyline.Text = "AddPolyline";
+            this.btnLinkDrawPolyline.Click += new System.EventHandler(this.btnLinkDrawPolyline_Click);
             // 
             // btnLinkDrawPolygon
             // 
@@ -320,14 +336,14 @@
             this.btnLinkDelete.Name = "btnLinkDelete";
             this.btnLinkDelete.Size = new System.Drawing.Size(36, 36);
             this.btnLinkDelete.Text = "Delete";
+            this.btnLinkDelete.Click += new System.EventHandler(this.btnLinkDelete_Click);
             // 
             // LinkLayerBox
             // 
             this.LinkLayerBox.CheckBoxes = true;
 
-
-            this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
-            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LinkLayerBox.Location = new System.Drawing.Point(12, 76);
+            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 
             this.LinkLayerBox.Name = "LinkLayerBox";
             this.LinkLayerBox.Size = new System.Drawing.Size(90, 302);
@@ -341,10 +357,8 @@
             this.LinkMapControl1.DisplayScale = 1D;
             this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
 
-
-            this.LinkMapControl1.Location = new System.Drawing.Point(210, 154);
-            this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-
+            this.LinkMapControl1.Location = new System.Drawing.Point(105, 77);
+            this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
 
             this.LinkMapControl1.Name = "LinkMapControl1";
             this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
@@ -371,7 +385,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 390);
+
+            this.ClientSize = new System.Drawing.Size(576, 399);
+
             this.Controls.Add(this.LinkPointLocation);
             this.Controls.Add(this.LinkMapControl1);
             this.Controls.Add(this.LinkLayerBox);
@@ -380,9 +396,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
 
-
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 
             this.Name = "FrmMain";
             this.Text = "LinkMap";
