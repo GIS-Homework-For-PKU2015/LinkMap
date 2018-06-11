@@ -131,6 +131,7 @@ namespace LinkMap
 
         #endregion
 
+        #region 按钮事件
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
 
@@ -143,6 +144,8 @@ namespace LinkMap
 
         private void LinkMapControl1_TrackingFinshed(object sender, LinkMapObject.Polygon polygon)
         {
+            //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
+
             LinkMapControl1.AddPolygon(polygon);
             LinkMapControl1.Refresh();
         }
@@ -167,12 +170,6 @@ namespace LinkMap
             LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
         }
 
-        private void btnLinkDrawPolygon_Click(object sender, EventArgs e)
-        {
-            LinkMapControl1.TrackPolygon();
-
-        }
-
 
         private void LinkLayerBox_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -189,8 +186,42 @@ namespace LinkMap
 
         }
         private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
-
+            SaveFileDialog pngSave = new SaveFileDialog();
+            pngSave.Filter = "png文件(*.png)|*.png";
+            if (pngSave.ShowDialog() == DialogResult.OK) {
+                int mc_w = LinkMapControl1.Width;
+                int mc_h = LinkMapControl1.Height;
+                LinkMapControl1.outMapToPng(pngSave.FileName, mc_w, mc_h);
+                MessageBox.Show("保存完毕！");
+            }
 
         }
+        //画点
+        private void btnLinkDrawPoints_Click (object sender, EventArgs e) {
+            LinkMapControl1.AddPoint();
+        }
+        //画线
+        private void btnLinkDrawPolyline_Click (object sender, EventArgs e) {
+
+        }
+        //画多边形
+        private void btnLinkDrawPolygon_Click (object sender, EventArgs e) {
+            LinkMapControl1.TrackPolygon();
+
+        }
+
+        //删除要素
+        private void btnLinkDelete_Click (object sender, EventArgs e) {
+
+        }
+
+        //更新树节点
+        private void UpdateTreeView () {
+            //
+            //string[] treeStr =;
+
+        }
+
+#endregion
     }
 }

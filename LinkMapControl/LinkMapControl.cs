@@ -35,7 +35,7 @@ namespace LinkMapObject
 
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
-        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择
+        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素
         private Polygon mTrackingPolygon = new Polygon();  //用户正在绘制的的多边形
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
@@ -174,6 +174,7 @@ namespace LinkMapObject
             PointD sPoint = new PointD();
             sPoint.X = (point.X - mOffsetX) / _DisplayScale;
             sPoint.Y = (point.Y - mOffsetY) / _DisplayScale;
+            //sPoint.Y =this.Height- (point.Y - mOffsetY) / _DisplayScale;
             return sPoint;
 
         }
@@ -188,6 +189,7 @@ namespace LinkMapObject
             PointD sPoint = new PointD();
             sPoint.X = point.X * _DisplayScale + mOffsetX;
             sPoint.Y = point.Y * _DisplayScale + mOffsetY;
+            //sPoint.Y = (point.Y- this.Height) * _DisplayScale + mOffsetY;
             return sPoint;
         }
 
@@ -262,12 +264,62 @@ namespace LinkMapObject
             this.Cursor = Cursors.Arrow;
         }
 
+        public void AddPoint () {
+            mMapOpStyle = 6;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void AddMultiPoint () {
+            mMapOpStyle = 7;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void AddPolyline () {
+            mMapOpStyle = 8;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void AddMultiline() {
+            mMapOpStyle = 9;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void AddMultiPolygon () {
+            mMapOpStyle = 10;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void DeleteFeature () {
+            mMapOpStyle = 11;
+            this.Cursor = Cursors.Arrow;
+        }
+        public void MoveFeature () {
+            mMapOpStyle = 12;
+        }
+
         /// <summary>
         /// 增加一个多边形
         /// </summary>
         public void AddPolygon(Polygon polygon)
         {
-            _Polygon.Add(polygon);
+            //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
+            if (wholeMap.LayerNum == 0) {
+                LinkLayer nlay = new LinkLayer(polygon);
+                nlay.Name = "drawPolygon";
+                nlay.IsVisble = true;
+                wholeMap.AddLayer(nlay);
+                _curLayer = wholeMap.GetCurLayer;
+            }
+            else {
+                _curLayer = wholeMap.GetCurLayer;
+                if (_curLayer.mapType == iType.Polygon) {
+                    _curLayer.AddPolygon(polygon);
+                    wholeMap.RefreshCurLayer(_curLayer);
+                }
+                else {
+                    LinkLayer nlay = new LinkLayer(polygon);
+                    nlay.Name = "drawPolygon1";
+                    nlay.IsVisble = true;
+                    wholeMap.AddLayer(nlay);
+                    _curLayer = wholeMap.GetCurLayer;
+                }
+            }
+            //_Polygon.Add(polygon);
         }
 
         /// <summary>
@@ -410,6 +462,67 @@ namespace LinkMapObject
                     }
 
                     break;
+                case 6:         //add point
+                    if (e.Button == MouseButtons.Left) {
+                        //判断当前图层是否是点图层 no->提醒用户；yes，加一个点
+                        //mStartPoint = e.Location;
+                        PointD poiw = new PointD(e.Location.X, e.Location.Y);
+                        if (wholeMap.LayerNum == 0) {
+                            LinkLayer nlay = new LinkLayer(poiw);
+                            nlay.Name = "drawPoint";
+                            nlay.IsVisble = true;
+                            wholeMap.AddLayer(nlay);
+                            _curLayer = wholeMap.GetCurLayer;
+                        }
+                        else {
+                            _curLayer = wholeMap.GetCurLayer;
+                            if (_curLayer.mapType == iType.PointD) {
+                                _curLayer.AddPointD(poiw);
+                                wholeMap.RefreshCurLayer(_curLayer);
+                            }
+                            else {
+                                LinkLayer nlay = new LinkLayer(poiw);
+                                nlay.Name = "drawPoi1";
+                                nlay.IsVisble = true;
+                                wholeMap.AddLayer(nlay);
+                                _curLayer = wholeMap.GetCurLayer;
+                            }
+                        }
+                        Refresh();
+                    }
+
+                    break;
+                case 7:         //add multipoint
+                    if (e.Button == MouseButtons.Left) {
+                        //判断当前图层是否是线图层 
+                        mStartPoint = e.Location;
+                    }
+
+                    break;
+                case 8:         //add line
+                    if (e.Button == MouseButtons.Left && e.Clicks == 1) {
+                        //
+                        //mStartPoint = e.Location;
+                    }
+
+                    break;
+                case 9:         //add multiline
+                    if (e.Button == MouseButtons.Left) {
+                        //
+                        //mStartPoint = e.Location;
+                    }
+
+                    break;
+                case 10:         //add multipolygon
+                    if (e.Button == MouseButtons.Left) {
+                        //判断当前图层是否是点图层 no->提醒用户；yes，加一个点
+                        //mStartPoint = e.Location;
+                    }
+
+                    break;
+                case 11:         //删除要素
+                    
+                    break;
             }
 
 
@@ -461,6 +574,24 @@ namespace LinkMapObject
                         g.Dispose();
                     }
                     break;
+                case 6:         //add point
+                    
+                    break;
+                case 7:         //add multipoint
+                    //等下一个点
+                    break;
+                case 8:         //add line
+                    
+                    break;
+                case 9:         //add multiline
+                    
+                    break;
+                case 10:         //add multipolygon
+                    
+                    break;
+                case 11:         //删除要素
+
+                    break;
             }
         }
 
@@ -497,6 +628,24 @@ namespace LinkMapObject
 
                     }
                     break;
+                case 6:         //add point
+
+                    break;
+                case 7:         //add multipoint
+                    //等下一个点
+                    break;
+                case 8:         //add line
+
+                    break;
+                case 9:         //add multiline
+
+                    break;
+                case 10:         //add multipolygon
+
+                    break;
+                case 11:         //删除要素
+
+                    break;
             }
         }
 
@@ -519,15 +668,37 @@ namespace LinkMapObject
                         if (mTrackingPolygon.PointCount >= 3)  //顶点个数必须大于等于3
                         {
                             LinkMapObject.Polygon sTrackingPolygon = mTrackingPolygon.Clone();
+                            //这一句不要手贱删LinkMapObject 否则容易出bug，我被坑过
                             mTrackingPolygon.Clear();
+                            //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
+
+
                             if (TrackingFinshed != null)
-                            {
+                            {//进入frmMain的委托事件
                               TrackingFinshed(this, sTrackingPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
                             }
                         }
                     }
                     break;
                 case 5:         //选择
+                    break;
+                case 6:         //add point
+
+                    break;
+                case 7:         //add multipoint
+                    //等下一个点
+                    break;
+                case 8:         //add line
+
+                    break;
+                case 9:         //add multiline
+
+                    break;
+                case 10:         //add multipolygon
+
+                    break;
+                case 11:         //删除要素
+
                     break;
             }
         }
@@ -582,8 +753,8 @@ namespace LinkMapObject
                         case iType.PointD:
                             foreach (PointD pd in elay)
                             {
-                                PointD sScreenPoint = FromMapPoint(pd);    //用变量存储转换后的点
-                                RectangleF rect = new RectangleF((float)pd.X, (float)pd.Y, 2f, 2f);
+                                PointD sScPoi= FromMapPoint(pd);    //用变量存储转换后的点
+                                RectangleF rect = new RectangleF((float)sScPoi.X, (float)sScPoi.Y, 2f, 2f);
                                 //目前写死了，之后做渲染的时候要改这里
                                 g.FillEllipse(Brushes.Black, rect);
                             }
@@ -591,24 +762,39 @@ namespace LinkMapObject
                         case iType.MultiPoint:
                             break;
                         case iType.Polyline:
+                            foreach (Polyline pline in elay) {
+                                Pen lPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                int lineCount = pline.PointCount;
+                                PointF[] wpoi = new PointF[lineCount];
+                                for (int i = 0; i < lineCount; i++) {
+
+                                    PointD sScPoi= FromMapPoint(pline.GetPoint(i));    //用变量存储转换后的点
+                                    wpoi[i] = new PointF((float) sScPoi.X, (float)sScPoi.Y);
+                                }
+                                g.DrawLines(lPen, wpoi);
+                                lPen.Dispose();
+                            }
+
                             break;
                         case iType.Polygon:
                             foreach (Polygon pg in elay)
                             {
+                                Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
                                 int sPointCount = pg.PointCount;  //由于绘图必须要用vs自带的PointF，所以要进行转换。
                                 PointF[] sScreenPoints = new PointF[sPointCount];   //新建点数组
                                 for (int j = 0; j < sPointCount; j++)
                                 {
-                                    PointD sScreenPoint = FromMapPoint(pg.GetPoint(j));    //用变量存储转换后的点
+                                    PointD sScreenPoint = FromMapPoint(pg.GetPoint(j));    //将地图坐标转化为屏幕坐标
                                     sScreenPoints[j].X = (float)sScreenPoint.X;         //将转换后的点输入数组
                                     sScreenPoints[j].Y = (float)sScreenPoint.Y;
                                 }
                                 //绘制多边形
-                                g.DrawPolygon(sPolygonPen, sScreenPoints);
+                                g.DrawPolygon(sPen, sScreenPoints);
                                 g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                sPen.Dispose();
                             }
                             break;
-                        case iType.MultiPolygon:
+                        case iType.MultiPolygon: //drawpath
                             break;
                         case iType.Null:
                             break;
@@ -714,9 +900,9 @@ namespace LinkMapObject
         /// <summary>
         /// 输出地图到bitmap
         /// </summary>
-        public void outMapToPng (int w,int h) {
+        public void outMapToPng (string png_path, int w,int h) {
             //思路：把地图在bitmap上再画一遍； （注意要是全图），允许修改参数
-            string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
+            //string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
             
             Image img = new Bitmap(w, h);
             Graphics gpng = Graphics.FromImage(img);

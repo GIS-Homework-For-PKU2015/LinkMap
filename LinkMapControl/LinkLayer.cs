@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 //图层类
@@ -13,11 +14,15 @@ namespace LinkMapObject
         private iType _type = iType.Null;//图层中数据类型 枚举
         private string _name="";
         private string _descript = "";//图层描述信息
+        private DataTable _dt = new DataTable();//装属性数据
         #endregion
 
         #region 构造函数
         public LinkLayer() {
-
+            _type = iType.Null;
+        }
+        public LinkLayer (iType t) {
+            _type = t;
         }
         public LinkLayer(PointD poi) {
             _items.Add(poi);
@@ -100,8 +105,11 @@ namespace LinkMapObject
             get {
                 return _type;
             }
+            set {
+                _type = value;
+            }
         }
-
+        //枚举 foreach用
         public IEnumerator<object> GetEnumerator () {
             return _items.GetEnumerator();
         }
@@ -147,7 +155,24 @@ namespace LinkMapObject
 
         #endregion
 
+        #region 加要素
+        //注：这里不进行类型判断，在调用的时候尽量进行，不要出现点图层还加线要素的情况
+        public void AddPointD (PointD pd) {
+            _items.Add(pd);
+        }
+        public void AddPolyline (Polyline line) {
+            _items.Add(line);
+        }
+        public void AddPolygon (Polygon poly) {
+            _items.Add(poly);
+        }
 
+
+        public void addFeature (object obj) {
+            _items.Add(obj);//尽量不用这一个
+        }
+
+#endregion
 
     }
 }
