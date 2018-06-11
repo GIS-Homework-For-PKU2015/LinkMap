@@ -185,9 +185,9 @@ namespace LinkMap
             Refresh();
         }
 
-        private void LinkLayerBox_AfterCheck(object sender, TreeViewEventArgs e)
-        {
+        private void LinkLayerBox_AfterCheck (object sender, TreeViewEventArgs e) {
 
+        }
         private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
 
 
