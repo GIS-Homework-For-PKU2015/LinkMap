@@ -19,7 +19,10 @@ namespace LinkMapObject
         private bool _SelfMouseWheel = true;    //接受鼠标滚轮事件时是否自动缩放  
         //运行时属性变量
 
-        private LinkMap wholeMap = new LinkMap();//整个mapControl 顶层元素应该是map，之后的操作是针对这个map进行操作
+
+        private LinkMap wholeMap = new LinkMap();
+        //整个mapControl 顶层元素应该是map，之后的操作是针对这个mao进行操作
+
         //不要单独对polygon操作，但是外包矩形可以有
         private int _curLayerIdx = 0;//当前图层索引 这个可能用不上，直接操作_curLayer
         private LinkLayer _curLayer; // = new LinkLayer();//当前图层
@@ -706,6 +709,21 @@ namespace LinkMapObject
 
         #region 对地图(Map)的处理
 
+
+
+        /// <summary>
+        /// 输出地图到bitmap
+        /// </summary>
+        public void outMapToPng (int w,int h) {
+            //思路：把地图在bitmap上再画一遍； （注意要是全图），允许修改参数
+            string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
+            
+            Image img = new Bitmap(w, h);
+            Graphics gpng = Graphics.FromImage(img);
+            DrawMap(gpng);
+
+            img.Save(png_path);
+        }
 
 #endregion
 
