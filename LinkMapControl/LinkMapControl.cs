@@ -37,7 +37,7 @@ namespace LinkMapObject
         
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
-        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素; 13 编辑要素 14 编辑点 15 编辑线 16 编辑多边形 
+        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素
         private Polygon mTrackingPolygon = new Polygon();  //用户正在绘制的的多边形
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
@@ -211,6 +211,10 @@ namespace LinkMapObject
             return sPoint;
         }
 
+        public LinkLayer GetCurlayer()
+        {
+            return _curLayer;
+        }
 
         /// <summary>
         /// 以指定点为中心，以指定系数进行缩放
@@ -302,7 +306,7 @@ namespace LinkMapObject
             mMapOpStyle = 10;
             this.Cursor = Cursors.Arrow;
         }
-        public void DeleteFeatureType () {
+        public void DeleteFeature () {
             mMapOpStyle = 11;
             this.Cursor = Cursors.Arrow;
         }
@@ -313,32 +317,32 @@ namespace LinkMapObject
         /// <summary>
         /// 增加一个多边形
         /// </summary>
-        public void AddPolygon(Polygon polygon)
-        {
-            //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
-            if (wholeMap.LayerNum == 0) {
-                LinkLayer nlay = new LinkLayer(polygon);
-                nlay.Name = "drawPolygon";
-                nlay.IsVisble = true;
-                wholeMap.AddLayer(nlay);
-                _curLayer = wholeMap.GetCurLayer;
-            }
-            else {
-                _curLayer = wholeMap.GetCurLayer;
-                if (_curLayer.mapType == iType.Polygon) {
-                    _curLayer.AddPolygon(polygon);
-                    wholeMap.RefreshCurLayer(_curLayer);
-                }
-                else {
-                    LinkLayer nlay = new LinkLayer(polygon);
-                    nlay.Name = "drawPolygon1";
-                    nlay.IsVisble = true;
-                    wholeMap.AddLayer(nlay);
-                    _curLayer = wholeMap.GetCurLayer;
-                }
-            }
-            //_Polygon.Add(polygon);
-        }
+        //public void AddPolygon(Polygon polygon)
+        //{
+        //    //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
+        //    if (wholeMap.LayerNum == 0) {
+        //        LinkLayer nlay = new LinkLayer(polygon);
+        //        nlay.Name = "drawPolygon";
+        //        nlay.IsVisble = false;
+        //        wholeMap.AddLayer(nlay);
+        //        _curLayer = wholeMap.GetCurLayer;
+        //    }
+        //    else {
+        //        _curLayer = wholeMap.GetCurLayer;
+        //        if (_curLayer.mapType == iType.Polygon) {
+        //            _curLayer.AddPolygon(polygon);
+        //            wholeMap.RefreshCurLayer(_curLayer);
+        //        }
+        //        else {
+        //            LinkLayer nlay = new LinkLayer(polygon);
+        //            nlay.Name = "drawPolygon1";
+        //            nlay.IsVisble = false;
+        //            wholeMap.AddLayer(nlay);
+        //            _curLayer = wholeMap.GetCurLayer;
+        //        }
+        //    }
+        //    //_Polygon.Add(polygon);
+        //}
 
         /// <summary>
         /// 根据矩形盒进行选择，返回选中要素集合
@@ -390,55 +394,6 @@ namespace LinkMapObject
             
             return sSels;
         }
-        /// <summary>
-        /// 删除选中要素，需要的判断逻辑和选择要素一样
-        /// </summary>
-        public void DeleteFeature () {
-            List<object> sSels = new List<object>();
-            RectangleD box = new RectangleD(00,1,1,1);
-            _curLayer = wholeMap.GetCurLayer;
-            sSels.Clear();//之前选中的要清掉
-            if (_curLayer.mapType == iType.PointD) {
-                foreach (PointD poi in _curLayer) {
-                    if (MapTools.IsPointWithinBox(poi, box)) {
-                        sSels.Add(poi);
-                    }
-                }
-                _selectType = iType.PointD;
-            }
-            else if (_curLayer.mapType == iType.MultiPoint) {
-
-            }
-            else if (_curLayer.mapType == iType.Polyline) {
-                foreach (Polyline line in _curLayer) {
-                    int lcount = line.PointCount;
-                    int c = 0;
-                    for (int i = 0; i < lcount; i++) {
-                        if (MapTools.IsPointWithinBox(line.GetPoint(i), box)) {
-                            c++;
-                        }
-                        if (c == lcount) {//不是完备版，目前仅当点都在box内才选中
-                            sSels.Add(line);
-                        }
-                    }
-                }
-                _selectType = iType.Polyline;
-            }
-            else if (_curLayer.mapType == iType.Polygon) {
-
-                foreach (Polygon poly in _curLayer) {
-                    if (MapTools.IsPolygonCompleteWithinBox(poly, box) == true) {
-                        sSels.Add(poly);
-                    }
-                }
-                _selectType = iType.Polygon;
-            }
-            else if (_curLayer.mapType == iType.MultiPolygon) {
-
-            }
-            
-        }
-
 
         //添加图层并且显示
         public void AddLayer(LinkLayer alayer)
@@ -482,6 +437,18 @@ namespace LinkMapObject
         /// 用户输入多边形完毕
         /// </summary>
         public event TrackingFinishedHandle TrackingFinshed;
+
+        public delegate void TrackingPolylineFinishedHandle(object sender, Polyline polyline);
+        /// <summary>
+        /// 用户输入线完毕
+        /// </summary>
+        public event TrackingPolylineFinishedHandle TrackingPolylineFinshed;
+
+        public delegate void TrackingPointFinishedHandle(object sender, PointD points);
+        /// <summary>
+        /// 用户输入点完毕
+        /// </summary>
+        public event TrackingPointFinishedHandle TrackingPointFinshed;
 
         public delegate void DispalyScaleChangeHandle(object sender);
         /// <summary>
@@ -571,9 +538,13 @@ namespace LinkMapObject
                         if (wholeMap.LayerNum == 0) {
                             LinkLayer nlay = new LinkLayer(mpoiw);
                             nlay.Name = "drawPoint";
-                            nlay.IsVisble = true;
+                            nlay.IsVisble = false;
                             wholeMap.AddLayer(nlay);
                             _curLayer = wholeMap.GetCurLayer;
+                            if (TrackingPointFinshed != null)
+                            {//进入frmMain的委托事件
+                                TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                            }
                         }
                         else {
                             _curLayer = wholeMap.GetCurLayer;
@@ -584,9 +555,13 @@ namespace LinkMapObject
                             else {
                                 LinkLayer nlay = new LinkLayer(mpoiw);
                                 nlay.Name = "drawPoi1";
-                                nlay.IsVisble = true;
+                                nlay.IsVisble = false;
                                 wholeMap.AddLayer(nlay);
                                 _curLayer = wholeMap.GetCurLayer;
+                                if (TrackingPointFinshed != null)
+                                {//进入frmMain的委托事件
+                                    TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                                }
                             }
                         }
                         Refresh();
@@ -768,19 +743,47 @@ namespace LinkMapObject
                 case 3:          //漫游
                     break;
                 case 4:         //输入多边形
-                    if (e.Button == MouseButtons.Left)
+                    if (mTrackingPolygon.PointCount >= 3)  //顶点个数必须大于等于2
                     {
-                        if (mTrackingPolygon.PointCount >= 3)  //顶点个数必须大于等于3
+                        Polygon sTraPolygon = mTrackingPolygon.Clone();
+                        //LinkMapObject.Polygon sTrackingPolygon = mTrackingPolygon.Clone();
+                        //这一句不要手贱删LinkMapObject 否则容易出bug，我被坑过
+                        mTrackingPolygon.Clear();
+                        //mTrackingPolygon.Clear();
+                        //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
+
+
+                        if (wholeMap.LayerNum == 0)
                         {
-                            LinkMapObject.Polygon sTrackingPolygon = mTrackingPolygon.Clone();
-                            //这一句不要手贱删LinkMapObject 否则容易出bug，我被坑过
-                            mTrackingPolygon.Clear();
-                            //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
-
-
+                            LinkLayer nlay = new LinkLayer(sTraPolygon);
+                            nlay.Name = "drawPolygon";
+                            nlay.IsVisble = false;
+                            wholeMap.AddLayer(nlay);
+                            _curLayer = wholeMap.GetCurLayer;
                             if (TrackingFinshed != null)
                             {//进入frmMain的委托事件
-                              TrackingFinshed(this, sTrackingPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                                TrackingFinshed(this, sTraPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                            }
+                        }
+                        else
+                        {
+                            _curLayer = wholeMap.GetCurLayer;
+                            if (_curLayer.mapType == iType.Polygon)
+                            {
+                                _curLayer.AddPolygon(sTraPolygon);
+                                wholeMap.RefreshCurLayer(_curLayer);
+                            }
+                            else
+                            {
+                                LinkLayer nlay = new LinkLayer(sTraPolygon);
+                                nlay.Name = "drawPolygon1";
+                                nlay.IsVisble = false;
+                                wholeMap.AddLayer(nlay);
+                                _curLayer = wholeMap.GetCurLayer;
+                                if (TrackingFinshed != null)
+                                {//进入frmMain的委托事件
+                                    TrackingFinshed(this, sTraPolygon); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                                }
                             }
                         }
                     }
@@ -806,9 +809,13 @@ namespace LinkMapObject
                         if (wholeMap.LayerNum == 0) {
                             LinkLayer nlay = new LinkLayer(sTraPolyline);
                             nlay.Name = "drawPolyline";
-                            nlay.IsVisble = true;
+                            nlay.IsVisble = false;
                             wholeMap.AddLayer(nlay);
                             _curLayer = wholeMap.GetCurLayer;
+                            if (TrackingPolylineFinshed != null)
+                            {//进入frmMain的委托事件
+                                TrackingPolylineFinshed(this, sTraPolyline); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                            }
                         }
                         else {
                             _curLayer = wholeMap.GetCurLayer;
@@ -819,9 +826,13 @@ namespace LinkMapObject
                             else {
                                 LinkLayer nlay = new LinkLayer(sTraPolyline);
                                 nlay.Name = "drawPolyline1";
-                                nlay.IsVisble = true;
+                                nlay.IsVisble = false;
                                 wholeMap.AddLayer(nlay);
                                 _curLayer = wholeMap.GetCurLayer;
+                                if (TrackingPolylineFinshed != null)
+                                {//进入frmMain的委托事件
+                                    TrackingPolylineFinshed(this, sTraPolyline); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                                }
                             }
                         }
 
@@ -1128,37 +1139,15 @@ namespace LinkMapObject
             //string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
             
             Image img = new Bitmap(w, h);
-
             Graphics gpng = Graphics.FromImage(img);
-            gpng.Clear(Color.White);//不要白色背景就去掉这一句
-            //Rectangle rect = new Rectangle();
-            //gpng.DrawRectangle(rect)
             DrawPolygons(gpng);
             DrawMap(gpng);
 
             img.Save(png_path);
         }
-        //移动点，编辑点的子集；对当前图层的点进行循环，如果点和鼠标位置再一定范围内，指针形状变化
-        //可以移动点，对当前图层的点进行更新，更新wholemap
-        private void movePoint () {
-
-
-        }
 
         #endregion
-        #region 辅助函数
-        private int zoomIndex (List<PointD> poilst,PointD intimePoi) {
-            int plct = poilst.Count;
-            for (int i = 0; i < plct; i++) {
 
-                if (Math.Abs(intimePoi.X - poilst[i].X) < 20 && Math.Abs(intimePoi.Y - poilst[i].Y) < 20) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        #endregion
 
     }
 }

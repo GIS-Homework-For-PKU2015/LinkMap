@@ -143,11 +143,32 @@ namespace LinkMap
             LinkMapControl1.SelcetFeature();
         }
 
+        private void LinkMapControl1_TrackingPointFinshed(object sender, LinkMapObject.PointD points)
+        {
+            LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
+            LinkLayerBox.Nodes.Add(Curlayer.Name);
+            int sLC = LinkLayerBox.Nodes.Count;
+            LinkLayerBox.Nodes[sLC - 1].Checked = true;
+            LinkMapControl1.Refresh();
+        }
+
+        private void LinkMapControl1_TrackingPolylineFinshed(object sender, LinkMapObject.Polyline polyline)
+        {
+            LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
+            LinkLayerBox.Nodes.Add(Curlayer.Name);
+            int sLC = LinkLayerBox.Nodes.Count;
+            LinkLayerBox.Nodes[sLC - 1].Checked = true;
+            LinkMapControl1.Refresh();
+        }
+
         private void LinkMapControl1_TrackingFinshed(object sender, LinkMapObject.Polygon polygon)
         {
             //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
 
-            LinkMapControl1.AddPolygon(polygon);
+            LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
+            LinkLayerBox.Nodes.Add(Curlayer.Name);
+            int sLC = LinkLayerBox.Nodes.Count;
+            LinkLayerBox.Nodes[sLC - 1].Checked = true;
             LinkMapControl1.Refresh();
         }
 
@@ -169,7 +190,8 @@ namespace LinkMap
         {
             LinkMapObject.PointD sMouseLocation = new LinkMapObject.PointD(mouseLocation.X, mouseLocation.Y);
             LinkMapObject.PointD sPointOnMap = LinkMapControl1.ToMapPoint(sMouseLocation);
-            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + (-sPointOnMap.Y).ToString("0.00");
+            double Yreal =0- sPointOnMap.Y;
+            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + Yreal.ToString("0.00");
         }
 
 
@@ -211,10 +233,7 @@ namespace LinkMap
 
         //删除要素
         private void btnLinkDelete_Click (object sender, EventArgs e) {
-            //只删除选中要素
-            if (MessageBox.Show("此操作将不可逆，是否确认当前图层的删除选中要素？", "tips", MessageBoxButtons.OKCancel)==DialogResult.OK) {
-                LinkMapControl1.DeleteFeature();
-            }
+
         }
 
         //更新树节点
@@ -223,6 +242,8 @@ namespace LinkMap
             //string[] treeStr =;
 
         }
+
+
 
 
         #endregion
