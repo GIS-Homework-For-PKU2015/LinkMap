@@ -78,6 +78,7 @@ namespace LinkMap
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes.Add(rwshp.LayerName);//这个应该由LinkMapControl管理吧
             int sLC = LinkLayerBox.Nodes.Count;
+            mjudgementcheckbox = 0;
             LinkLayerBox.Nodes[sLC-1].Checked = true;
             LinkMapControl1.Refresh();
         }

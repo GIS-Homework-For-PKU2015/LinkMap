@@ -537,7 +537,7 @@ namespace LinkMapObject
                         PointD mpoiw = ToMapPoint(poiw);
                         if (wholeMap.LayerNum == 0) {
                             LinkLayer nlay = new LinkLayer(mpoiw);
-                            nlay.Name = "drawPoint";
+                            nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
                             nlay.IsVisble = true;
                             wholeMap.AddLayer(nlay);
                             _curLayer = wholeMap.GetCurLayer;
@@ -554,7 +554,7 @@ namespace LinkMapObject
                             }
                             else {
                                 LinkLayer nlay = new LinkLayer(mpoiw);
-                                nlay.Name = "drawPoi1";
+                                nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
                                 nlay.IsVisble = true;
                                 wholeMap.AddLayer(nlay);
                                 _curLayer = wholeMap.GetCurLayer;
@@ -756,7 +756,7 @@ namespace LinkMapObject
                         if (wholeMap.LayerNum == 0)
                         {
                             LinkLayer nlay = new LinkLayer(sTraPolygon);
-                            nlay.Name = "drawPolygon";
+                            nlay.Name = "Layer"+wholeMap.LayerNum.ToString();
                             nlay.IsVisble = true;
                             wholeMap.AddLayer(nlay);
                             _curLayer = wholeMap.GetCurLayer;
@@ -776,7 +776,7 @@ namespace LinkMapObject
                             else
                             {
                                 LinkLayer nlay = new LinkLayer(sTraPolygon);
-                                nlay.Name = "drawPolygon1";
+                                nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
                                 nlay.IsVisble = true;
                                 wholeMap.AddLayer(nlay);
                                 _curLayer = wholeMap.GetCurLayer;
@@ -808,7 +808,7 @@ namespace LinkMapObject
 
                         if (wholeMap.LayerNum == 0) {
                             LinkLayer nlay = new LinkLayer(sTraPolyline);
-                            nlay.Name = "drawPolyline";
+                            nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
                             nlay.IsVisble = true;
                             wholeMap.AddLayer(nlay);
                             _curLayer = wholeMap.GetCurLayer;
@@ -825,7 +825,7 @@ namespace LinkMapObject
                             }
                             else {
                                 LinkLayer nlay = new LinkLayer(sTraPolyline);
-                                nlay.Name = "drawPolyline1";
+                                nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
                                 nlay.IsVisble = true;
                                 wholeMap.AddLayer(nlay);
                                 _curLayer = wholeMap.GetCurLayer;
