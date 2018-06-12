@@ -11,7 +11,7 @@ namespace LinkMapObject {  //LinkMapControl
 
         #endregion
         #region 构造函数
-        public Polyline () {}
+        public Polyline () { }
 
         public Polyline (PointD[] pois) {
             _Points.AddRange(pois);
@@ -38,9 +38,20 @@ namespace LinkMapObject {  //LinkMapControl
         /// 获取点数目
         /// </summary>
         public int PointCount {
-            get { return _Points.Count;}           
+            get { return _Points.Count; }
         }
-
+        public PointD getLineByIdx (int idx) {
+            return _Points[idx];
+        }
+        public void setLPoiByIdx (int idx, PointD p) {
+            _Points[idx] = p;
+        }
+        public void delPoiByIdx (int idx) {
+            _Points.RemoveAt(idx);
+        }
+        public void insertPoint (int idx, PointD p) {
+            _Points.Insert(idx, p);
+        }
         #endregion
         #region 方法
         /// <summary>
