@@ -67,19 +67,10 @@ namespace LinkMap
 
         private void 导入ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            /*
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "位图文件(*.bmp)|*.bmp";
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.FilterIndex = 1;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                
-            }
-            */
+            
             readWshapefile rwshp = new readWshapefile();
             rwshp.readShp();
+            rwshp.readDbf();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes[0].Nodes.Add(rwshp.LayerName);//这个应该由LinkMapControl管理吧
             int sLC = LinkLayerBox.Nodes[0].Nodes.Count;

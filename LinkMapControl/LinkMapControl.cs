@@ -746,7 +746,8 @@ namespace LinkMapObject
                                 for (int k = 0; k < curl; k++) {
                                     PointD pd = (PointD)_curLayer.getFeatureByIdx(k);
                                     PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
-                                    if (Math.Abs(md.X - pd.X) < 20 && Math.Abs(md.Y - pd.Y) < 20) {
+                                    double thd = 20 * _DisplayScale;
+                                    if (Math.Abs(md.X - pd.X) < thd && Math.Abs(md.Y - pd.Y) < thd) {
                                         this.Cursor = Cursors.SizeAll;
                                         _curLayer.setFeatureByIdx(k, md);
                                         wholeMap.RefreshCurLayer(_curLayer);
@@ -767,7 +768,8 @@ namespace LinkMapObject
                                     PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                     for (int k = 0; k < line.PointCount; k++) {
                                         PointD ld = line.getLineByIdx(k);
-                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                        double thd = 20 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y - ld.Y) < thd) {
                                             line.setLPoiByIdx(k, md);
                                             this.Cursor = Cursors.SizeAll;
                                             _curLayer.setFeatureByIdx(i, line);
@@ -788,7 +790,8 @@ namespace LinkMapObject
                                     PointD md =ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                     for (int k = 0; k < line.PointCount; k++) {
                                         PointD ld = line.getPoiByIdx(k);
-                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y- ld.Y) < 20) {
+                                        double thd = 20 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y- ld.Y) < thd) {
                                             line.setPoiByIdx(k, md);
                                             this.Cursor = Cursors.SizeAll;
                                             _curLayer.setFeatureByIdx(i, line);
@@ -816,7 +819,8 @@ namespace LinkMapObject
                         mMouseLocation.Y = e.Location.Y;
                         for (int k = 0; k < pc; k++) {
                             PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
-                            if (Math.Abs(md.X - plst[k].X) < 20 && Math.Abs(md.Y - plst[k].Y) < 20) {
+                            double thd = 20 * _DisplayScale;
+                            if (Math.Abs(md.X - plst[k].X) < thd && Math.Abs(md.Y - plst[k].Y) < thd) {
                                 this.Cursor = Cursors.SizeAll;
                                 kt = 1;
                             }
@@ -1018,7 +1022,8 @@ namespace LinkMapObject
                                 for (int k = 0; k < curl; k++) {
                                     PointD pd = (PointD)_curLayer.getFeatureByIdx(k);
                                     PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
-                                    if (Math.Abs(md.X - pd.X) < 20 && Math.Abs(md.Y - pd.Y) < 20) {
+                                    double thd = 20 * _DisplayScale;
+                                    if (Math.Abs(md.X - pd.X) < thd && Math.Abs(md.Y - pd.Y) < thd) {
                                         //满足条件，删除节点
                                         _curLayer.delFeaByIdx(k);
                                         wholeMap.RefreshCurLayer(_curLayer);
@@ -1036,7 +1041,8 @@ namespace LinkMapObject
                                         PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                         for (int k = 0; k < line.PointCount; k++) {
                                             PointD ld = line.getLineByIdx(k);
-                                            if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                        double thd = 20 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y - ld.Y) < thd) {
                                             if (line.PointCount < 3) {
                                                 MessageBox.Show("顶点太少了，不能再删了！");
                                             }
@@ -1058,7 +1064,8 @@ namespace LinkMapObject
                                         PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                         for (int k = 0; k < line.PointCount; k++) {
                                             PointD ld = line.getPoiByIdx(k);
-                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                        double thd = 20 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y - ld.Y) < thd) {
                                             if (line.PointCount < 4) {
                                                 MessageBox.Show("顶点太少，不能再删了！");
                                             }
