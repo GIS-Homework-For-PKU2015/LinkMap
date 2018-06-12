@@ -473,7 +473,7 @@ namespace LinkMapObject
         private void LinkMapControl_Paint(object sender, PaintEventArgs e)
         {
             //绘制所有多边形    另外，这里面自带了一个e作为绘图用的对象。
-            DrawPolygons(e.Graphics);
+            //DrawPolygons(e.Graphics);
             //DrawSelectedPolygons(e.Graphics);
             DrawSelectedFeas(e.Graphics);
             DrawTrackingPolygon(e.Graphics);
@@ -1121,6 +1121,7 @@ namespace LinkMapObject
 
 
         #endregion
+
 
         #region 对地图(Map)的处理
 

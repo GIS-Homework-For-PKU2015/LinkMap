@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +76,7 @@
             this.LinkSearchToolStripMenuItem});
             this.Linkmenu.Location = new System.Drawing.Point(0, 0);
             this.Linkmenu.Name = "Linkmenu";
-            this.Linkmenu.Size = new System.Drawing.Size(1140, 39);
+            this.Linkmenu.Size = new System.Drawing.Size(1268, 39);
             this.Linkmenu.TabIndex = 0;
             this.Linkmenu.Text = "menuStrip1";
             // 
@@ -217,7 +218,7 @@
             this.ScripLink.Location = new System.Drawing.Point(0, 39);
             this.ScripLink.Name = "ScripLink";
             this.ScripLink.Padding = new System.Windows.Forms.Padding(0);
-            this.ScripLink.Size = new System.Drawing.Size(1140, 39);
+            this.ScripLink.Size = new System.Drawing.Size(1268, 39);
             this.ScripLink.TabIndex = 1;
             this.ScripLink.Text = "toolStrip1";
             // 
@@ -323,18 +324,28 @@
             // 
             // LinkLayerBox
             // 
+            this.LinkLayerBox.AllowDrop = true;
             this.LinkLayerBox.CheckBoxes = true;
             this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
-            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            this.LinkLayerBox.Size = new System.Drawing.Size(176, 600);
+            treeNode1.Checked = true;
+            treeNode1.Name = "LinkMapNode";
+            treeNode1.Text = "LinkMap";
+            this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.LinkLayerBox.Size = new System.Drawing.Size(272, 600);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.LinkLayerBox_AfterCheck);
+            this.LinkLayerBox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.LinkLayerBox_ItemDrag);
+            this.LinkLayerBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragDrop);
+            this.LinkLayerBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragEnter);
+            this.LinkLayerBox.DragOver += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragOver);
             // 
             // LinkPointLocation
             // 
             this.LinkPointLocation.AutoSize = true;
-            this.LinkPointLocation.Location = new System.Drawing.Point(256, 760);
+            this.LinkPointLocation.Location = new System.Drawing.Point(336, 760);
             this.LinkPointLocation.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LinkPointLocation.Name = "LinkPointLocation";
             this.LinkPointLocation.Size = new System.Drawing.Size(0, 24);
@@ -343,7 +354,7 @@
             // tss2
             // 
             this.tss2.AutoSize = true;
-            this.tss2.Location = new System.Drawing.Point(1040, 760);
+            this.tss2.Location = new System.Drawing.Point(1160, 760);
             this.tss2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.tss2.Name = "tss2";
             this.tss2.Size = new System.Drawing.Size(82, 24);
@@ -357,7 +368,7 @@
             this.LinkMapControl1.BoundaryColor = System.Drawing.Color.Black;
             this.LinkMapControl1.DisplayScale = 1D;
             this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
-            this.LinkMapControl1.Location = new System.Drawing.Point(210, 154);
+            this.LinkMapControl1.Location = new System.Drawing.Point(328, 152);
             this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2);
             this.LinkMapControl1.Name = "LinkMapControl1";
             this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
@@ -379,7 +390,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1140, 800);
+            this.ClientSize = new System.Drawing.Size(1268, 800);
             this.Controls.Add(this.tss2);
             this.Controls.Add(this.LinkPointLocation);
             this.Controls.Add(this.LinkMapControl1);
@@ -388,7 +399,7 @@
             this.Controls.Add(this.Linkmenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmMain";
             this.Text = "LinkMap";
             this.Linkmenu.ResumeLayout(false);
