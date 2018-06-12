@@ -136,10 +136,7 @@ namespace LinkMap
         #endregion
 
         #region 按钮事件
-        private void btnLinkEdit_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void btnLinkSelcet_Click(object sender, EventArgs e)
         {
@@ -156,8 +153,9 @@ namespace LinkMap
 
         private void LinkMapControl1_SelectingFinshed(object sender, LinkMapObject.RectangleD box)
         {
-            LinkMapObject.Polygon[] sPolygons = LinkMapControl1.SelcetByBox(box);
-            LinkMapControl1.SelectedPolygon = sPolygons;
+            //不限制于选多边形；判断是什么要素，然后加到选择列表里
+            
+            LinkMapControl1.SelectedFea = LinkMapControl1.SelcetByBox(box); ;
             LinkMapControl1.Refresh();
         }
 
@@ -194,13 +192,17 @@ namespace LinkMap
             }
 
         }
+        //编辑
+        private void btnLinkEdit_Click (object sender, EventArgs e) {
+
+        }
         //画点
         private void btnLinkDrawPoints_Click (object sender, EventArgs e) {
             LinkMapControl1.AddPoint();
         }
         //画线
         private void btnLinkDrawPolyline_Click (object sender, EventArgs e) {
-
+            LinkMapControl1.AddPolyline();
         }
         //画多边形
         private void btnLinkDrawPolygon_Click (object sender, EventArgs e) {

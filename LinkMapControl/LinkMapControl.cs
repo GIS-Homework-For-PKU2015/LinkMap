@@ -31,15 +31,18 @@ namespace LinkMapObject
         private List<Polygon> _Polygon = new List<Polygon>();       //多边形集合
         private double _DisplayScale = 1D;       //显示比例尺倒数
         private List<Polygon> _SelectedPolygons = new List<Polygon>(); //选中多边形集合
+        private List<object> _SelectedFea = new List<object>();//选中的要素集合
+        private iType _selectType = iType.Null;
         private List<string> _str;//?
-
+        
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
         private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素
         private Polygon mTrackingPolygon = new Polygon();  //用户正在绘制的的多边形
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
-
+        private Polyline mTrackingLine = new Polyline();
+        
         //鼠标光标对象定义
         //private Cursor mCur_Cross = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapObject.Resources.Cross.ico"));
 
@@ -112,7 +115,7 @@ namespace LinkMapObject
             set { _SelfMouseWheel = value; }
         }
         /// <summary>
-        /// 获取或设置多边形数组
+        /// 获取或设置多边形数组, 这个是在哪里调用的？
         /// </summary>
         [Browsable(false)]
         public Polygon[] Polygon
@@ -136,6 +139,21 @@ namespace LinkMapObject
             {
                 _SelectedPolygons.Clear();
                 _SelectedPolygons.AddRange(value);
+            }
+        }
+        //选中的要素，不止于多边形
+        public List<object> SelectedFea {
+            get {
+                return _SelectedFea;
+            }
+            set {
+                _SelectedFea.Clear();
+                _SelectedFea = value;
+            }
+        }
+        public iType SelectedFeaType {
+            get {
+                return _selectType;
             }
         }
 
@@ -323,23 +341,54 @@ namespace LinkMapObject
         }
 
         /// <summary>
-        /// 根据矩形盒进行选择，返回选中多边形集合
+        /// 根据矩形盒进行选择，返回选中要素集合
         /// </summary>
         /// <param name="box"></param>
         /// <returns></returns>
-        public Polygon[] SelcetByBox(RectangleD box)
+        public List<object> SelcetByBox(RectangleD box)
         {
-            List<Polygon> sSels = new List<Polygon>();
-            int sPolygonCount = _Polygon.Count;
-            for (int i = 0; i < sPolygonCount; i++)
-            {
-                if (MapTools.IsPolygonCompleteWithinBox(_Polygon[i], box) == true)
-                {
-                    sSels.Add(_Polygon[i]);
-
+            List<object> sSels = new List<object>();
+            _curLayer = wholeMap.GetCurLayer;
+            sSels.Clear();//之前选中的要清掉
+            if (_curLayer.mapType == iType.PointD) {
+                foreach(PointD poi in _curLayer) {
+                    if (MapTools.IsPointWithinBox(poi, box)) {
+                        sSels.Add(poi);
+                    }
                 }
+                _selectType = iType.PointD;
+            }else if (_curLayer.mapType == iType.MultiPoint) {
+
+            }else if (_curLayer.mapType == iType.Polyline) {
+                foreach (Polyline line in _curLayer) {
+                    int lcount = line.PointCount;
+                    int c = 0;
+                    for (int i = 0; i < lcount; i++) {
+                        if (MapTools.IsPointWithinBox(line.GetPoint(i), box) ) {
+                            c++;
+                        }
+                        if (c == lcount) {//不是完备版，目前仅当点都在box内才选中
+                            sSels.Add(line);
+                        }
+                    }
+                }
+                _selectType = iType.Polyline;
             }
-            return sSels.ToArray();
+            else if (_curLayer.mapType == iType.Polygon) {
+                
+                foreach (Polygon poly in _curLayer) {
+                    if (MapTools.IsPolygonCompleteWithinBox(poly, box) == true) {
+                        sSels.Add(poly);
+                    }
+                }
+                _selectType = iType.Polygon;
+            }
+            else if (_curLayer.mapType == iType.MultiPolygon) {
+
+            }
+            
+            
+            return sSels;
         }
 
         //添加图层并且显示
@@ -409,8 +458,10 @@ namespace LinkMapObject
         {
             //绘制所有多边形    另外，这里面自带了一个e作为绘图用的对象。
             DrawPolygons(e.Graphics);
-            DrawSelectedPolygons(e.Graphics);
+            //DrawSelectedPolygons(e.Graphics);
+            DrawSelectedFeas(e.Graphics);
             DrawTrackingPolygon(e.Graphics);
+            DrawTrackingPolyline(e.Graphics);
             DrawMap(e.Graphics);
         }
 
@@ -467,8 +518,9 @@ namespace LinkMapObject
                         //判断当前图层是否是点图层 no->提醒用户；yes，加一个点
                         //mStartPoint = e.Location;
                         PointD poiw = new PointD(e.Location.X, e.Location.Y);
+                        PointD mpoiw = ToMapPoint(poiw);
                         if (wholeMap.LayerNum == 0) {
-                            LinkLayer nlay = new LinkLayer(poiw);
+                            LinkLayer nlay = new LinkLayer(mpoiw);
                             nlay.Name = "drawPoint";
                             nlay.IsVisble = true;
                             wholeMap.AddLayer(nlay);
@@ -477,11 +529,11 @@ namespace LinkMapObject
                         else {
                             _curLayer = wholeMap.GetCurLayer;
                             if (_curLayer.mapType == iType.PointD) {
-                                _curLayer.AddPointD(poiw);
+                                _curLayer.AddPointD(mpoiw);
                                 wholeMap.RefreshCurLayer(_curLayer);
                             }
                             else {
-                                LinkLayer nlay = new LinkLayer(poiw);
+                                LinkLayer nlay = new LinkLayer(mpoiw);
                                 nlay.Name = "drawPoi1";
                                 nlay.IsVisble = true;
                                 wholeMap.AddLayer(nlay);
@@ -501,8 +553,10 @@ namespace LinkMapObject
                     break;
                 case 8:         //add line
                     if (e.Button == MouseButtons.Left && e.Clicks == 1) {
-                        //
-                        //mStartPoint = e.Location;
+                        PointD sScreenPoint = new PointD(e.Location.X, e.Location.Y);
+                        PointD sMapPoint = ToMapPoint(sScreenPoint);
+                        mTrackingLine.AddPoint(sMapPoint);
+                        Refresh();
                     }
 
                     break;
@@ -581,7 +635,9 @@ namespace LinkMapObject
                     //等下一个点
                     break;
                 case 8:         //add line
-                    
+                    mMouseLocation.X = e.Location.X;
+                    mMouseLocation.Y = e.Location.Y;
+                    Refresh();
                     break;
                 case 9:         //add multiline
                     
@@ -689,7 +745,38 @@ namespace LinkMapObject
                     //等下一个点
                     break;
                 case 8:         //add line
+                    if (mTrackingLine.PointCount >= 2)  //顶点个数必须大于等于2
+                        {
+                        Polyline sTraPolyline = mTrackingLine.Clone();
+                        //LinkMapObject.Polygon sTrackingPolygon = mTrackingPolygon.Clone();
+                        //这一句不要手贱删LinkMapObject 否则容易出bug，我被坑过
+                        mTrackingLine.Clear();
+                        //mTrackingPolygon.Clear();
+                        //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
 
+                        if (wholeMap.LayerNum == 0) {
+                            LinkLayer nlay = new LinkLayer(sTraPolyline);
+                            nlay.Name = "drawPolyline";
+                            nlay.IsVisble = true;
+                            wholeMap.AddLayer(nlay);
+                            _curLayer = wholeMap.GetCurLayer;
+                        }
+                        else {
+                            _curLayer = wholeMap.GetCurLayer;
+                            if (_curLayer.mapType == iType.Polygon) {
+                                _curLayer.AddPolyline(sTraPolyline);
+                                wholeMap.RefreshCurLayer(_curLayer);
+                            }
+                            else {
+                                LinkLayer nlay = new LinkLayer(sTraPolyline);
+                                nlay.Name = "drawPolyline1";
+                                nlay.IsVisble = true;
+                                wholeMap.AddLayer(nlay);
+                                _curLayer = wholeMap.GetCurLayer;
+                            }
+                        }
+
+                    }
                     break;
                 case 9:         //add multiline
 
@@ -869,7 +956,89 @@ namespace LinkMapObject
             sTrackingPen.Dispose();
             sVertexBrush.Dispose();
         }
+        private void DrawTrackingPolyline (Graphics g) {
+            int sPointCount = mTrackingLine.PointCount; //获取跟踪多边形顶点数
+            if (sPointCount == 0)
+                return;
+            //绘制跟踪线的所有边
+            Pen sTrackingPen = new Pen(_TrackingColor, mcTrackingWidth);
+            PointF[] sScreenPoints = new PointF[sPointCount];
 
+            for (int i = 0; i < sPointCount; i++) {
+
+                PointD sScreenPoint = FromMapPoint(mTrackingLine.GetPoint(i));
+                sScreenPoints[i].X = (float)sScreenPoint.X;
+                sScreenPoints[i].Y = (float)sScreenPoint.Y;
+            }
+            if (sPointCount > 1) {
+                g.DrawLines(sTrackingPen, sScreenPoints);
+            }
+            //绘制多边形顶点手柄
+            SolidBrush sVertexBrush = new SolidBrush(_TrackingColor);
+            for (int i = 0; i < sPointCount; i++) {
+                RectangleF sRect = new RectangleF(sScreenPoints[i].X -
+                    mcVetexHandleSize / 2,
+                    sScreenPoints[i].Y - mcVetexHandleSize / 2,
+                    mcVetexHandleSize, mcVetexHandleSize);
+                g.FillRectangle(sVertexBrush, sRect);
+            }
+
+            if (mMapOpStyle == 8) {//橡皮筋效果
+                //g.DrawLine(sTrackingPen, sScreenPoints[0], mMouseLocation);
+                g.DrawLine(sTrackingPen, sScreenPoints[sPointCount - 1], mMouseLocation);
+
+            }
+            sTrackingPen.Dispose();
+            sVertexBrush.Dispose();
+        }
+
+        private void DrawSelectedFeas (Graphics g) {
+            int sPolygonCount = _SelectedFea.Count;
+            Pen sPolygonPen = new Pen(mcSelectingColor, 2);
+            if (_selectType == iType.Null) {
+
+            }else if (_selectType == iType.PointD) {
+                foreach(PointD p in _SelectedFea) {
+                    PointD sScreenPoint = FromMapPoint(p);
+                    DrawPoint(sScreenPoint, g, 3f,Brushes.Tomato);
+                }
+            }
+            else if (_selectType == iType.MultiPoint) {
+
+            }
+            else if (_selectType == iType.Polyline) {
+                foreach(Polyline p in _SelectedFea) {
+                    int sPointCount = p.PointCount;
+                    PointF[] sScreenPoints = new PointF[sPointCount];
+                    for (int j = 0; j < sPointCount; j++) {
+                        PointD sScreenPoint = FromMapPoint(p.Points[j]);
+                        sScreenPoints[j].X = (float)sScreenPoint.X;
+                        sScreenPoints[j].Y = (float)sScreenPoint.Y;
+
+                    }
+                    g.DrawLines(sPolygonPen, sScreenPoints);
+                }
+            }
+            else if (_selectType == iType.Polygon) {
+                foreach (Polygon p in _SelectedFea) {
+                    int sPointCount = p.PointCount;
+                    PointF[] sScreenPoints = new PointF[sPointCount];
+                    for (int j = 0; j < sPointCount; j++) {
+                        PointD sScreenPoint = FromMapPoint(p.Points[j]);
+                        sScreenPoints[j].X = (float)sScreenPoint.X;
+                        sScreenPoints[j].Y = (float)sScreenPoint.Y;
+
+                    }
+                    g.DrawPolygon(sPolygonPen, sScreenPoints);
+                }
+            }
+            else if (_selectType == iType.MultiPolygon) {
+
+            }
+            
+            
+        }
+        //不用了
         private void DrawSelectedPolygons(Graphics g)
         {
             int sPolygonCount = _SelectedPolygons.Count;
@@ -895,7 +1064,12 @@ namespace LinkMapObject
 
         #region 对地图(Map)的处理
 
-
+        public void DrawPoint (PointD p, Graphics g,float s,Brush b) {
+            PointD sScPoi = FromMapPoint(p);    //用变量存储转换后的点
+            RectangleF rect = new RectangleF((float)sScPoi.X, (float)sScPoi.Y, s, s);
+            //目前写死了，之后做渲染的时候要改这里
+            g.FillEllipse(b, rect);
+        }
 
         /// <summary>
         /// 输出地图到bitmap
@@ -906,6 +1080,7 @@ namespace LinkMapObject
             
             Image img = new Bitmap(w, h);
             Graphics gpng = Graphics.FromImage(img);
+            DrawPolygons(gpng);
             DrawMap(gpng);
 
             img.Save(png_path);
