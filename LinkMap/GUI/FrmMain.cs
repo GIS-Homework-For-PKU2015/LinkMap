@@ -171,7 +171,8 @@ namespace LinkMap
         {
             LinkMapObject.PointD sMouseLocation = new LinkMapObject.PointD(mouseLocation.X, mouseLocation.Y);
             LinkMapObject.PointD sPointOnMap = LinkMapControl1.ToMapPoint(sMouseLocation);
-            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
+            double Yreal =0- sPointOnMap.Y;
+            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + Yreal.ToString("0.00");
         }
 
 
