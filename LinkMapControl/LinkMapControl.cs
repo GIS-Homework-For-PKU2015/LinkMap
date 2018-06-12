@@ -37,7 +37,7 @@ namespace LinkMapObject
         
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
-        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素
+        private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素; 13 编辑要素 14 编辑点 15 编辑线 16 编辑多边形 
         private Polygon mTrackingPolygon = new Polygon();  //用户正在绘制的的多边形
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
@@ -302,7 +302,7 @@ namespace LinkMapObject
             mMapOpStyle = 10;
             this.Cursor = Cursors.Arrow;
         }
-        public void DeleteFeature () {
+        public void DeleteFeatureType () {
             mMapOpStyle = 11;
             this.Cursor = Cursors.Arrow;
         }
@@ -390,6 +390,55 @@ namespace LinkMapObject
             
             return sSels;
         }
+        /// <summary>
+        /// 删除选中要素，需要的判断逻辑和选择要素一样
+        /// </summary>
+        public void DeleteFeature () {
+            List<object> sSels = new List<object>();
+            RectangleD box = new RectangleD(00,1,1,1);
+            _curLayer = wholeMap.GetCurLayer;
+            sSels.Clear();//之前选中的要清掉
+            if (_curLayer.mapType == iType.PointD) {
+                foreach (PointD poi in _curLayer) {
+                    if (MapTools.IsPointWithinBox(poi, box)) {
+                        sSels.Add(poi);
+                    }
+                }
+                _selectType = iType.PointD;
+            }
+            else if (_curLayer.mapType == iType.MultiPoint) {
+
+            }
+            else if (_curLayer.mapType == iType.Polyline) {
+                foreach (Polyline line in _curLayer) {
+                    int lcount = line.PointCount;
+                    int c = 0;
+                    for (int i = 0; i < lcount; i++) {
+                        if (MapTools.IsPointWithinBox(line.GetPoint(i), box)) {
+                            c++;
+                        }
+                        if (c == lcount) {//不是完备版，目前仅当点都在box内才选中
+                            sSels.Add(line);
+                        }
+                    }
+                }
+                _selectType = iType.Polyline;
+            }
+            else if (_curLayer.mapType == iType.Polygon) {
+
+                foreach (Polygon poly in _curLayer) {
+                    if (MapTools.IsPolygonCompleteWithinBox(poly, box) == true) {
+                        sSels.Add(poly);
+                    }
+                }
+                _selectType = iType.Polygon;
+            }
+            else if (_curLayer.mapType == iType.MultiPolygon) {
+
+            }
+            
+        }
+
 
         //添加图层并且显示
         public void AddLayer(LinkLayer alayer)
@@ -763,7 +812,7 @@ namespace LinkMapObject
                         }
                         else {
                             _curLayer = wholeMap.GetCurLayer;
-                            if (_curLayer.mapType == iType.Polygon) {
+                            if (_curLayer.mapType == iType.Polyline) {
                                 _curLayer.AddPolyline(sTraPolyline);
                                 wholeMap.RefreshCurLayer(_curLayer);
                             }
@@ -1079,15 +1128,37 @@ namespace LinkMapObject
             //string png_path = @"E:\ComputerGraphicsProj\outPng001.png";
             
             Image img = new Bitmap(w, h);
+
             Graphics gpng = Graphics.FromImage(img);
+            gpng.Clear(Color.White);//不要白色背景就去掉这一句
+            //Rectangle rect = new Rectangle();
+            //gpng.DrawRectangle(rect)
             DrawPolygons(gpng);
             DrawMap(gpng);
 
             img.Save(png_path);
         }
+        //移动点，编辑点的子集；对当前图层的点进行循环，如果点和鼠标位置再一定范围内，指针形状变化
+        //可以移动点，对当前图层的点进行更新，更新wholemap
+        private void movePoint () {
+
+
+        }
 
         #endregion
+        #region 辅助函数
+        private int zoomIndex (List<PointD> poilst,PointD intimePoi) {
+            int plct = poilst.Count;
+            for (int i = 0; i < plct; i++) {
 
+                if (Math.Abs(intimePoi.X - poilst[i].X) < 20 && Math.Abs(intimePoi.Y - poilst[i].Y) < 20) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        #endregion
 
     }
 }

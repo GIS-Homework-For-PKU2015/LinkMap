@@ -169,7 +169,7 @@ namespace LinkMap
         {
             LinkMapObject.PointD sMouseLocation = new LinkMapObject.PointD(mouseLocation.X, mouseLocation.Y);
             LinkMapObject.PointD sPointOnMap = LinkMapControl1.ToMapPoint(sMouseLocation);
-            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + sPointOnMap.Y.ToString("0.00");
+            LinkPointLocation.Text = "X:" + sPointOnMap.X.ToString("0.00") + "   Y:" + (-sPointOnMap.Y).ToString("0.00");
         }
 
 
@@ -211,7 +211,10 @@ namespace LinkMap
 
         //删除要素
         private void btnLinkDelete_Click (object sender, EventArgs e) {
-
+            //只删除选中要素
+            if (MessageBox.Show("此操作将不可逆，是否确认当前图层的删除选中要素？", "tips", MessageBoxButtons.OKCancel)==DialogResult.OK) {
+                LinkMapControl1.DeleteFeature();
+            }
         }
 
         //更新树节点
