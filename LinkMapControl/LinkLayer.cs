@@ -99,7 +99,24 @@ namespace LinkMapObject
                 return _items.Count;
             }//只读
         }
+        public object getFeatureByIdx (int idx) {
+            //不主要在这里验证 idx是否超出索引
+            if (idx < _items.Count) {
+                return _items[idx];
+            }
+            else {
+                return _items[0];
+            }
+            
+        }
+        public void setFeatureByIdx (int idx,object fea) {
+            //不主要在这里验证 idx是否超出索引
+            if (idx < _items.Count) {
+                _items[idx]=fea;
+            }
+            else {}
 
+        }
 
         public iType mapType {
             get {
@@ -121,7 +138,36 @@ namespace LinkMapObject
                 _dt = value;
             }
         }
-
+        public PointD[] GetPointRange () {
+            List<PointD> plst = new List<PointD>();
+            if (_type == iType.PointD) {
+                foreach(PointD p in _items) {
+                    plst.Add(p);
+                }
+                return plst.ToArray();
+            }else if (_type == iType.MultiPoint) {
+                
+            }else if (_type == iType.Polyline) {
+                foreach (Polyline pline in _items) {
+                    int lc = pline.PointCount;
+                    for (int i = 0; i < lc; i++) {
+                        plst.Add(pline.GetPoint(i));
+                    }
+                }
+                return plst.ToArray();
+            }else if (_type == iType.Polygon) {
+                foreach (Polygon poly in _items) {
+                    int lc = poly.PointCount;
+                    for (int i = 0; i < lc; i++) {
+                        plst.Add(poly.GetPoint(i));
+                    }
+                }
+                return plst.ToArray();
+            }else if (_type == iType.MultiPolygon) {
+                
+            }else { }
+            return plst.ToArray();
+        }
 
         #endregion
 
@@ -178,7 +224,17 @@ namespace LinkMapObject
         public void addFeature (object obj) {
             _items.Add(obj);//尽量不用这一个
         }
-
+        //可以增加就应该可以删除，删除其中的要素，在编辑和删除中用到
+        /// <summary>
+        /// 通过索引idx删除要素
+        /// </summary>
+        /// <param name="idx"></param>
+        public void delFeaByIdx (int idx) {
+            _items.RemoveAt(idx);
+        }
+        public void insertFeature (int idx,object obj) {
+            _items.Insert(idx, obj);
+        }
 #endregion
 
     }

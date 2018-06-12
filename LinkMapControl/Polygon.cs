@@ -74,8 +74,18 @@ namespace LinkMapObject
         {
             _Points.Clear();
         }
-
-
+        public PointD getPoiByIdx (int idx) {
+            return _Points[idx];
+        }
+        public void setPoiByIdx (int idx, PointD p) {
+            _Points[idx] = p;
+        }
+        public void delPoiByIdx (int idx) {
+            _Points.RemoveAt(idx);
+        }
+        public void insertPoint (int idx, PointD p) {
+            _Points.Insert(idx, p);
+        }
         /// <summary>
         /// 复制一个副本
         /// </summary>
