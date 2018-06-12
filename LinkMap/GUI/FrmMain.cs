@@ -269,6 +269,12 @@ namespace LinkMap
             DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
+        //编辑
+        private void btnLinkEdit_Click (object sender, EventArgs e) {
+            LinkMapControl1.MoveFeature();
+            }
+
+
         private void LinkLayerBox_DragOver(object sender, DragEventArgs e)
         {
             //处理 treeView1控件DragOver事件
@@ -281,6 +287,7 @@ namespace LinkMap
             //    MyNode.BackColor = Color.Blue;
             //    MyOldNode = MyNode;
             //}
+
         }
 
         private void LinkLayerBox_DragDrop(object sender, DragEventArgs e)

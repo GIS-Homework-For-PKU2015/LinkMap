@@ -26,7 +26,7 @@ namespace LinkMapObject
         //不要单独对polygon操作，但是外包矩形可以有
         private int _curLayerIdx = 0;//当前图层索引 这个可能用不上，直接操作_curLayer
         private LinkLayer _curLayer; // = new LinkLayer();//当前图层
-        
+        private int _editNearPoi = 0;//0:不在编辑状态 1:鼠标属于按下的情况  2：有在编辑范围内的点 3：不在
 
         private List<Polygon> _Polygon = new List<Polygon>();       //多边形集合
         private double _DisplayScale = 1D;       //显示比例尺倒数
@@ -35,6 +35,7 @@ namespace LinkMapObject
         private iType _selectType = iType.Null;
         private List<string> _str;//?
         
+
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
         private int mMapOpStyle = 0;//当前操作类型，0无，1放大，2缩小 3漫游 4输入多边形 5选择 6 输入点 7输入多点 8输入线 9输入多线 10输入多多边形 11 删除选中要素 12 移动要素
@@ -312,6 +313,7 @@ namespace LinkMapObject
         }
         public void MoveFeature () {
             mMapOpStyle = 12;
+            _editNearPoi = 2;
         }
 
         /// <summary>
@@ -601,6 +603,65 @@ namespace LinkMapObject
                 case 11:         //删除要素
                     
                     break;
+                case 12:         //编辑要素  移动要素
+                    if (e.Button == MouseButtons.Left) {
+                        _editNearPoi = 1;
+                    }else if (e.Button == MouseButtons.Right && e.Clicks == 20) {//增加节点
+                        //需要计算加点的位置应该加在哪个节点上，这部分逻辑还需要时间去写，作为暂存功能。
+                        _curLayer = wholeMap.GetCurLayer;
+                        switch (_curLayer.mapType) {
+                            case iType.PointD:
+                                
+                                break;
+                            case iType.MultiPoint:
+
+                                break;
+                            case iType.Polyline:
+                                int lc = _curLayer.Count;
+                                for (int i = 0; i < lc; i++) {
+                                    Polyline line = (Polyline)_curLayer.getFeatureByIdx(i);
+                                    PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    for (int k = 0; k < line.PointCount; k++) {
+                                        PointD ld = line.getLineByIdx(k);
+                                        if (Math.Abs(md.X - ld.X) < 40 && Math.Abs(md.Y - ld.Y) < 40) {
+                                            line.insertPoint(k,md);
+                                            _curLayer.setFeatureByIdx(i, line);
+                                            wholeMap.RefreshCurLayer(_curLayer);
+                                            this.Refresh();
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                break;
+                            case iType.Polygon:
+                                int pca = _curLayer.Count;
+                                for (int i = 0; i < pca; i++) {
+                                    Polygon line = (Polygon)_curLayer.getFeatureByIdx(i);
+                                    PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    for (int k = 0; k < line.PointCount; k++) {
+                                        PointD ld = line.getPoiByIdx(k);
+                                        if (Math.Abs(md.X - ld.X) < 40 && Math.Abs(md.Y - ld.Y) < 40) {
+                                            line.insertPoint(k, md);
+                                            _curLayer.setFeatureByIdx(i, line);
+                                            wholeMap.RefreshCurLayer(_curLayer);
+                                            this.Refresh();
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            case iType.MultiPolygon:
+
+                                break;
+
+                            }
+                        }
+
+                        break;
+                case 13:         //编辑要素
+                    
+                    break;
             }
 
 
@@ -672,6 +733,98 @@ namespace LinkMapObject
                 case 11:         //删除要素
 
                     break;
+                case 12:         //编辑要素 目前只有移动要素
+                    //判断要素类型，对当前点循环，如果距离在一定范围内，鼠标变化
+                    _curLayer = wholeMap.GetCurLayer;
+                    int kt = 0;
+                    if (_editNearPoi == 1) {//鼠标左键属于按下状态
+                        switch (_curLayer.mapType) {
+                            case iType.PointD:
+                                int curl = _curLayer.Count;
+                                for (int k = 0; k < curl; k++) {
+                                    PointD pd = (PointD)_curLayer.getFeatureByIdx(k);
+                                    PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    if (Math.Abs(md.X - pd.X) < 20 && Math.Abs(md.Y - pd.Y) < 20) {
+                                        this.Cursor = Cursors.SizeAll;
+                                        _curLayer.setFeatureByIdx(k, md);
+                                        wholeMap.RefreshCurLayer(_curLayer);
+                                        this.Refresh();
+                                        kt = 1;
+                                    }else if (kt==0) {
+                                        this.Cursor = Cursors.Arrow;
+                                    }
+                                }
+                                break;
+                            case iType.MultiPoint:
+
+                                break;
+                            case iType.Polyline:
+                                int lc = _curLayer.Count;
+                                for (int i = 0; i < lc; i++) {
+                                    Polyline line = (Polyline)_curLayer.getFeatureByIdx(i);
+                                    PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    for (int k = 0; k < line.PointCount; k++) {
+                                        PointD ld = line.getLineByIdx(k);
+                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                            line.setLPoiByIdx(k, md);
+                                            this.Cursor = Cursors.SizeAll;
+                                            _curLayer.setFeatureByIdx(i, line);
+                                            wholeMap.RefreshCurLayer(_curLayer);
+                                            this.Refresh();
+                                            kt = 1;
+                                        }else if (kt==0) {
+                                            this.Cursor = Cursors.Arrow;
+                                        }
+
+                                    }
+                                }
+                                break;
+                            case iType.Polygon:
+                                int pca = _curLayer.Count;
+                                for (int i = 0; i < pca; i++) {
+                                    Polygon line = (Polygon)_curLayer.getFeatureByIdx(i);
+                                    PointD md =ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    for (int k = 0; k < line.PointCount; k++) {
+                                        PointD ld = line.getPoiByIdx(k);
+                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y- ld.Y) < 20) {
+                                            line.setPoiByIdx(k, md);
+                                            this.Cursor = Cursors.SizeAll;
+                                            _curLayer.setFeatureByIdx(i, line);
+                                            wholeMap.RefreshCurLayer(_curLayer);
+                                            this.Refresh();
+                                            kt = 1;
+                                        }else if (kt ==0) {
+                                           this.Cursor = Cursors.Arrow;
+                                        }
+
+                                    }
+                                }
+                                break;
+                            case iType.MultiPolygon:
+
+                                break;
+
+
+                        }
+
+                    }else if (_editNearPoi == 2) {//这里的目的是变符号形状
+                        PointD[] plst = _curLayer.GetPointRange();
+                        int pc = plst.Length;
+                        mMouseLocation.X = e.Location.X;
+                        mMouseLocation.Y = e.Location.Y;
+                        for (int k = 0; k < pc; k++) {
+                            PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                            if (Math.Abs(md.X - plst[k].X) < 20 && Math.Abs(md.Y - plst[k].Y) < 20) {
+                                this.Cursor = Cursors.SizeAll;
+                                kt = 1;
+                            }
+                            else if (kt==0) {
+                                this.Cursor = Cursors.Arrow;
+                            }
+                        }
+                    }
+                    
+                    break;
             }
         }
 
@@ -724,6 +877,12 @@ namespace LinkMapObject
 
                     break;
                 case 11:         //删除要素
+
+                    break;
+                case 12:         //编辑要素  移动要素 当鼠标拿起来时，点定型了
+                    _editNearPoi =2;
+                    break;
+                case 13:         //编辑要素
 
                     break;
             }
@@ -846,6 +1005,79 @@ namespace LinkMapObject
                     break;
                 case 11:         //删除要素
 
+                    break;
+                case 12:         //移动要素 右键双击时是删除结点
+                    if (e.Button == MouseButtons.Right) {//右键双击
+                        _curLayer = wholeMap.GetCurLayer;
+                        int kt = 0;
+                        switch (_curLayer.mapType) {
+                            case iType.PointD:
+                                int curl = _curLayer.Count;
+                                for (int k = 0; k < curl; k++) {
+                                    PointD pd = (PointD)_curLayer.getFeatureByIdx(k);
+                                    PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                    if (Math.Abs(md.X - pd.X) < 20 && Math.Abs(md.Y - pd.Y) < 20) {
+                                        //满足条件，删除节点
+                                        _curLayer.delFeaByIdx(k);
+                                        wholeMap.RefreshCurLayer(_curLayer);
+                                        this.Refresh();
+                                    }
+                                    }
+                                    break;
+                                case iType.MultiPoint:
+
+                                    break;
+                                case iType.Polyline:
+                                    int lc = _curLayer.Count;
+                                    for (int i = 0; i < lc; i++) {
+                                        Polyline line = (Polyline)_curLayer.getFeatureByIdx(i);
+                                        PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                        for (int k = 0; k < line.PointCount; k++) {
+                                            PointD ld = line.getLineByIdx(k);
+                                            if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                            line.delPoiByIdx(k);
+                                                _curLayer.setFeatureByIdx(i, line);
+                                                wholeMap.RefreshCurLayer(_curLayer);
+                                                this.Refresh();
+                                            }
+
+                                        }
+                                    }
+                                    break;
+                                case iType.Polygon:
+                                    int pca = _curLayer.Count;
+                                    for (int i = 0; i < pca; i++) {
+                                        Polygon line = (Polygon)_curLayer.getFeatureByIdx(i);
+                                        PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
+                                        for (int k = 0; k < line.PointCount; k++) {
+                                            PointD ld = line.getPoiByIdx(k);
+                                        if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
+                                            if (line.PointCount < 4) {
+                                                MessageBox.Show("顶点太少，不能再删了！");
+                                            }
+                                            else {
+                                                line.delPoiByIdx(k);
+                                                _curLayer.setFeatureByIdx(i, line);
+                                                wholeMap.RefreshCurLayer(_curLayer);
+                                                this.Refresh();
+                                            }
+                                        }
+                                            //else if (kt == 0) {
+                                                //this.Cursor = Cursors.Arrow;
+                                            //}
+
+                                        }
+                                    }
+                                    break;
+                                case iType.MultiPolygon:
+
+                                    break;
+
+
+                            
+
+                        }
+                    }
                     break;
             }
         }
