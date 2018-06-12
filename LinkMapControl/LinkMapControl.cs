@@ -477,10 +477,12 @@ namespace LinkMapObject
             //绘制所有多边形    另外，这里面自带了一个e作为绘图用的对象。
             //DrawPolygons(e.Graphics);
             //DrawSelectedPolygons(e.Graphics);
-            DrawSelectedFeas(e.Graphics);
+            //注意画的顺序，追踪要素应该是最上面的时间
+            DrawMap(e.Graphics);
             DrawTrackingPolygon(e.Graphics);
             DrawTrackingPolyline(e.Graphics);
-            DrawMap(e.Graphics);
+            DrawSelectedFeas(e.Graphics);
+
         }
 
         //鼠标按下事件
@@ -1035,10 +1037,15 @@ namespace LinkMapObject
                                         for (int k = 0; k < line.PointCount; k++) {
                                             PointD ld = line.getLineByIdx(k);
                                             if (Math.Abs(md.X - ld.X) < 20 && Math.Abs(md.Y - ld.Y) < 20) {
-                                            line.delPoiByIdx(k);
+                                            if (line.PointCount < 3) {
+                                                MessageBox.Show("顶点太少了，不能再删了！");
+                                            }
+                                            else {
+                                                line.delPoiByIdx(k);
                                                 _curLayer.setFeatureByIdx(i, line);
                                                 wholeMap.RefreshCurLayer(_curLayer);
                                                 this.Refresh();
+                                            }
                                             }
 
                                         }
@@ -1373,6 +1380,7 @@ namespace LinkMapObject
             
             Image img = new Bitmap(w, h);
             Graphics gpng = Graphics.FromImage(img);
+            gpng.Clear(Color.White);//白色背景，如果需要透明背景就把这句注释掉
             DrawPolygons(gpng);
             DrawMap(gpng);
 

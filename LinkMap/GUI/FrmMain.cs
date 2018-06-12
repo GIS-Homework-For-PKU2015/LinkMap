@@ -164,7 +164,7 @@ namespace LinkMap
         //编辑
         private void btnLinkEdit_Click(object sender, EventArgs e)
         {
-
+            LinkMapControl1.MoveFeature();
         }
         //画点
         private void btnLinkDrawPoints_Click(object sender, EventArgs e)
@@ -270,9 +270,9 @@ namespace LinkMap
         }
 
         //编辑
-        private void btnLinkEdit_Click (object sender, EventArgs e) {
-            LinkMapControl1.MoveFeature();
-            }
+        //private void btnLinkEdit_Click (object sender, EventArgs e) {
+            //LinkMapControl1.MoveFeature();
+            //}
 
 
         private void LinkLayerBox_DragOver(object sender, DragEventArgs e)
