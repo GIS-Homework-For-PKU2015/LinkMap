@@ -12,7 +12,7 @@ namespace LinkMap
     public partial class FrmMain : Form
     {
 
-
+        public int mjudgementcheckbox=1;
         public string LinkLayerName = "";
 
         #region 构造函数
@@ -148,6 +148,7 @@ namespace LinkMap
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
             LinkLayerBox.Nodes.Add(Curlayer.Name);
             int sLC = LinkLayerBox.Nodes.Count;
+            mjudgementcheckbox = 0;
             LinkLayerBox.Nodes[sLC - 1].Checked = true;
             LinkMapControl1.Refresh();
         }
@@ -157,6 +158,7 @@ namespace LinkMap
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
             LinkLayerBox.Nodes.Add(Curlayer.Name);
             int sLC = LinkLayerBox.Nodes.Count;
+            mjudgementcheckbox = 0;
             LinkLayerBox.Nodes[sLC - 1].Checked = true;
             LinkMapControl1.Refresh();
         }
@@ -168,6 +170,7 @@ namespace LinkMap
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
             LinkLayerBox.Nodes.Add(Curlayer.Name);
             int sLC = LinkLayerBox.Nodes.Count;
+            mjudgementcheckbox = 0;
             LinkLayerBox.Nodes[sLC - 1].Checked = true;
             LinkMapControl1.Refresh();
         }
@@ -199,8 +202,16 @@ namespace LinkMap
 
         private void LinkLayerBox_AfterCheck (object sender, TreeViewEventArgs e)
         {
-            LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
-            Refresh();
+            if (mjudgementcheckbox == 0)
+            {
+                mjudgementcheckbox = 1;
+            }
+            else
+            {
+                LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
+                Refresh();
+            }
+            
         }
         private void 导出ToolStripMenuItem_Click (object sender, EventArgs e) {
             SaveFileDialog pngSave = new SaveFileDialog();
