@@ -211,6 +211,31 @@ namespace LinkMapObject
             return sPoint;
         }
 
+        /// <summary>
+        /// 将map中layer的显示顺序改为treeview上的顺序
+        /// </summary>
+        /// 
+
+        //这里的输入是Treevi里面的父Node—LinkMap
+        public void SortByTreeview(TreeNode sNode)
+        {
+            TreeNode MyNode = sNode;
+            LinkMap sclonemap = wholeMap;
+            for(int i=0;i<wholeMap.LayerNum;i++)
+            {
+                foreach (TreeNode sTreeNode in sNode.Nodes)
+                {
+                    if(sTreeNode.Text==wholeMap.GetLayerByIndex(i).Name)
+                    {
+                        sclonemap.MapExchangeLayerIndex(wholeMap.LayerNum-i-1, sTreeNode.Index);
+                    }
+                }
+            }
+            wholeMap = sclonemap;
+            
+
+        }
+
         public LinkLayer GetCurlayer()
         {
             return _curLayer;
@@ -427,9 +452,6 @@ namespace LinkMapObject
         #endregion
 
 
-
-
-
         #region 事件
 
         public delegate void TrackingFinishedHandle(object sender, Polygon polygon);            //delegate是什么？
@@ -461,6 +483,12 @@ namespace LinkMapObject
         /// 用户选择完毕
         /// </summary>
         public event SelectingFinishedHandle SelectingFinshed;
+
+        public delegate void GetTreeViewIndexHandle(object sender, TreeNode linkmap);
+        /// <summary>
+        /// 用户刷新treeview事件
+        /// </summary>
+        public event GetTreeViewIndexHandle GetTreeViewIndex;
 
 
 
@@ -881,6 +909,7 @@ namespace LinkMapObject
 
 
         #region 私有函数
+
 
         //重绘地图，按道理说这个把DrawPolygons DrawTrackingPolygon 等囊括了
         private void DrawMap (Graphics g) {

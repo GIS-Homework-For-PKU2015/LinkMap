@@ -383,6 +383,7 @@
             this.LinkMapControl1.TrackingPointFinshed += new LinkMapObject.LinkMapControl.TrackingPointFinishedHandle(this.LinkMapControl1_TrackingPointFinshed);
             this.LinkMapControl1.DispalyCsaleChanged += new LinkMapObject.LinkMapControl.DispalyScaleChangeHandle(this.LinkMapControl1_DispalyCsaleChanged);
             this.LinkMapControl1.SelectingFinshed += new LinkMapObject.LinkMapControl.SelectingFinishedHandle(this.LinkMapControl1_SelectingFinshed);
+            this.LinkMapControl1.GetTreeViewIndex += new LinkMapObject.LinkMapControl.GetTreeViewIndexHandle(this.LinkMapControl1_GetTreeViewIndex);
             this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
             this.LinkMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl1_MouseMove);
             // 

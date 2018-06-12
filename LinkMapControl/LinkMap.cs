@@ -90,6 +90,20 @@ namespace LinkMapObject
         }
 
 
+        public LinkLayer GetLayerByName(string name)
+        {
+            LinkLayer a = new LinkLayer();
+            for(int i=0; i<_items.Count; i++)
+            {
+                if (name == _items[i].Name)
+                {
+                    return _items[i];
+                }
+            }
+            return a;
+        }
+
+
 
 
         #endregion
@@ -102,6 +116,8 @@ namespace LinkMapObject
         public void AddLayer (LinkLayer lay) {
             _items.Add(lay);
         }
+
+
         
         
 

@@ -81,10 +81,10 @@ namespace LinkMap
             readWshapefile rwshp = new readWshapefile();
             rwshp.readShp();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
-            LinkLayerBox.Nodes[0].Nodes.Add(rwshp.LayerName);//这个应该由LinkMapControl管理吧
-            int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, rwshp.LayerName);//这个应该由LinkMapControl管理吧
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
             mjudgementcheckbox = 0;
-            LinkLayerBox.Nodes[0].Nodes[sLC - 1].Checked = true;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
             LinkLayerBox.Nodes[0].ExpandAll();
             LinkMapControl1.Refresh();
         }
@@ -196,10 +196,10 @@ namespace LinkMap
         private void LinkMapControl1_TrackingPointFinshed(object sender, LinkMapObject.PointD points)
         {
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
-            LinkLayerBox.Nodes[0].Nodes.Add(Curlayer.Name);
-            int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, Curlayer.Name); //Add(Curlayer.Name);
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
             mjudgementcheckbox = 0;
-            LinkLayerBox.Nodes[0].Nodes[sLC - 1].Checked = true;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
             LinkLayerBox.Nodes[0].ExpandAll();
             LinkMapControl1.Refresh();
         }
@@ -207,10 +207,10 @@ namespace LinkMap
         private void LinkMapControl1_TrackingPolylineFinshed(object sender, LinkMapObject.Polyline polyline)
         {
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
-            LinkLayerBox.Nodes[0].Nodes.Add(Curlayer.Name);
-            int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, Curlayer.Name);
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
             mjudgementcheckbox = 0;
-            LinkLayerBox.Nodes[0].Nodes[sLC - 1].Checked = true;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
             LinkLayerBox.Nodes[0].ExpandAll();
             LinkMapControl1.Refresh();
         }
@@ -220,10 +220,10 @@ namespace LinkMap
             //如果当前图层是多边形图层，该多边形写到当前图层里，否则写到新图层里
 
             LinkMapObject.LinkLayer Curlayer = LinkMapControl1.GetCurlayer();
-            LinkLayerBox.Nodes[0].Nodes.Add(Curlayer.Name);
-            int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, Curlayer.Name);
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
             mjudgementcheckbox = 0;
-            LinkLayerBox.Nodes[0].Nodes[sLC - 1].Checked = true;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
             LinkLayerBox.Nodes[0].ExpandAll();
             LinkMapControl1.Refresh();
         }
@@ -252,6 +252,11 @@ namespace LinkMap
         private void LinkMapControl1_DispalyCsaleChanged(object sender)
         {
             tss2.Text = "1:" + LinkMapControl1.DisplayScale.ToString("0.00");
+        }
+
+        private void LinkMapControl1_GetTreeViewIndex(object sender, TreeNode linkmap)
+        {
+            //LinkLayerBox.Nodes[0]
         }
 
         #endregion
@@ -302,11 +307,9 @@ namespace LinkMap
                     MyTargetNode.BackColor = Color.White;
                     MyTreeView.SelectedNode = MyTargetNode;
                 }
-
-
             }
             //把节点索引和图层索引统一，然后刷新重绘
-
+            LinkMapControl1.SortByTreeview(LinkLayerBox.Nodes[0]);
             Refresh();
         }
 
@@ -333,15 +336,16 @@ namespace LinkMap
             //string[] treeStr =;
 
         }
+
+
+
+
+
+
+
+
+
         #endregion
-
-
-
-
-
-
-
-
 
 
     }
