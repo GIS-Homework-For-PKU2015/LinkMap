@@ -61,6 +61,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RectangleD.cs" />
+    <Compile Include="rwToExportMap.cs" />
     <Compile Include="TypeEnum.cs" />
   </ItemGroup>
   <ItemGroup>

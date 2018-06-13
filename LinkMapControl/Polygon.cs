@@ -21,6 +21,9 @@ namespace LinkMapObject
         {
             _Points.AddRange(points);
         }
+        public Polygon (List<PointD> plst) {
+            _Points = plst;
+        }
         #endregion
 
 
