@@ -273,10 +273,13 @@ namespace LinkMap
             tss2.Text = "1:" + LinkMapControl1.DisplayScale.ToString("0.00");
         }
 
-        private void LinkMapControl1_GetTreeViewIndex(object sender, TreeNode linkmap)
+        private void LinkMapControl1_GetTreeViewIndex(object sender, int a, int b)
         {
-            //LinkLayerBox.Nodes[0]
+            TreeNode temp = LinkLayerBox.Nodes[0].Nodes[a];
+            LinkLayerBox.Nodes[0].Nodes[a] = LinkLayerBox.Nodes[0].Nodes[b];
+            LinkLayerBox.Nodes[0].Nodes[b] = temp;
         }
+
 
         #endregion
 
@@ -366,6 +369,7 @@ namespace LinkMap
             //string[] treeStr =;
 
         }
+
 
 
 

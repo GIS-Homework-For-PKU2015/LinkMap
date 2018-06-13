@@ -233,8 +233,26 @@ namespace LinkMapObject
                 }
             }
             wholeMap = sclonemap;
-            
+        }
 
+
+        public void SortByWholeMap(TreeNode sNode)
+        {
+            TreeNode MyNode = sNode;
+            for (int i = 0; i < wholeMap.LayerNum; i++)
+            {
+                foreach (TreeNode sTreeNode in sNode.Nodes)
+                {
+                    if (sTreeNode.Text == wholeMap.GetLayerByIndex(i).Name)
+                    {
+                        if (GetTreeViewIndex != null)
+                        {
+                            //进入frmMain的委托事件
+                            GetTreeViewIndex(this, wholeMap.LayerNum - i - 1, sTreeNode.Index); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                        }
+                    }
+                }
+            }
         }
 
         public LinkLayer GetCurlayer()
@@ -516,7 +534,7 @@ namespace LinkMapObject
         /// </summary>
         public event SelectingFinishedHandle SelectingFinshed;
 
-        public delegate void GetTreeViewIndexHandle(object sender, TreeNode linkmap);
+        public delegate void GetTreeViewIndexHandle(object sender, int a,int b);
         /// <summary>
         /// 用户刷新treeview事件
         /// </summary>
