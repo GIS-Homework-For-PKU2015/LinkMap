@@ -17,7 +17,10 @@ namespace LinkMapObject
         #region 构造函数
         public LinkMap ()            //默认什么都没有
         { }
-
+        public LinkMap (string n)            //默认什么都没有
+        {
+            _name = n;
+        }
         public LinkMap(LinkLayer[] Map )     //输入函数,输入接口采取数组而不是list，为了让别的开发环境也能通用。
         {
             _items.AddRange(Map);

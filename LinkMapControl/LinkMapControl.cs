@@ -20,7 +20,7 @@ namespace LinkMapObject
         //运行时属性变量
 
 
-        private LinkMap wholeMap = new LinkMap();
+        private LinkMap wholeMap = new LinkMap("默认工程");
         //整个mapControl 顶层元素应该是map，之后的操作是针对这个mao进行操作
 
         //不要单独对polygon操作，但是外包矩形可以有
@@ -168,7 +168,11 @@ namespace LinkMapObject
             get { return _DisplayScale; }
             set { _DisplayScale = value; }
         }
-
+        public string GetMapName {
+            get {
+                return wholeMap.MapName;
+            }
+        }
 
 
 
@@ -1468,6 +1472,38 @@ namespace LinkMapObject
 
             img.Save(png_path);
         }
+
+        /// <summary>
+        /// 导出所有图层和属性数据到地图文件中
+        /// </summary>
+        public void outMapToEGIS () {
+
+
+        }
+        /// <summary>
+        /// 读取egis文件变成一个wholeMap
+        /// </summary>
+        /// <param name="egis"></param>
+        public void readEGISfile (string egis) {
+            rwToExportMap rEm = new rwToExportMap(egis);
+            wholeMap=rEm.getMap();
+
+            this.Refresh();
+        }
+        /// <summary>
+        /// 判断目前wholeMap是否为空
+        /// </summary>
+        public bool isWholeMapNotEmpty {
+            get {
+                if (wholeMap.LayerNum == 0) {
+                    return false;//is empty
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+
 
         #endregion
 

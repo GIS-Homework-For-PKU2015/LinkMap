@@ -26,7 +26,7 @@ namespace LinkMap
 
         private void LinkMapControl1_Load(object sender, EventArgs e)
         {
-
+            this.Text = LinkMapControl1.GetMapName;
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace LinkMap
             CreatMap cm = new CreatMap();
             cm.ShowDialog();
         }
-
+        //**打开**按钮会执行的操作
         private void 导入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //OpenFileDialog dlg = new OpenFileDialog();
@@ -51,20 +51,26 @@ namespace LinkMap
             //    //textBox1.Text = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
             //    Point a = new Point();
             //}
-
+            if (LinkMapControl1.isWholeMapNotEmpty) {
+                DialogResult drl = MessageBox.Show("当前项目里有图层，确认打开新项目文件么？（为防止数据丢失，建议保存egis文件再打开新文件）","tips",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning);
+                if (drl == DialogResult.Cancel) {
+                    return;
+                }
+            }
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = "c:\\";
-            openFileDialog.Filter = "DataCenter GIS 工程文件(*.egis)|*.egis";
+            openFileDialog.Filter = "LinkMap工程文件(*.egis)|*.egis";
+            openFileDialog.Title = "打开工程文件";
             openFileDialog.RestoreDirectory = true;
             openFileDialog.FilterIndex = 1;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                LinkMapControl1.readEGISfile(openFileDialog.FileName);
+                this.Text = LinkMapControl1.GetMapName;
             }
-
+            LinkMapControl1.Refresh();
 
         }
-
+        //正版导入按钮
         private void 导入ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             
