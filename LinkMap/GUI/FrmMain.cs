@@ -70,7 +70,7 @@ namespace LinkMap
             
             readWshapefile rwshp = new readWshapefile();
             rwshp.readShp();
-            //rwshp.readDbf();
+            rwshp.readDbf();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes[0].Nodes.Insert(0, rwshp.LayerName);//这个应该由LinkMapControl管理吧
             //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
@@ -91,6 +91,19 @@ namespace LinkMap
         private void 删除图层ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+        private void 查看属性表ToolStripMenuItem_Click (object sender, EventArgs e) {
+            GUI.attributeForm attf = new GUI.attributeForm();
+            LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
+            DataTable dat = lay.Table;
+            if (dat.Rows.Count==0) {
+                dat.Columns.Add("AttZero", typeof(String));
+                dat.Rows.Add("目前属性为空");
+            }
+            attf.SetDGVsource(dat);
+
+            attf.Text = lay.Name;
+            attf.Show();
         }
 
         private void 在选定位置添加点ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -345,6 +358,7 @@ namespace LinkMap
             //string[] treeStr =;
 
         }
+
 
 
 

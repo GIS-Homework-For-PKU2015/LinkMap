@@ -62,6 +62,12 @@
     <Compile Include="GUI\AddPoint.Designer.cs">
       <DependentUpon>AddPoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\attributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\attributeForm.Designer.cs">
+      <DependentUpon>attributeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\CreatMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\AddPoint.resx">
       <DependentUpon>AddPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\attributeForm.resx">
+      <DependentUpon>attributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\CreatMap.resx">
       <DependentUpon>CreatMap.cs</DependentUpon>
