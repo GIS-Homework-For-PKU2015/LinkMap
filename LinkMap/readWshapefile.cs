@@ -68,8 +68,7 @@ namespace LinkMap {
             set {
                 _layer.Name = value;
             }
-
-
+            
         }
 
         #endregion
@@ -84,6 +83,7 @@ namespace LinkMap {
         }
         public void readDbf () {
             ReadDbfToLayer();
+            _layer.Table = _dt;
         }
         public void readDbf (string dbf_path) {
             _dbfFullPath = dbf_path;
@@ -316,6 +316,7 @@ namespace LinkMap {
 
                 OpenFileDialog opendbf = new OpenFileDialog();
                 opendbf.Filter = "shapefileDbf(*.dbf)|*.dbf|All files(*.*)|*.*";
+                opendbf.Title = "请选择对应dbf文件";
                 if (opendbf.ShowDialog() == DialogResult.OK) {
                     _dbfFullPath = opendbf.FileName;
                 }
@@ -327,10 +328,8 @@ namespace LinkMap {
 
         private void ReadDbfByFname (FileStream fs) {
             
-            string fwpath = @"E:\ComputerGraphicsProj\GISdesign\pointDbfOut04.txt";
-
-            StreamWriter swDbf = new StreamWriter(fwpath);
-           
+            //string fwpath = @"E:\ComputerGraphicsProj\GISdesign\pointDbfOut34.txt";
+            //StreamWriter swDbf = new StreamWriter(fwpath);
             BinaryReader brShp = new BinaryReader(fs);
             //读取文件过程
             byte oversion = brShp.ReadByte(); //文件版本，一般是 3
@@ -340,21 +339,21 @@ namespace LinkMap {
             int numOfRecords = brShp.ReadInt32();//+4  // 文件中的记录条数.
             int HeaderLen = brShp.ReadInt16(); // 文件头中的字节数
             int oneRecordLen = brShp.ReadInt16(); // 一条记录中的字节长度
-            swDbf.WriteLine("ver:{0};year-month-day:{1}-{2}-{3}", oversion, oyear, omonth, oday);
-            swDbf.WriteLine("numOfRecords:{0}; HeaderLen:{1};oneRecordLen:{2}", numOfRecords, HeaderLen, oneRecordLen);
+            //swDbf.WriteLine("ver:{0};year-month-day:{1}-{2}-{3}", oversion, oyear, omonth, oday);
+            //swDbf.WriteLine("numOfRecords:{0}; HeaderLen:{1};oneRecordLen:{2}", numOfRecords, HeaderLen, oneRecordLen);
             byte[] awqdfd11 = brShp.ReadBytes(16);//2+1+1+12
             byte mdxMark = brShp.ReadByte();//DBF文件的MDX标识。
             byte langID = brShp.ReadByte();//languageDriverId 国家导出：77 国家标准：0  arcgis导出：77 
             byte[] awqdfd12 = brShp.ReadBytes(2);
 
             int numFields = (HeaderLen - 33) / 32;
-            swDbf.WriteLine("numFields:{0}", numFields);
+            //swDbf.WriteLine("numFields:{0}", numFields);
             int nDataOffset = 1;
             List<object> mFields = new List<object>();
             int[] recordILen = new int[numFields];
             for (int i = 0; i < numFields; i++) {
                 byte[] nbytes = brShp.ReadBytes(11);//记录项名称，是ASCII码值
-                Encoding encoding = Encoding.ASCII;
+                Encoding encoding = Encoding.ASCII;//只是11个byte会出现长于11的记录不全
                 string sFieldName = encoding.GetString(nbytes);
                 string sw1234 = Convert.ToString(nbytes);
                 string sw12 = Encoding.Default.GetString(nbytes);
@@ -362,15 +361,12 @@ namespace LinkMap {
                 int nullPoint = sFieldName.IndexOf((char)0);
                 if (nullPoint != -1)
                     sFieldName = sFieldName.Substring(0, nullPoint);
-
                 //read the field type
                 char cDbaseType = (char)brShp.ReadByte();//记录项的数据类型，是ASCII码值
 
                 // read the field data address, offset from the start of the record.
                 int nFieldDataAddress = brShp.ReadInt32(); // +4
-
-                //
-
+                
                 int nFieldLength = 0;
                 int nDecimals = 0;
                 if (cDbaseType == 'C' || cDbaseType == 'c') {
@@ -380,23 +376,19 @@ namespace LinkMap {
                 else {
                     //read field length as an unsigned byte.
                     nFieldLength = (int)brShp.ReadByte();
-
                     //read decimal count as one byte
                     nDecimals = (int)brShp.ReadByte();//记录项的精度
                 }
                 recordILen[i] = nFieldLength;
                 //read the reserved bytes.
                 brShp.ReadBytes(14);
-
                 //Create and add field to collection
                 //mFields.Add(new DbfColumn(sFieldName, DbfColumn.GetDbaseType(cDbaseType), nFieldLength, nDecimals, nDataOffset));
-                swDbf.WriteLine("Name:{0}\t;Len:{1}\t;Decimals:{2}\t;DataOffset:{3}\t", sFieldName, nFieldLength, nDecimals, nDataOffset);
-                // add up address information, you can not trust the address recorded in the DBF file...
+                //swDbf.WriteLine("Name:{0}\t;Len:{1}\t;Decimals:{2}\t;DataOffset:{3}\t", sFieldName, nFieldLength, nDecimals, nDataOffset);
+                _dt.Columns.Add(sFieldName, typeof(String));
                 nDataOffset += nFieldLength;
 
-
             }
-
             byte adwed13 = brShp.ReadByte();
 
             int ColumnDescriptorSize = 32;
@@ -405,37 +397,27 @@ namespace LinkMap {
                 brShp.ReadBytes(nExtraReadBytes);
 
             if (brShp.BaseStream.CanSeek && numOfRecords == 0) {
-                //notice here that we subtract file end byte which is supposed to be 0x1A,
-                //but some DBF files are incorrectly written without this byte, so we round off to nearest integer.
-                //that gives a correct result with or without ending byte.
+                
                 if (oneRecordLen > 0)
                     numOfRecords = (int)Math.Round(((double)(brShp.BaseStream.Length - HeaderLen - 1) / oneRecordLen));
 
             }
             //读内容部分 record
-            DataTable dt = new DataTable();
-            swDbf.WriteLine("===record====");
+            //swDbf.WriteLine("===record====");
             List<object> abcd = new List<object>();
             for (int j = 0; j < numOfRecords; j++) {
                 byte spaceByte = brShp.ReadByte();//
-                //DataRow dr = dt.NewRow();
-                string wrstr = "";
+                DataRow dr = _dt.NewRow();
                 for (int i = 0; i < numFields; i++) {
                     byte[] valRow = brShp.ReadBytes(recordILen[i]);
-                    string val = Encoding.ASCII.GetString(valRow);
-                    string val2 = Encoding.Default.GetString(valRow);
-                    string val3 = Encoding.UTF8.GetString(valRow);
-                    wrstr = wrstr + "--" + "ASCII:" + val + ";Default:" + val2 + ";UTF8:" + val3 + "|";
-                    //dr[i]=val;
+                    string val = Encoding.Default.GetString(valRow);
+                    dr[i]=val.Trim();//去除空格
                 }
-                swDbf.WriteLine(wrstr);
-                swDbf.WriteLine("------end one------");
-                //dt.Rows.Add(dr);
+                _dt.Rows.Add(dr);
+                //swDbf.WriteLine(wrstr);swDbf.WriteLine("------end one------");
             }
-
-            swDbf.WriteLine("===end record====");
-            swDbf.Close();
-
+            //swDbf.WriteLine("===end record====");
+            //swDbf.Close();
         }
 
 
