@@ -145,8 +145,6 @@ namespace LinkMap
             LinkMapControl1.Pan();
         }
 
-
-
         private void btnLinkSelcet_Click(object sender, EventArgs e)
         {
             LinkMapControl1.SelcetFeature();
@@ -330,8 +328,12 @@ namespace LinkMap
             }
             else
             {
-                LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
-                Refresh();
+                if(e.Node.Text!="LinkMap")
+                {
+                    LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
+                    Refresh();
+                }
+
             }
         }
         #endregion
