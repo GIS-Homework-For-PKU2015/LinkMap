@@ -254,10 +254,13 @@ namespace LinkMapObject
                 }
             }
         }
-
+        /// <summary>
+        /// 获取当前图层,调用了wholeMap.GetCurLayer
+        /// </summary>
+        /// <returns></returns>
         public LinkLayer GetCurlayer()
         {
-            return _curLayer;
+            return wholeMap.GetCurLayer;
         }
 
         /// <summary>
@@ -815,7 +818,8 @@ namespace LinkMapObject
                     //判断要素类型，对当前点循环，如果距离在一定范围内，鼠标变化
                     _curLayer = wholeMap.GetCurLayer;
                     int kt = 0;
-                    if (_editNearPoi == 1) {//鼠标左键属于按下状态
+                    if (_editNearPoi == 1 && _curLayer.IsVisble) {//鼠标左键属于按下状态
+                        //必须是可见的图层才能编辑
                         switch (_curLayer.mapType) {
                             case iType.PointD:
                                 int curl = _curLayer.Count;
@@ -825,10 +829,13 @@ namespace LinkMapObject
                                     double thd = 20 * _DisplayScale;
                                     if (Math.Abs(md.X - pd.X) < thd && Math.Abs(md.Y - pd.Y) < thd) {
                                         this.Cursor = Cursors.SizeAll;
-                                        _curLayer.setFeatureByIdx(k, md);
-                                        wholeMap.RefreshCurLayer(_curLayer);
+                                        kt += 1;
+                                        if (kt == 1) {
+                                            _curLayer.setFeatureByIdx(k, md);
+                                            wholeMap.RefreshCurLayer(_curLayer);
+                                        }
                                         this.Refresh();
-                                        kt = 1;
+                                        break;
                                     }else if (kt==0) {
                                         this.Cursor = Cursors.Arrow;
                                     }
@@ -846,12 +853,17 @@ namespace LinkMapObject
                                         PointD ld = line.getLineByIdx(k);
                                         double thd = 20 * _DisplayScale;
                                         if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y - ld.Y) < thd) {
-                                            line.setLPoiByIdx(k, md);
+                                            
                                             this.Cursor = Cursors.SizeAll;
-                                            _curLayer.setFeatureByIdx(i, line);
-                                            wholeMap.RefreshCurLayer(_curLayer);
-                                            this.Refresh();
-                                            kt = 1;
+                                            kt += 1;
+                                            if (kt == 1) {
+                                                line.setLPoiByIdx(k, md);
+                                                _curLayer.setFeatureByIdx(i, line);
+                                                wholeMap.RefreshCurLayer(_curLayer);
+                                                this.Refresh();
+                                            }
+                                            
+                                            break;
                                         }else if (kt==0) {
                                             this.Cursor = Cursors.Arrow;
                                         }
@@ -868,12 +880,16 @@ namespace LinkMapObject
                                         PointD ld = line.getPoiByIdx(k);
                                         double thd = 20 * _DisplayScale;
                                         if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y- ld.Y) < thd) {
-                                            line.setPoiByIdx(k, md);
                                             this.Cursor = Cursors.SizeAll;
-                                            _curLayer.setFeatureByIdx(i, line);
-                                            wholeMap.RefreshCurLayer(_curLayer);
-                                            this.Refresh();
-                                            kt = 1;
+                                            kt += 1;
+                                            if (kt == 1) {
+                                                line.setPoiByIdx(k, md);
+                                                _curLayer.setFeatureByIdx(i, line);
+                                                wholeMap.RefreshCurLayer(_curLayer);
+                                                this.Refresh();
+                                            }
+                                            
+                                            break;
                                         }else if (kt ==0) {
                                            this.Cursor = Cursors.Arrow;
                                         }
@@ -888,7 +904,7 @@ namespace LinkMapObject
 
                         }
 
-                    }else if (_editNearPoi == 2) {//这里的目的是变符号形状
+                    }else if (_editNearPoi == 2 && _curLayer.IsVisble) {//这里的目的是变符号形状
                         PointD[] plst = _curLayer.GetPointRange();
                         int pc = plst.Length;
                         mMouseLocation.X = e.Location.X;
