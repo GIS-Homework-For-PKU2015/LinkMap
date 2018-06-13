@@ -459,6 +459,31 @@ namespace LinkMapObject
         {
             wholeMap.MapRemoveLayer(index);
         }
+
+        public void AddLayer(string name,string type)
+        {
+            LinkLayer nlay = new LinkLayer();
+            if(type=="Polygon")
+            {
+                nlay.mapType =iType.Polygon;
+            }
+            else if(type =="Polyline")
+            {
+                nlay.mapType = iType.Polyline;
+            }
+            else if (type == "PointD")
+            {
+                nlay.mapType = iType.PointD;
+            }
+            else
+            {
+                return;
+            }
+            nlay.Name = name;
+            nlay.IsVisble = true;
+            wholeMap.AddLayer(nlay);
+            _curLayer = wholeMap.GetCurLayer;
+        }
         #endregion
 
 

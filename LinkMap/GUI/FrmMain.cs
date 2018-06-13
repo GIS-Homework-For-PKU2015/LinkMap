@@ -85,12 +85,29 @@ namespace LinkMap
             GUI.AddLayer al = new GUI.AddLayer();
             al.ShowDialog();
             string LinkLayerName = al.LinkLayerName;
-            LinkLayerBox.Nodes.Add(LinkLayerName);
+            LinkMapControl1.AddLayer(LinkLayerName, al.type);
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, LinkLayerName);//这个应该由LinkMapControl管理吧
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            mjudgementcheckbox = 0;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
+            LinkLayerBox.Nodes[0].ExpandAll();
+            LinkMapControl1.Refresh();
         }
 
         private void 删除图层ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            for (int i = 0; i < LinkLayerBox.Nodes[0].GetNodeCount(false); i++)
+            {
+                if (LinkLayerBox.Nodes[0].Nodes[i].IsSelected == true)
+                {
+                    int a = LinkLayerBox.Nodes[0].GetNodeCount(false);
+                    LinkLayerBox.Nodes[0].Nodes[i].Remove();
+                    LinkMapControl1.RemoveLayer(a - i - 1);
+                    LinkMapControl1.SortByTreeview(LinkLayerBox.Nodes[0]);
+                    LinkMapControl1.Refresh();
+                    return;
+                }
+            }
         }
         private void 查看属性表ToolStripMenuItem_Click (object sender, EventArgs e) {
             GUI.attributeForm attf = new GUI.attributeForm();
@@ -112,11 +129,7 @@ namespace LinkMap
             ap.ShowDialog();
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
-        {
-            Identity ID = new Identity();
-            ID.ShowDialog();
-        }
+
 
         private void 依据属性查询ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -142,6 +155,11 @@ namespace LinkMap
 
         #region 工具栏事件
 
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            Identity ID = new Identity();
+            ID.Show();
+        }
 
         private void btnLinkZoomIn_Click(object sender, EventArgs e)
         {
@@ -157,8 +175,6 @@ namespace LinkMap
         {
             LinkMapControl1.Pan();
         }
-
-
 
         private void btnLinkSelcet_Click(object sender, EventArgs e)
         {
@@ -254,6 +270,7 @@ namespace LinkMap
         private void LinkMapControl1_MouseMove(object sender, MouseEventArgs e)
         {
             ShowCoordinates(e.Location);
+
         }
 
         private void ShowCoordinates(PointF mouseLocation)
@@ -343,8 +360,12 @@ namespace LinkMap
             }
             else
             {
-                LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
-                Refresh();
+                if(e.Node.Text!="LinkMap")
+                {
+                    LinkMapControl1.MapChangeSelectedLayerVisible(LinkMapControl1.GetLayerByName(e.Node.Text));
+                    Refresh();
+                }
+
             }
         }
         #endregion
