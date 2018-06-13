@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("LinkMap");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -330,11 +330,11 @@
             this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            treeNode1.Checked = true;
-            treeNode1.Name = "LinkMapNode";
-            treeNode1.Text = "LinkMap";
+            treeNode2.Checked = true;
+            treeNode2.Name = "LinkMapNode";
+            treeNode2.Text = "LinkMap";
             this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.LinkLayerBox.Size = new System.Drawing.Size(272, 600);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.LinkLayerBox_AfterCheck);
@@ -399,9 +399,11 @@
             this.Controls.Add(this.LinkLayerBox);
             this.Controls.Add(this.ScripLink);
             this.Controls.Add(this.Linkmenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "LinkMap";
             this.Linkmenu.ResumeLayout(false);

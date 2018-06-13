@@ -32,6 +32,8 @@
             this.LinkLayerNameBox = new System.Windows.Forms.TextBox();
             this.btnGetLayerName = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.typebox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -52,9 +54,9 @@
             // 
             // btnGetLayerName
             // 
-            this.btnGetLayerName.Location = new System.Drawing.Point(64, 152);
+            this.btnGetLayerName.Location = new System.Drawing.Point(64, 240);
             this.btnGetLayerName.Name = "btnGetLayerName";
-            this.btnGetLayerName.Size = new System.Drawing.Size(128, 48);
+            this.btnGetLayerName.Size = new System.Drawing.Size(160, 48);
             this.btnGetLayerName.TabIndex = 2;
             this.btnGetLayerName.Text = "确定";
             this.btnGetLayerName.UseVisualStyleBackColor = true;
@@ -62,18 +64,42 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(296, 152);
+            this.btnCancel.Location = new System.Drawing.Point(264, 240);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(128, 48);
+            this.btnCancel.Size = new System.Drawing.Size(160, 48);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // typebox
+            // 
+            this.typebox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typebox.FormattingEnabled = true;
+            this.typebox.Items.AddRange(new object[] {
+            "PointD",
+            "Polyline",
+            "Polygon"});
+            this.typebox.Location = new System.Drawing.Point(64, 184);
+            this.typebox.Name = "typebox";
+            this.typebox.Size = new System.Drawing.Size(360, 32);
+            this.typebox.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(64, 144);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(106, 24);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "图层类型";
             // 
             // AddLayer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 492);
+            this.ClientSize = new System.Drawing.Size(457, 492);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.typebox);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnGetLayerName);
             this.Controls.Add(this.LinkLayerNameBox);
@@ -91,5 +117,7 @@
         private System.Windows.Forms.TextBox LinkLayerNameBox;
         private System.Windows.Forms.Button btnGetLayerName;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.ComboBox typebox;
+        private System.Windows.Forms.Label label2;
     }
 }
