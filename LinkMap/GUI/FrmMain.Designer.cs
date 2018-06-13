@@ -325,6 +325,7 @@
             // LinkLayerBox
             // 
             this.LinkLayerBox.AllowDrop = true;
+            this.LinkLayerBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LinkLayerBox.CheckBoxes = true;
             this.LinkLayerBox.Location = new System.Drawing.Point(24, 152);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4);

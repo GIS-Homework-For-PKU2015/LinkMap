@@ -70,7 +70,7 @@ namespace LinkMap
             
             readWshapefile rwshp = new readWshapefile();
             rwshp.readShp();
-            rwshp.readDbf();
+            //rwshp.readDbf();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes[0].Nodes.Insert(0, rwshp.LayerName);//这个应该由LinkMapControl管理吧
             //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
@@ -177,7 +177,18 @@ namespace LinkMap
         //删除要素
         private void btnLinkDelete_Click(object sender, EventArgs e)
         {
-
+            for(int i=0;i<LinkLayerBox.Nodes[0].GetNodeCount(false);i++)
+            {
+                if(LinkLayerBox.Nodes[0].Nodes[i].IsSelected==true)
+                {
+                    int a = LinkLayerBox.Nodes[0].GetNodeCount(false);
+                    LinkLayerBox.Nodes[0].Nodes[i].Remove();
+                    LinkMapControl1.RemoveLayer(a-i-1);
+                    LinkMapControl1.SortByTreeview(LinkLayerBox.Nodes[0]);
+                    LinkMapControl1.Refresh();
+                    return;
+                }
+            }
         }
         #endregion
 

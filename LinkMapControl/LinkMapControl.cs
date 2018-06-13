@@ -451,6 +451,11 @@ namespace LinkMapObject
             else
                 wholeMap.GetLayerByIndex(sLayer).IsVisble = true;
         }
+
+        public void RemoveLayer(int index)
+        {
+            wholeMap.MapRemoveLayer(index);
+        }
         #endregion
 
 
