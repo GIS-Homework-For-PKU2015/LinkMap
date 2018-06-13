@@ -43,15 +43,15 @@ namespace LinkMapObject
         private PointF mMouseLocation = new Point();   //鼠标当前位置，用于漫游
         private PointF mStartPoint = new PointF();   //几率鼠标按下时的位置，用于拉框
         private Polyline mTrackingLine = new Polyline();
-        
+
         //鼠标光标对象定义
-        //private Cursor mCur_Cross = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapObject.Resources.Cross.ico"));
+        private Cursor mCur_Cross = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapControl.Resources.Cross.ico"));
 
-        //private Cursor mCur_ZoomIn = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapObject.Resources.ZoomIn.ico"));
+        private Cursor mCur_ZoomIn = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapControl.Resources.ZoomIn.ico"));
 
-        //private Cursor mCur_ZoomOut = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapObject.Resources.ZoomOut.ico"));
+        private Cursor mCur_ZoomOut = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapControl.Resources.ZoomOut.ico"));
 
-        //private Cursor mCur_PangUp = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapObject.Resources.PanUp.ico"));
+        private Cursor mCur_PangUp = new Cursor(System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("LinkMapControl.Resources.PanUp.ico"));
 
         //常量
         private const float mcBoundaryWidth = 1F;       //多边形边界宽度
@@ -272,7 +272,7 @@ namespace LinkMapObject
         public void ZoomIn()
         {
             mMapOpStyle = 1;
-            //this.Cursor = mCur_ZoomIn;
+            this.Cursor = mCur_ZoomIn;
 
         }
 
@@ -282,7 +282,7 @@ namespace LinkMapObject
         public void ZoomOut()
         {
             mMapOpStyle = 2;
-            //this.Cursor = mCur_ZoomOut;
+            this.Cursor = mCur_ZoomOut;
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace LinkMapObject
         public void Pan()
         {
             mMapOpStyle = 3;
-            this.Cursor = Cursors.Hand;
+            this.Cursor = mCur_PangUp;
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace LinkMapObject
         public void TrackPolygon()
         {
             mMapOpStyle = 4;
-            this.Cursor = Cursors.Cross;
+            this.Cursor = mCur_Cross;
         }
 
         /// <summary>
