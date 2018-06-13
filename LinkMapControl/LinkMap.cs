@@ -105,7 +105,15 @@ namespace LinkMapObject
             }
             return a;
         }
-
+        public string[] getAllLayerName {
+            get {
+                string[] layNum = new string[_items.Count];
+                for(int i=0;i<_items.Count;i++) {
+                    layNum[i] = _items[i].Name;
+                }
+                return layNum;
+            }
+        }
 
 
 

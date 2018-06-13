@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Xml;
+using System.IO;
 
 //保存和读取地图文件的类
 namespace LinkMapObject {
@@ -33,6 +34,26 @@ namespace LinkMapObject {
             praseEfile();
             return _cMap;
         }
+        /// <summary>
+        /// 传 入地图
+        /// </summary>
+        /// <param name="map"></param>
+        public void setMap (LinkMap map) {
+            _cMap = map;
+        }
+        public void SaveEGIS () {
+            mapToEgisFile();
+        }
+        //尽量不用
+        public void SaveEGIS (string str) {
+            _egisFile = str;
+            mapToEgisFile();
+        }
+        public void SaveEGIS (string str,LinkMap m) {
+            _egisFile = str;
+            _cMap = m;
+            mapToEgisFile();
+        }
 
         #endregion
         #region 私有函数
@@ -49,17 +70,25 @@ namespace LinkMapObject {
                 }catch {}
 
                 XmlNodeList xLayLst = ((XmlElement)xDoc).GetElementsByTagName("Folder");
+                int numLay = -1;
                 foreach (XmlNode fea in xLayLst) {//图层遍历
+                    numLay++;
                     XmlElement xDT = fea["DTable"];
 
                     LinkLayer lay = new LinkLayer();
-                    string visibility = "1";
+                    try {
+                        lay.Name = fea["name"].InnerText;
+                    }
+                    catch {
+                        lay.Name = "layer" + numLay.ToString();
+                    }
+                    string visibility = "0";
                     try { 
                         visibility = fea["visibility"].InnerText;
                     }catch { }
-                    if (visibility == "1") {//可见 
+                    if (visibility == "0") {//可见 
                         lay.IsVisble = true;
-                    }else if (visibility == "0") {
+                    }else if (visibility == "1") {
                         lay.IsVisble = false;
                     }
                     else {//kml里这是false
@@ -136,7 +165,7 @@ namespace LinkMapObject {
 
                 
             }
-            catch (Exception exp) {
+            catch {
                 
             }
 
@@ -145,9 +174,35 @@ namespace LinkMapObject {
         private void mapToEgisFile () {
 
 
+            XmlDocument kmlMeta = new XmlDocument();
+            XmlDeclaration xdra = kmlMeta.CreateXmlDeclaration("1.0", "UTF-8", null);//这一句还是必须有的
+            XmlElement rootElt = kmlMeta.CreateElement("kml", "http://www.opengis.net/kml/2.2");
+            XmlElement kdoc = kmlMeta.CreateElement("Document");
+
+            try {
+                
+                        XmlElement kcdr = kmlMeta.CreateElement("coordinates");
+                        kcdr.InnerText ="111";
+                        XmlElement kpmk = kmlMeta.CreateElement("Placemark");
+                        XmlElement kpoi = kmlMeta.CreateElement("Point");
+                        kpoi.AppendChild(kcdr);
+                        kpmk.AppendChild(kpoi);
+                        kdoc.AppendChild(kpmk);
+                    
+                rootElt.AppendChild(kdoc);
+                kmlMeta.AppendChild(xdra);
+                kmlMeta.AppendChild(rootElt);
+                kmlMeta.Save(_egisFile);
+            }
+            catch  {
+                
+            }
         }
 
+        
 
+        #endregion
+        #region 辅助函数
         //节点转DataTable
         private DataTable nodeToDataTable (XmlElement xdt) {
             XmlElement xcol = xdt["col"];

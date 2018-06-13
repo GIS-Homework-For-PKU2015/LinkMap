@@ -14,6 +14,7 @@ namespace LinkMap
         #region 字段
         public int mjudgementcheckbox = 1;
         public string LinkLayerName = "";
+        public string _mapFile = "";//工程文件egis保存路径
         #endregion
 
 
@@ -41,16 +42,6 @@ namespace LinkMap
         //**打开**按钮会执行的操作
         private void 导入ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //OpenFileDialog dlg = new OpenFileDialog();
-            //dlg.Filter = "DataCenter GIS 工程文件(*.egis)|*.egis";
-            //dlg.Multiselect = false;
-            //dlg.SupportMultiDottedExtensions = true;
-            //dlg.Title = "打开";
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    //textBox1.Text = System.IO.Path.GetFileNameWithoutExtension(dlg.FileName);
-            //    Point a = new Point();
-            //}
             if (LinkMapControl1.isWholeMapNotEmpty) {
                 DialogResult drl = MessageBox.Show("当前项目里有图层，确认打开新项目文件么？（为防止数据丢失，建议保存egis文件再打开新文件）","tips",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning);
                 if (drl == DialogResult.Cancel) {
@@ -61,14 +52,40 @@ namespace LinkMap
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "LinkMap工程文件(*.egis)|*.egis";
             openFileDialog.Title = "打开工程文件";
-            openFileDialog.RestoreDirectory = true;
+            //openFileDialog.RestoreDirectory = true;
             openFileDialog.FilterIndex = 1;
             if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                LinkMapControl1.readEGISfile(openFileDialog.FileName);
+                _mapFile = openFileDialog.FileName;
+                LinkMapControl1.readEGISfile(_mapFile);
                 this.Text = LinkMapControl1.GetMapName;
             }
+            int nc = LinkLayerBox.Nodes[0].Nodes.Count;
+            if (nc > 0) {//删掉所有现有节点
+                for (int k = nc - 1; k >= 0; k--) {
+                    LinkLayerBox.Nodes[0].Nodes[k].Remove();
+                }
+            }
+            foreach (string w in LinkMapControl1.getAllLayerName) {
+                LinkLayerBox.Nodes[0].Nodes.Insert(0, w);
+            }
+            LinkLayerBox.Nodes[0].ExpandAll();
             LinkMapControl1.Refresh();
 
+        }
+        private void 保存ToolStripMenuItem_Click (object sender, EventArgs e) {
+            if (_mapFile == "") {
+                SaveFileDialog egisSave = new SaveFileDialog();
+                if (egisSave.ShowDialog() == DialogResult.OK) {
+                    _mapFile = egisSave.FileName;
+                    LinkMapControl1.outMapToEGIS(_mapFile);
+                    MessageBox.Show("保存完毕！");
+                }
+            }
+            else {
+                LinkMapControl1.outMapToEGIS(_mapFile);
+                MessageBox.Show("已保存！");
+            }
+            
         }
         //正版导入按钮
         private void 导入ToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -388,6 +405,7 @@ namespace LinkMap
             //string[] treeStr =;
 
         }
+
 
 
 
