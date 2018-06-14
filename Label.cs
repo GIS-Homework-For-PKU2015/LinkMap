@@ -141,7 +141,7 @@ namespace LinkMapControl
         private int _Priority;
         private float _Rotation;
         private bool _show;
-
+        private LabelStyle _Style;
         private string _Text;
 
         /// <summary>
@@ -152,13 +152,14 @@ namespace LinkMapControl
         /// <param name="priority">Label priority used for collision detection</param>
         /// <param name="collisionbox">Box around label for collision detection</param>
         /// <param name="style">The style of the label</param>
-        protected BaseLabel(string text, float rotation, int priority, LabelBox collisionbox)
+        protected BaseLabel(string text, float rotation, int priority, LabelBox collisionbox,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
             _Rotation = rotation;
             _Priority = priority;
             _box = collisionbox;
+            _Style = style;
             _show = true;
         }
         /// <summary>
@@ -168,12 +169,13 @@ namespace LinkMapControl
         /// <param name="rotation"></param>
         /// <param name="priority"></param>
         /// <param name="style"></param>
-        protected BaseLabel(string text, float rotation, int priority)
+        protected BaseLabel(string text, float rotation, int priority,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
             _Rotation = rotation;
             _Priority = priority;
+            _Style = style;
             _show = true;
         }
 
@@ -229,6 +231,15 @@ namespace LinkMapControl
         {
             get { return _box; }
             set { _box = value; }
+        }
+        
+        /// <summary>
+        /// Gets or sets the <see cref="SharpMap.Styles.LabelStyle"/> of this label
+        /// </summary>
+        public LabelStyle Style
+        {
+            get { return _Style; }
+            set { _Style = value; }
         }
 
         #region IComparable<Label> Members
