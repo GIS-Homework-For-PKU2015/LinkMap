@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("LinkMap");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -389,11 +389,11 @@
             this.LinkLayerBox.Location = new System.Drawing.Point(8, 76);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            treeNode2.Checked = true;
-            treeNode2.Name = "LinkMapNode";
-            treeNode2.Text = "LinkMap";
+            treeNode3.Checked = true;
+            treeNode3.Name = "LinkMapNode";
+            treeNode3.Text = "LinkMap";
             this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode3});
             this.LinkLayerBox.Size = new System.Drawing.Size(153, 302);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.LinkLayerBox_AfterLabelEdit);
@@ -493,6 +493,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(625, 394);
             this.Controls.Add(this.tss2);
             this.Controls.Add(this.LinkPointLocation);
@@ -500,6 +501,7 @@
             this.Controls.Add(this.LinkLayerBox);
             this.Controls.Add(this.ScripLink);
             this.Controls.Add(this.Linkmenu);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
