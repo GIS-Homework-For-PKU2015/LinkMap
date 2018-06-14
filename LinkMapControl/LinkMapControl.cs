@@ -1501,7 +1501,8 @@ namespace LinkMapObject
         /// </summary>
         public void outMapToEGIS (string egis) {
             rwToExportMap rEm = new rwToExportMap();
-            //rEm.SaveEGIS(egis,wholeMap);
+            rEm.SaveEGIS(egis,wholeMap);
+            
         }
         /// <summary>
         /// 读取egis文件变成一个wholeMap

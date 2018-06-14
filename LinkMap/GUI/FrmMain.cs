@@ -49,7 +49,7 @@ namespace LinkMap
                 }
             }
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = "c:\\";
+            //openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "LinkMap工程文件(*.egis)|*.egis";
             openFileDialog.Title = "打开工程文件";
             //openFileDialog.RestoreDirectory = true;
@@ -75,6 +75,7 @@ namespace LinkMap
         private void 保存ToolStripMenuItem_Click (object sender, EventArgs e) {
             if (_mapFile == "") {
                 SaveFileDialog egisSave = new SaveFileDialog();
+                egisSave.Filter = "LinkMap工程文件(*.egis)|*.egis";
                 if (egisSave.ShowDialog() == DialogResult.OK) {
                     _mapFile = egisSave.FileName;
                     LinkMapControl1.outMapToEGIS(_mapFile);
