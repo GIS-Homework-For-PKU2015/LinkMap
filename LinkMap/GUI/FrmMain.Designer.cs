@@ -99,7 +99,8 @@
             this.导入ToolStripMenuItem,
             this.导入ToolStripMenuItem1,
             this.保存ToolStripMenuItem,
-            this.导出ToolStripMenuItem});
+            this.导出ToolStripMenuItem,
+            this.设置地图名称ToolStripMenuItem});
             this.LinkFileToolStripMenuItem.Name = "LinkFileToolStripMenuItem";
             this.LinkFileToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
             this.LinkFileToolStripMenuItem.Text = "文件";

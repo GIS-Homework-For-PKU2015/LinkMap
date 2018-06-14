@@ -70,6 +70,9 @@ namespace LinkMapObject
         /// </summary>
         public LinkLayer GetCurLayer {
             get {
+                if (_items.Count == 0) {
+                    return new LinkLayer();
+                }
                 return _items.Last();
             }
         }
