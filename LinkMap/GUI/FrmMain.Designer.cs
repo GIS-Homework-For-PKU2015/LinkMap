@@ -71,9 +71,9 @@
             this.查看属性表ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.增加图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除图层ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
             this.简单符号法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.唯一值符号法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
             this.Linkmenu.SuspendLayout();
             this.ScripLink.SuspendLayout();
             this.cmstripLayer.SuspendLayout();
@@ -384,6 +384,7 @@
             this.LinkLayerBox.Size = new System.Drawing.Size(304, 602);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.LinkLayerBox_AfterLabelEdit);
+            this.LinkLayerBox.BeforeCheck += new System.Windows.Forms.TreeViewCancelEventHandler(this.LinkLayerBox_BeforeCheck);
             this.LinkLayerBox.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.LinkLayerBox_AfterCheck);
             this.LinkLayerBox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.LinkLayerBox_ItemDrag);
             this.LinkLayerBox.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.LinkLayerBox_NodeMouseDoubleClick);
@@ -449,6 +450,20 @@
             this.删除图层ToolStripMenuItem1.Text = "删除图层";
             this.删除图层ToolStripMenuItem1.Click += new System.EventHandler(this.删除图层ToolStripMenuItem1_Click);
             // 
+            // 简单符号法ToolStripMenuItem
+            // 
+            this.简单符号法ToolStripMenuItem.Name = "简单符号法ToolStripMenuItem";
+            this.简单符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.简单符号法ToolStripMenuItem.Text = "简单符号法";
+            this.简单符号法ToolStripMenuItem.Click += new System.EventHandler(this.简单符号法ToolStripMenuItem_Click);
+            // 
+            // 唯一值符号法ToolStripMenuItem
+            // 
+            this.唯一值符号法ToolStripMenuItem.Name = "唯一值符号法ToolStripMenuItem";
+            this.唯一值符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.唯一值符号法ToolStripMenuItem.Text = "唯一值符号法";
+            this.唯一值符号法ToolStripMenuItem.Click += new System.EventHandler(this.唯一值符号法ToolStripMenuItem_Click);
+            // 
             // LinkMapControl1
             // 
             this.LinkMapControl1.BackColor = System.Drawing.Color.White;
@@ -475,18 +490,6 @@
             this.LinkMapControl1.GetTreeViewIndex += new LinkMapObject.LinkMapControl.GetTreeViewIndexHandle(this.LinkMapControl1_GetTreeViewIndex);
             this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
             this.LinkMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl1_MouseMove);
-            // 
-            // 简单符号法ToolStripMenuItem
-            // 
-            this.简单符号法ToolStripMenuItem.Name = "简单符号法ToolStripMenuItem";
-            this.简单符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
-            this.简单符号法ToolStripMenuItem.Text = "简单符号法";
-            // 
-            // 唯一值符号法ToolStripMenuItem
-            // 
-            this.唯一值符号法ToolStripMenuItem.Name = "唯一值符号法ToolStripMenuItem";
-            this.唯一值符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
-            this.唯一值符号法ToolStripMenuItem.Text = "唯一值符号法";
             // 
             // FrmMain
             // 

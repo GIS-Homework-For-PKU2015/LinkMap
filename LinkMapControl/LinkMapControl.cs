@@ -62,6 +62,9 @@ namespace LinkMapObject
         private const float mcSelcetingBoxWidth = 2F;//选择多边形宽度
         private Color mcSelectingColor = Color.Cyan;//选择多边形颜色
 
+
+        //渲染类型
+        public int Renderertype = 0; 
         #endregion
 
 
@@ -674,7 +677,8 @@ namespace LinkMapObject
 
                     break;
                 case 6:         //add point
-                    if (e.Button == MouseButtons.Left) {
+                    if (e.Button == MouseButtons.Left)
+                    {
                         AddPointToMap(e.Location.X, e.Location.Y);
                     }
 

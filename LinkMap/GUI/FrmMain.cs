@@ -536,6 +536,7 @@ namespace LinkMap
 
         private void LinkLayerBox_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            e.Node.ForeColor = Color.Gray;
             e.Node.BeginEdit();
         }
 
@@ -544,11 +545,8 @@ namespace LinkMap
         {
             string sNewName = e.Label;
             string sOldName = e.Node.Text;
-
-            for (int i = 0;i<LinkMapControl1.mapLayerNum;i++)
-            {
-                LinkMapControl1.GetRealLayerByName(sOldName).Name = sNewName;
-            }
+            LinkMapControl1.GetRealLayerByName(sOldName).Name = sNewName;
+            e.Node.ForeColor = Color.Black;
         }
 
         private void 添加注记ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -567,6 +565,22 @@ namespace LinkMap
 
         }
 
+        private void 简单符号法ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.Renderertype = 1;
+        }
 
+        private void 唯一值符号法ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.Renderertype = 2;
+        }
+
+        private void LinkLayerBox_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        {
+            if(e.Node.ForeColor == Color.Gray)
+            {
+                e.Cancel=true;
+            }
+        }
     }
 }
