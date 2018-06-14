@@ -520,8 +520,7 @@ namespace LinkMap
         private void 重命名ToolStripMenuItem_Click (object sender, EventArgs e) {
 
         }
-
-        private void 设置地图名称ToolStripMenuItem_Click (object sender, EventArgs e) {
+        private void 重设地图名称ToolStripMenuItem_Click (object sender, EventArgs e) {
             GUI.renameMapPrioj rename = new GUI.renameMapPrioj();
             rename.Rname = this.Text;
             DialogResult dir = rename.ShowDialog();
@@ -530,6 +529,10 @@ namespace LinkMap
                 LinkMapControl1.MapNameSet = this.Text;
             }
         }
+
+        //private void 设置地图名称ToolStripMenuItem_Click (object sender, EventArgs e) {
+            
+        //}
 
         private void LinkLayerBox_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -563,6 +566,7 @@ namespace LinkMap
 
 
         }
+
 
     }
 }
