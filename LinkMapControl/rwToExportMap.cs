@@ -88,9 +88,9 @@ namespace LinkMapObject {
                         visibility = fea["visibility"].InnerText;
                     }catch { }
                     if (visibility == "0") {//可见 
-                        lay.IsVisble = true;
-                    }else if (visibility == "1") {
                         lay.IsVisble = false;
+                    }else if (visibility == "1") {
+                        lay.IsVisble = true;
                     }
                     else {//kml里这是false
                         lay.IsVisble = true;

@@ -58,18 +58,21 @@ namespace LinkMap
                 _mapFile = openFileDialog.FileName;
                 LinkMapControl1.readEGISfile(_mapFile);
                 this.Text = LinkMapControl1.GetMapName;
-            }
-            int nc = LinkLayerBox.Nodes[0].Nodes.Count;
-            if (nc > 0) {//删掉所有现有节点
-                for (int k = nc - 1; k >= 0; k--) {
-                    LinkLayerBox.Nodes[0].Nodes[k].Remove();
+                int nc = LinkLayerBox.Nodes[0].Nodes.Count;
+                if (nc > 0) {//删掉所有现有节点
+                    for (int k = nc - 1; k >= 0; k--) {
+                        LinkLayerBox.Nodes[0].Nodes[k].Remove();
+                    }
                 }
+                foreach (string w in LinkMapControl1.getAllLayerName) {
+                    LinkLayerBox.Nodes[0].Nodes.Insert(0, w);
+                }
+
+                LinkLayerBox.Nodes[0].ExpandAll();
+                LinkMapControl1.Refresh();
             }
-            foreach (string w in LinkMapControl1.getAllLayerName) {
-                LinkLayerBox.Nodes[0].Nodes.Insert(0, w);
-            }
-            LinkLayerBox.Nodes[0].ExpandAll();
-            LinkMapControl1.Refresh();
+            
+            
 
         }
         private void 保存ToolStripMenuItem_Click (object sender, EventArgs e) {
@@ -437,8 +440,64 @@ namespace LinkMap
 
 
 
+
         #endregion
 
+#region 右键菜单栏
+        private void 查看属性表ToolStripMenuItem1_Click (object sender, EventArgs e) {
+            if (LinkMapControl1.mapLayerNum == 0) {
+                MessageBox.Show("当前无图层。", "tips", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            GUI.attributeForm attf = new GUI.attributeForm();
+            //目前查看的是当前图层的属性表，想看选中图层的属性表之后再拓展，目前不写
+            LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
+            DataTable dat = lay.Table;
+            if (dat.Rows.Count == 0) {
+                dat.Columns.Add("AttZero", typeof(String));
+                dat.Rows.Add("目前属性为空");
+            }
+            attf.SetDGVsource(dat);
 
+            attf.Text = lay.Name;
+            attf.Show();
+        }
+
+
+
+
+
+
+        #endregion
+
+        private void 增加图层ToolStripMenuItem_Click (object sender, EventArgs e) {
+            GUI.AddLayer al = new GUI.AddLayer();
+            al.ShowDialog();
+            string LinkLayerName = al.LinkLayerName;
+            LinkMapControl1.AddLayer(LinkLayerName, al.type);
+            LinkLayerBox.Nodes[0].Nodes.Insert(0, LinkLayerName);//这个应该由LinkMapControl管理吧
+            //int sLC = LinkLayerBox.Nodes[0].Nodes.Count;
+            mjudgementcheckbox = 0;
+            LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
+            LinkLayerBox.Nodes[0].ExpandAll();
+            LinkMapControl1.Refresh();
+        }
+
+        private void 删除图层ToolStripMenuItem1_Click (object sender, EventArgs e) {
+            for (int i = 0; i < LinkLayerBox.Nodes[0].GetNodeCount(false); i++) {
+                if (LinkLayerBox.Nodes[0].Nodes[i].IsSelected == true) {
+                    int a = LinkLayerBox.Nodes[0].GetNodeCount(false);
+                    LinkLayerBox.Nodes[0].Nodes[i].Remove();
+                    LinkMapControl1.RemoveLayer(a - i - 1);
+                    LinkMapControl1.SortByTreeview(LinkLayerBox.Nodes[0]);
+                    LinkMapControl1.Refresh();
+                    return;
+                }
+            }
+        }
+
+        private void 重命名ToolStripMenuItem_Click (object sender, EventArgs e) {
+
+        }
     }
 }
