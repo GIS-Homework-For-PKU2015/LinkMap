@@ -115,6 +115,9 @@ namespace LinkMap {
                 _fileShp = openShpFD.FileName;
                 splitPathToName();
             }
+            else {
+                return;
+            }
             FileStream fs = new FileStream(_fileShp, FileMode.Open);
             BinaryReader brShp = new BinaryReader(fs);
             //读取文件过程

@@ -202,6 +202,7 @@ namespace LinkMap
         private void 依据属性查询ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Search sch = new Search();
+            sch.searchDT = LinkMapControl1.GetCurlayer().Table;
             sch.ShowDialog();
         }
 
