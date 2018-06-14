@@ -580,6 +580,8 @@ namespace LinkMapObject
             _curLayer = wholeMap.GetCurLayer;
             DataTable scurdatatabel = _curLayer.Table;
             int j = 0;
+            if (scurdatatabel == null)
+                return;
             for(int i=0;i<scurdatatabel.Rows.Count;i++)
             {
                 object a = scurdatatabel.Rows[i][sindex];
@@ -1352,7 +1354,7 @@ namespace LinkMapObject
                                 if (Renderertype == 0)
                                 {
                                     Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
-                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+                                    SolidBrush sPolygonBrush = new SolidBrush(Color.Tomato);
                                     g.DrawPolygon(sPen, sScreenPoints);
                                     g.FillPolygon(sPolygonBrush, sScreenPoints);
                                     sPen.Dispose();
@@ -1373,6 +1375,10 @@ namespace LinkMapObject
                                 }
                                 else if (Renderertype == 2)
                                 {
+                                    if (elay.Table==null)
+                                    {
+                                        break;
+                                    }
                                     Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
                                     foreach(string key in sValueDic.Keys)
                                     {
@@ -1391,6 +1397,28 @@ namespace LinkMapObject
                                     g.FillPolygon(sPolygonBrush, sScreenPoints);
                                     sPen.Dispose();
                                     sPolygonBrush.Dispose();
+                                }
+                                else if (Renderertype == 3)
+                                {
+                                    
+                                    Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                    if (elay.Table == null && elay.Table.Rows == null)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                    _FillColor = Color.FromArgb(int.Parse(elay.Table.Rows[sindex][1].ToString())*170/4,0,0);                                        
+                                    sindex++;
+                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+
+
+                                    g.DrawPolygon(sPen, sScreenPoints);
+                                    g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                    sPen.Dispose();
+                                    sPolygonBrush.Dispose();
+                                    }
+
                                 }
                                 else
                                 {

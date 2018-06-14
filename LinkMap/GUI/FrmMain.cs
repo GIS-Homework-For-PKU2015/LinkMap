@@ -567,6 +567,8 @@ namespace LinkMap
             //    LinkMapControl.BaseLabel baselabel=new LinkMapControl.BaseLabel();
             //    baselabel.Text = wd.Rows[i].ItemArray[0].ToString();
             //}
+            LinkMapControl1.Renderertype = 0;
+            Refresh();
 
 
         }
@@ -611,6 +613,13 @@ namespace LinkMap
             {
                 e.Cancel=true;
             }
+        }
+
+        private void 分级符号法ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LinkMapControl1.Renderertype = 3;
+            Refresh();
+
         }
     }
 }
