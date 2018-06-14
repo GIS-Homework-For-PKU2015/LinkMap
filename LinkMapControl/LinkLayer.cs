@@ -20,38 +20,59 @@ namespace LinkMapObject
         #region 构造函数
         public LinkLayer() {
             _type = iType.Null;
+            datatableInt();//把datatable初始化一下
+
         }
         public LinkLayer (iType t) {
             _type = t;
+            datatableInt();
         }
         public LinkLayer(PointD poi) {
             _items.Add(poi);
             _type = iType.PointD;
+            datatableInt();
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
         public LinkLayer (List<PointD> plst) {
+            datatableInt();
             foreach (PointD p in plst) {
                 _items.Add(p);
+                DataRow r = _dt.NewRow();
+                _dt.Rows.Add(r);
             }
             _type = iType.PointD;//注意pd和multipoint的区分
         }
 
         public LinkLayer(PointD[] pois) {
-            foreach(PointD p in pois) {
+            datatableInt();
+            foreach (PointD p in pois) {
                 _items.Add(p);
+                DataRow r = _dt.NewRow();
+                _dt.Rows.Add(r);
             }
             _type = iType.MultiPoint; //or pointd;
         }
         public LinkLayer(Polyline pline) {
             _items.Add(pline);
             _type = iType.Polyline;
+            datatableInt();
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
         public LinkLayer(Polygon poly) {
             _items.Add(poly);
             _type = iType.Polygon;
+            datatableInt();
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
         public LinkLayer(MultiPolygon mpoly) {
             _items.Add(mpoly);
             _type = iType.MultiPolygon;
+            datatableInt();
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
 
         #endregion
@@ -208,32 +229,56 @@ namespace LinkMapObject
 
         #endregion
 
-        #region 加要素
+        #region 增删要素
         //注：这里不进行类型判断，在调用的时候尽量进行，不要出现点图层还加线要素的情况
         public void AddPointD (PointD pd) {
             _items.Add(pd);
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
         public void AddPolyline (Polyline line) {
             _items.Add(line);
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
         public void AddPolygon (Polygon poly) {
             _items.Add(poly);
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
 
 
         public void addFeature (object obj) {
             _items.Add(obj);//尽量不用这一个
+            DataRow r = _dt.NewRow();
+            _dt.Rows.Add(r);
         }
+
         //可以增加就应该可以删除，删除其中的要素，在编辑和删除中用到
         /// <summary>
         /// 通过索引idx删除要素
         /// </summary>
         /// <param name="idx"></param>
         public void delFeaByIdx (int idx) {
-            _items.RemoveAt(idx);
+            try {
+                _items.RemoveAt(idx);
+                _dt.Rows.RemoveAt(idx);
+            }
+            catch {}
         }
         public void insertFeature (int idx,object obj) {
             _items.Insert(idx, obj);
+            try {
+                DataRow r = _dt.NewRow();
+                _dt.Rows.InsertAt(r,idx); 
+            }
+            catch { }
+        }
+
+
+        private void datatableInt () {//属性数据初始化；
+            _dt.Columns.Add("name");//typeof(String)
+            _dt.Columns.Add("decs");
         }
 #endregion
 

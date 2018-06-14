@@ -33,7 +33,8 @@ namespace LinkMapObject
             int sPointCount = polygon.PointCount;   //挨个点判定
             for (int i = 0; i < sPointCount; i++)
             {
-                if (IsPointWithinBox(polygon.GetPoint(i), box) == false)
+                //return IsPointWithinBox(polygon.GetPoint(i), box);//不能直接这么写，
+                if (!IsPointWithinBox(polygon.GetPoint(i), box))
                     return false;
             }
             return true;

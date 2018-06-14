@@ -141,7 +141,7 @@ namespace LinkMapControl
         private int _Priority;
         private float _Rotation;
         private bool _show;
-
+        private LabelStyle _Style;
         private string _Text;
 
         /// <summary>
@@ -152,13 +152,14 @@ namespace LinkMapControl
         /// <param name="priority">Label priority used for collision detection</param>
         /// <param name="collisionbox">Box around label for collision detection</param>
         /// <param name="style">The style of the label</param>
-        protected BaseLabel(string text, float rotation, int priority, LabelBox collisionbox)
+        protected BaseLabel(string text, float rotation, int priority, LabelBox collisionbox,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
             _Rotation = rotation;
             _Priority = priority;
             _box = collisionbox;
+            _Style = style;
             _show = true;
         }
         /// <summary>
@@ -168,12 +169,13 @@ namespace LinkMapControl
         /// <param name="rotation"></param>
         /// <param name="priority"></param>
         /// <param name="style"></param>
-        protected BaseLabel(string text, float rotation, int priority)
+        protected BaseLabel(string text, float rotation, int priority,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
             _Rotation = rotation;
             _Priority = priority;
+            _Style = style;
             _show = true;
         }
 
@@ -230,6 +232,15 @@ namespace LinkMapControl
             get { return _box; }
             set { _box = value; }
         }
+        
+        /// <summary>
+        /// Gets or sets the <see cref="SharpMap.Styles.LabelStyle"/> of this label
+        /// </summary>
+        public LabelStyle Style
+        {
+            get { return _Style; }
+            set { _Style = value; }
+        }
 
         #region IComparable<Label> Members
 
@@ -279,5 +290,56 @@ namespace LinkMapControl
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// Type specific base label class
+    /// </summary>
+    /// <typeparam name="T">The type of the location</typeparam>
+    public abstract class BaseLabel<T> : BaseLabel
+    {
+        /// <summary>
+        /// Creates an instance of this class
+        /// </summary>
+        /// <param name="text">The label text</param>
+        /// <param name="location">The position of label</param>
+        /// <param name="rotation">The rotation of the label (in degrees)</param>
+        /// <param name="priority">A priority value. Labels with lower priority are less likely to be rendered</param>
+        /// <param name="collisionbox">A bounding box for collision detection</param>
+        /// <param name="style">The label style to apply upon rendering</param>
+        protected BaseLabel(string text, T location, float rotation, int priority, LabelBox collisionbox, LabelStyle style)
+            : base(text, rotation, priority, collisionbox, style)
+        {
+            //if (typeof(T) is ValueType)
+            if (location==null)
+                return;
+
+            if (!(location is PointF || location is GraphicsPath))
+                throw new ArgumentException("Invalid location type", "location");
+            Location = location;
+        }
+
+        /// <summary>
+        /// Creates an instance of this class
+        /// </summary>
+        /// <param name="text">The label text</param>
+        /// <param name="location">The position of label</param>
+        /// <param name="rotation">The rotation of the label (in degrees)</param>
+        /// <param name="priority">A priority value. Labels with lower priority are less likely to be rendered</param>
+        /// <param name="style">The label style to apply upon rendering</param>
+        protected BaseLabel(string text, T location, float rotation, int priority, LabelStyle style)
+            : base(text, rotation, priority, style)
+        {
+            if (location == null)
+                return;
+
+            if (!(location is PointF || location is GraphicsPath))
+                throw new ArgumentException("Invalid location type", "location");
+            Location = location;
+        }
+        /// <summary>
+        /// Gets or sets the location of the label
+        /// </summary>
+        public T Location { get; set; }
     }
 }
