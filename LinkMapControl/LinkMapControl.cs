@@ -66,6 +66,7 @@ namespace LinkMapObject
         //渲染类型
         public int Renderertype = 0;
         public List<Color> mColorList= new List<Color>();
+        Dictionary<string, string> sValueDic = new Dictionary<string, string>();
         #endregion
 
 
@@ -570,6 +571,27 @@ namespace LinkMapObject
             nlay.IsVisble = true;
             wholeMap.AddLayer(nlay);
             _curLayer = wholeMap.GetCurLayer;
+        }
+
+        public void SetValueMapRenderer(int sindex)
+        {
+            _curLayer = wholeMap.GetCurLayer;
+            DataTable scurdatatabel = _curLayer.Table;
+            int j = 0;
+            for(int i=0;i<scurdatatabel.Rows.Count;i++)
+            {
+                object a = scurdatatabel.Rows[i][sindex];
+                if(HaveAnother(a, sValueDic))
+                {
+
+                }
+                else
+                {
+                    sValueDic.Add(a.ToString(),j.ToString());
+                    j++;
+                }
+            }
+
         }
         #endregion
 
@@ -1259,6 +1281,16 @@ namespace LinkMapObject
 
         #region 私有函数
 
+        private bool HaveAnother(object a, Dictionary<string, string> b)
+        {
+            foreach (string key in b.Keys)
+            {
+                if (key==a.ToString())
+                    return true;
+            }
+            return false;
+        }
+
 
         //重绘地图，按道理说这个把DrawPolygons DrawTrackingPolygon 等囊括了
         private void DrawMap (Graphics g) {
@@ -1340,7 +1372,19 @@ namespace LinkMapObject
                                 else if (Renderertype == 2)
                                 {
                                     Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
-                                    SolidBrush sPolygonBrush = new SolidBrush(SystemColors.ActiveBorder);
+                                    foreach(string key in sValueDic.Keys)
+                                    {
+                                        if(elay.Table.Rows[sindex][1].ToString()==key)
+                                        {
+                                            _FillColor = mColorList[int.Parse(sValueDic[key])];
+                                            break;
+                                        }
+
+                                    }
+                                    sindex++;
+                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+
+
                                     g.DrawPolygon(sPen, sScreenPoints);
                                     g.FillPolygon(sPolygonBrush, sScreenPoints);
                                     sPen.Dispose();

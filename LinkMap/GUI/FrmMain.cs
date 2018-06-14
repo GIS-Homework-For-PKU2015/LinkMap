@@ -587,7 +587,17 @@ namespace LinkMap
 
         private void 唯一值符号法ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Random rnd = new Random();
+            for (int i = 0; i < 30000; i++)        //这里随便写了个大数
+            {
+                LinkMapControl1.mColorList.Add(Color.FromArgb(
+                                         rnd.Next(0, 255),
+                                         rnd.Next(0, 255),
+                                         rnd.Next(0, 255)));
+            }
+            LinkMapControl1.SetValueMapRenderer(1);
             LinkMapControl1.Renderertype = 2;
+            Refresh();
         }
 
         private void LinkLayerBox_BeforeCheck(object sender, TreeViewCancelEventArgs e)
