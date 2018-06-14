@@ -41,10 +41,10 @@
             // 
             // searchTBox
             // 
-            this.searchTBox.Location = new System.Drawing.Point(65, 20);
-            this.searchTBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.searchTBox.Location = new System.Drawing.Point(130, 40);
+            this.searchTBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.searchTBox.Name = "searchTBox";
-            this.searchTBox.Size = new System.Drawing.Size(196, 21);
+            this.searchTBox.Size = new System.Drawing.Size(358, 35);
             this.searchTBox.TabIndex = 0;
             this.searchTBox.Text = "NAME=\'杭州市\'";
             // 
@@ -57,20 +57,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 23);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(28, 46);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 12);
+            this.label1.Size = new System.Drawing.Size(94, 24);
             this.label1.TabIndex = 2;
             this.label1.Text = "SQL语句";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(14, 66);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(28, 132);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.Size = new System.Drawing.Size(130, 24);
             this.label2.TabIndex = 3;
             this.label2.Text = "查询结果：";
             // 
@@ -78,35 +78,36 @@
             // 
             this.sqlDataGridView.AllowUserToAddRows = false;
             this.sqlDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.sqlDataGridView.Location = new System.Drawing.Point(11, 91);
-            this.sqlDataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.sqlDataGridView.Location = new System.Drawing.Point(22, 182);
+            this.sqlDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.sqlDataGridView.Name = "sqlDataGridView";
             this.sqlDataGridView.RowTemplate.Height = 37;
-            this.sqlDataGridView.Size = new System.Drawing.Size(299, 207);
+            this.sqlDataGridView.Size = new System.Drawing.Size(598, 414);
             this.sqlDataGridView.TabIndex = 4;
             // 
             // btnDoSearch
             // 
-            this.btnDoSearch.Location = new System.Drawing.Point(266, 18);
+            this.btnDoSearch.Location = new System.Drawing.Point(504, 36);
+            this.btnDoSearch.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnDoSearch.Name = "btnDoSearch";
-            this.btnDoSearch.Size = new System.Drawing.Size(44, 23);
+            this.btnDoSearch.Size = new System.Drawing.Size(116, 46);
             this.btnDoSearch.TabIndex = 5;
-            this.btnDoSearch.Text = "查";
+            this.btnDoSearch.Text = "查询";
             this.btnDoSearch.UseVisualStyleBackColor = true;
             this.btnDoSearch.Click += new System.EventHandler(this.btnDoSearch_Click);
             // 
             // Search
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(321, 309);
+            this.ClientSize = new System.Drawing.Size(642, 618);
             this.Controls.Add(this.btnDoSearch);
             this.Controls.Add(this.sqlDataGridView);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.searchTBox);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Search";
             this.Text = "Search";
             ((System.ComponentModel.ISupportInitialize)(this.sqlDataGridView)).EndInit();
