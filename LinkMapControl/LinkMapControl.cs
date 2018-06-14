@@ -173,7 +173,11 @@ namespace LinkMapObject
                 return wholeMap.MapName;
             }
         }
-
+        public string[] getAllLayerName {
+            get {
+                return wholeMap.getAllLayerName;
+            }
+        }
 
 
         #endregion
@@ -245,6 +249,7 @@ namespace LinkMapObject
             TreeNode MyNode = sNode;
             for (int i = 0; i < wholeMap.LayerNum; i++)
             {
+                
                 foreach (TreeNode sTreeNode in sNode.Nodes)
                 {
                     if (sTreeNode.Text == wholeMap.GetLayerByIndex(i).Name)
@@ -252,7 +257,7 @@ namespace LinkMapObject
                         if (GetTreeViewIndex != null)
                         {
                             //进入frmMain的委托事件
-                            GetTreeViewIndex(this, wholeMap.LayerNum - i - 1, sTreeNode.Index); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                            GetTreeViewIndex(this, wholeMap.LayerNum - i - 1, sTreeNode.Index); 
                         }
                     }
                 }
@@ -1494,9 +1499,10 @@ namespace LinkMapObject
         /// <summary>
         /// 导出所有图层和属性数据到地图文件中
         /// </summary>
-        public void outMapToEGIS () {
-
-
+        public void outMapToEGIS (string egis) {
+            rwToExportMap rEm = new rwToExportMap();
+            rEm.SaveEGIS(egis,wholeMap);
+            
         }
         /// <summary>
         /// 读取egis文件变成一个wholeMap
@@ -1505,8 +1511,7 @@ namespace LinkMapObject
         public void readEGISfile (string egis) {
             rwToExportMap rEm = new rwToExportMap(egis);
             wholeMap=rEm.getMap();
-
-            this.Refresh();
+            //this.Refresh();
         }
         /// <summary>
         /// 判断目前wholeMap是否为空

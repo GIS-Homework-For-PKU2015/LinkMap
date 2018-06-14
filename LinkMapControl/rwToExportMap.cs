@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Xml;
+using System.IO;
 
 //保存和读取地图文件的类
 namespace LinkMapObject {
@@ -33,6 +34,27 @@ namespace LinkMapObject {
             praseEfile();
             return _cMap;
         }
+        /// <summary>
+        /// 传 入地图
+        /// </summary>
+        /// <param name="map"></param>
+        public void setMap (LinkMap map) {
+            _cMap = map;
+        }
+        public void SaveEGIS () {
+            mapToEgisFile();
+        }
+        //尽量不用
+        public void SaveEGIS (string str) {
+            _egisFile = str;
+            mapToEgisFile();
+        }
+        public void SaveEGIS (string str,LinkMap m) {
+            _egisFile = str;
+            _cMap = m;
+            mapToEgisFile();
+           
+        }
 
         #endregion
         #region 私有函数
@@ -49,17 +71,25 @@ namespace LinkMapObject {
                 }catch {}
 
                 XmlNodeList xLayLst = ((XmlElement)xDoc).GetElementsByTagName("Folder");
+                int numLay = -1;
                 foreach (XmlNode fea in xLayLst) {//图层遍历
+                    numLay++;
                     XmlElement xDT = fea["DTable"];
 
                     LinkLayer lay = new LinkLayer();
-                    string visibility = "1";
+                    try {
+                        lay.Name = fea["name"].InnerText;
+                    }
+                    catch {
+                        lay.Name = "layer" + numLay.ToString();
+                    }
+                    string visibility = "0";
                     try { 
                         visibility = fea["visibility"].InnerText;
                     }catch { }
-                    if (visibility == "1") {//可见 
+                    if (visibility == "0") {//可见 
                         lay.IsVisble = true;
-                    }else if (visibility == "0") {
+                    }else if (visibility == "1") {
                         lay.IsVisble = false;
                     }
                     else {//kml里这是false
@@ -136,7 +166,7 @@ namespace LinkMapObject {
 
                 
             }
-            catch (Exception exp) {
+            catch {
                 
             }
 
@@ -145,9 +175,97 @@ namespace LinkMapObject {
         private void mapToEgisFile () {
 
 
+            XmlDocument xmlVer = new XmlDocument();
+            XmlDeclaration xdra = xmlVer.CreateXmlDeclaration("1.0", "UTF-8", null);//这一句还是必须有的
+            XmlElement rootElt = xmlVer.CreateElement("kml", "http://www.opengis.net/kml/2.2");
+            XmlElement xname = xmlVer.CreateElement("name");
+            XmlElement xdesc = xmlVer.CreateElement("description");
+            xname.InnerText = _cMap.MapName;
+            xdesc.InnerText = _cMap.MapDescription;
+            XmlElement xdoc = xmlVer.CreateElement("Document");
+            xdoc.AppendChild(xname);
+            xdoc.AppendChild(xdesc);
+            try {
+                foreach (LinkLayer lay in _cMap) {
+                    XmlElement xfolder = xmlVer.CreateElement("Folder");
+                    XmlElement yname = xmlVer.CreateElement("name");
+                    XmlElement ydesc = xmlVer.CreateElement("description");
+                    XmlElement yVis = xmlVer.CreateElement("visibility");
+                    yname.InnerText = lay.Name;
+                    ydesc.InnerText = lay.Description;
+                    yVis.InnerText = "1";
+                    if (!lay.IsVisble) {
+                        yVis.InnerText = "0";
+                    }
+                    xfolder.AppendChild(yname);
+                    xfolder.AppendChild(ydesc);
+                    xfolder.AppendChild(yVis);
+                    //==========
+                    //属性数据写入xml
+                    // 图层中没有元素怎么办？这个之后解决掉
+                    switch (lay.mapType) {
+                        case iType.PointD:
+                            foreach(PointD p in lay) {
+                                XmlElement kcdr = xmlVer.CreateElement("coordinates");
+                                kcdr.InnerText = pointdToStr(p);
+                                XmlElement kpmk = xmlVer.CreateElement("Placemark");
+                                XmlElement kpoi = xmlVer.CreateElement("Point");
+                                kpoi.AppendChild(kcdr);
+                                kpmk.AppendChild(kpoi);
+                                xfolder.AppendChild(kpmk);
+                            }
+                            break;
+                        case iType.MultiPoint:
+
+                            break;
+                        case iType.Polyline:
+                            foreach (Polyline poly in lay) {
+                                XmlElement kcdr = xmlVer.CreateElement("coordinates");
+                                kcdr.InnerText = lineToCoord(poly);
+                                XmlElement kpmk = xmlVer.CreateElement("Placemark");
+                                XmlElement kpoi = xmlVer.CreateElement("LineString");
+                                kpoi.AppendChild(kcdr);
+                                kpmk.AppendChild(kpoi);
+                                xfolder.AppendChild(kpmk);
+                            }
+                            break;
+                        case iType.Polygon:
+                            foreach (Polygon poly in lay) {
+                                XmlElement kcdr = xmlVer.CreateElement("coordinates");
+                                kcdr.InnerText = lineToCoord(poly);
+                                XmlElement kpmk = xmlVer.CreateElement("Placemark");
+                                XmlElement kpoi = xmlVer.CreateElement("Polygon");
+                                XmlElement kobi = xmlVer.CreateElement("outerBoundaryIs");
+                                kobi.AppendChild(kcdr);
+                                kpoi.AppendChild(kobi);
+                                kpmk.AppendChild(kpoi);
+                                xfolder.AppendChild(kpmk);
+                            }
+                            break;
+                        case iType.MultiPolygon:
+
+                            break;
+
+
+                    }
+
+                    xdoc.AppendChild(xfolder);
+
+                }
+                rootElt.AppendChild(xdoc);
+                xmlVer.AppendChild(xdra);
+                xmlVer.AppendChild(rootElt);
+                xmlVer.Save(_egisFile);
+            }
+            catch  {
+                
+            }
         }
 
+        
 
+        #endregion
+        #region 辅助函数
         //节点转DataTable
         private DataTable nodeToDataTable (XmlElement xdt) {
             XmlElement xcol = xdt["col"];
@@ -174,13 +292,43 @@ namespace LinkMapObject {
 
         public List<PointD> strToPList (string coor) {
             List<PointD> oPlst = new List<PointD>();
-            string[] clst = coor.Trim().Split(' ');//在这里写Trim比在调用的时候每一次调用都写更好
-            foreach (string cv in clst) {
-                string[] ct = cv.Split(',');
-                PointD pd= new PointD(Convert.ToDouble(ct[0]), Convert.ToDouble(ct[1]));
+            string[] clst = coor.Trim().Split(' ');//
+            int lenc = clst.Length;
+            for(int i = 0; i < lenc; i++) {
+                
+                if (i == lenc - 1) {
+                    string[] ctk = clst[i].Split(',');
+                    PointD p = new PointD(Convert.ToDouble(ctk[0]), Convert.ToDouble(ctk[1]));
+                    if (p.X == oPlst[0].X && p.Y == oPlst[0].Y)
+                        break;
+                }
+                
+                string[] ct = clst[i].Split(',');
+                PointD pd = new PointD(Convert.ToDouble(ct[0]), Convert.ToDouble(ct[1]));
                 oPlst.Add(pd);
+                
             }
+
+            
             return oPlst;
+        }
+
+        private string pointdToStr (PointD pd) {
+            return pd.X.ToString() + "," + pd.Y.ToString();
+        }
+        private string lineToCoord (Polyline line) {
+            string crd = "";
+            for(int i = 0; i < line.PointCount; i++) {
+                crd = crd + " " + pointdToStr(line.GetPoint(i));
+            }
+            return crd.Trim();
+        }
+        private string lineToCoord (Polygon line) {
+            string crd = "";
+            for (int i = 0; i < line.PointCount; i++) {
+                crd = crd + " " + pointdToStr(line.GetPoint(i));
+            }
+            return crd.Trim();
         }
 
         #endregion
