@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document xmlns="">
+    <name>默认工程</name>
+    <description>
+    </description>
+    <Folder>
+      <name>Layer1</name>
+      <description>
+      </description>
+      <visibility>1</visibility>
+      <DTable>
+        <col>name decs</col>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+        <row> </row>
+      </DTable>
+      <Placemark>
+        <Point>
+          <coordinates>164.600014381406,48.200023231502</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>270.199990043642,33.800026550288</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>286.999986171725,129.800004425048</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>185.000009679793,131.000004148483</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>262.999991703035,69.800018253323</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>378.199965152747,69.800018253323</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>223.400000829697,102.200010786055</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <Point>
+          <coordinates>346.99997234345,102.200010786055</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Layer0</name>
+      <description>
+      </description>
+      <visibility>1</visibility>
+      <DTable>
+        <col>name decs</col>
+        <row> </row>
+      </DTable>
+      <Placemark>
+        <Polygon>
+          <outerBoundaryIs>
+            <LinearRing>
+              <coordinates>246.199995574952,9.80003208159793 87.8000320815979,72.200017700192 96.2000301456395,219.799983682636 274.99998893738,208.999986171725</coordinates>
+            </LinearRing>
+          </outerBoundaryIs>
+        </Polygon>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Layer2</name>
+      <description>
+      </description>
+      <visibility>1</visibility>
+      <DTable>
+        <col>name decs</col>
+        <row> </row>
+        <row> </row>
+      </DTable>
+      <Placemark>
+        <LineString>
+          <coordinates>24.2000467395694,80.6000157642335 339.799974002843,170.599995021821 340.999973726278,29.0000276565499 412.999957132348,55.400021572109 409.399957962044,108.200009403227</coordinates>
+        </LineString>
+      </Placemark>
+      <Placemark>
+        <LineString>
+          <coordinates>51.8000403785629,154.999998617173 326.599977045064,247.399977321629 391.399962110527,137.000002765655</coordinates>
+        </LineString>
+      </Placemark>
+    </Folder>
+  </Document>
+</kml>
