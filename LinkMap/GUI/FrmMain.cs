@@ -499,5 +499,10 @@ namespace LinkMap
         private void 重命名ToolStripMenuItem_Click (object sender, EventArgs e) {
 
         }
+
+        private void LinkLayerBox_MouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            e.Node.BeginEdit();
+        }
     }
 }

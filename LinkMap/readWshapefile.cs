@@ -104,7 +104,6 @@ namespace LinkMap {
         }
 
         #endregion
-
         #region 私有函数
         private void ReadToLayer () {
             //1，读入
