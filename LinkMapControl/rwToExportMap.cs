@@ -200,8 +200,9 @@ namespace LinkMapObject {
                     xfolder.AppendChild(yname);
                     xfolder.AppendChild(ydesc);
                     xfolder.AppendChild(yVis);
-                    //==========
                     //属性数据写入xml
+                    XmlElement xtable = dtableToXelm(lay.Table, xmlVer);
+                    xfolder.AppendChild(xtable);
                     // 图层中没有元素怎么办？这个之后解决掉
                     switch (lay.mapType) {
                         case iType.PointD:
@@ -223,20 +224,22 @@ namespace LinkMapObject {
                                 XmlElement kcdr = xmlVer.CreateElement("coordinates");
                                 kcdr.InnerText = lineToCoord(poly);
                                 XmlElement kpmk = xmlVer.CreateElement("Placemark");
-                                XmlElement kpoi = xmlVer.CreateElement("LineString");
-                                kpoi.AppendChild(kcdr);
-                                kpmk.AppendChild(kpoi);
+                                XmlElement kline = xmlVer.CreateElement("LineString");
+                                kline.AppendChild(kcdr);
+                                kpmk.AppendChild(kline);
                                 xfolder.AppendChild(kpmk);
                             }
                             break;
                         case iType.Polygon:
                             foreach (Polygon poly in lay) {
-                                XmlElement kcdr = xmlVer.CreateElement("coordinates");
-                                kcdr.InnerText = lineToCoord(poly);
                                 XmlElement kpmk = xmlVer.CreateElement("Placemark");
                                 XmlElement kpoi = xmlVer.CreateElement("Polygon");
                                 XmlElement kobi = xmlVer.CreateElement("outerBoundaryIs");
-                                kobi.AppendChild(kcdr);
+                                XmlElement kline = xmlVer.CreateElement("LinearRing");//注意不是LineString
+                                XmlElement kcdr = xmlVer.CreateElement("coordinates");
+                                kcdr.InnerText = lineToCoord(poly);
+                                kline.AppendChild(kcdr);
+                                kobi.AppendChild(kline);
                                 kpoi.AppendChild(kobi);
                                 kpmk.AppendChild(kpoi);
                                 xfolder.AppendChild(kpmk);
@@ -257,7 +260,7 @@ namespace LinkMapObject {
                 xmlVer.AppendChild(rootElt);
                 xmlVer.Save(_egisFile);
             }
-            catch  {
+            catch (Exception exp) {
                 
             }
         }
@@ -268,15 +271,18 @@ namespace LinkMapObject {
         #region 辅助函数
         //节点转DataTable
         private DataTable nodeToDataTable (XmlElement xdt) {
+            DataTable dc = new DataTable();
+            if (xdt == null)
+                return dc;
             XmlElement xcol = xdt["col"];
             string[] cols = xcol.InnerText.Trim().Split(' ');
-            DataTable dc = new DataTable();
+            
             foreach (string c in cols) {
                 dc.Columns.Add(c, typeof(String));
             }
             try {
                 foreach (XmlNode xr in xdt.GetElementsByTagName("row")) {
-                    string[] rows = xr.InnerText.Trim().Split(' ');
+                    string[] rows = xr.InnerText.Trim().Split(' ');//用空格分隔确实有风险
                     DataRow dr = dc.NewRow();
                     for (int i = 0; i < rows.Length; i++) {
                         dr[i] = rows[i];
@@ -290,6 +296,56 @@ namespace LinkMapObject {
             return dc;
         }
 
+        private XmlElement dtableToXelm (DataTable dat,XmlDocument xver) {
+            XmlElement xTable = xver.CreateElement("DTable");
+            XmlElement xcol= xver.CreateElement("col");
+            //要解决好空值的情况
+            //DataColumn dc=dat.
+            string scol = "";
+            //为了处理空值，还是用i；不用foreach
+            int colc = dat.Columns.Count;
+            for (int i = 0; i < colc; i++) {
+                if (i == 0) {//当然列名不至于为空
+                    scol = dat.Columns[i].ColumnName;
+                }
+                else {
+                    scol = scol + " " + dat.Columns[i].ColumnName;
+                }
+            }
+            xcol.InnerText = scol;
+            xTable.AppendChild(xcol);
+            foreach(DataRow dr in dat.Rows) {
+                object[] wdk = dr.ItemArray;
+                int wklen = wdk.Length;
+                string[] wdr = new string[wklen];
+                if (wklen > 0) {
+                    try {
+                        for (int i = 0; i < wklen; i++) {
+                            wdr[i] = Convert.ToString(wdk[i]).Trim().Replace(' ','_');
+                        }
+                    }
+                    catch {
+
+                    }
+                }
+                XmlElement xrow= xver.CreateElement("row");
+                xrow.InnerText = strlstTostr(wdr, " ");
+                xTable.AppendChild(xrow);
+            }
+            return xTable;
+        }
+        private string strlstTostr (string[] slst,string tt) {
+            string aw = ""; //tt默认为空格
+            for(int j = 0; j < slst.Length; j++) {
+                if (j == 0) {
+                    aw = slst[j];
+                }
+                else {
+                    aw = aw + tt + slst[j];
+                }
+            }
+            return aw;
+        }
         public List<PointD> strToPList (string coor) {
             List<PointD> oPlst = new List<PointD>();
             string[] clst = coor.Trim().Split(' ');//

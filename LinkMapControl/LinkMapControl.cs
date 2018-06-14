@@ -271,7 +271,11 @@ namespace LinkMapObject
         {
             return wholeMap.GetCurLayer;
         }
-
+        public void UpdateTable (DataTable dw) {
+            LinkLayer lw = wholeMap.GetCurLayer;
+            lw.Table = dw;
+            wholeMap.RefreshCurLayer(lw);
+        }
         /// <summary>
         /// 以指定点为中心，以指定系数进行缩放
         /// </summary>
@@ -305,7 +309,11 @@ namespace LinkMapObject
             this.Cursor = mCur_ZoomIn;
 
         }
-
+        public int mapLayerNum {
+            get {
+                return wholeMap.LayerNum;
+            }
+        }
         /// <summary>
         /// 将地图操作设置为缩小状态
         /// </summary>
@@ -1467,7 +1475,37 @@ namespace LinkMapObject
         }
 
 
-
+        //把dat写入到一个msg，debug用
+        public void dtableToXelm (DataTable dat) {
+            string scol = "";
+            //为了处理空值，还是用i；不用foreach
+            int colc = dat.Columns.Count;
+            for (int i = 0; i < colc; i++) {
+                if (i == 0) {//当然列名不至于为空
+                    scol = dat.Columns[i].ColumnName;
+                }
+                else {
+                    scol = scol + " " + dat.Columns[i].ColumnName;
+                }
+            }
+            scol = scol + "\n";
+            foreach (DataRow dr in dat.Rows) {
+                object[] wdk = dr.ItemArray;
+                int wklen = wdk.Length;
+                //string[] wdr = new string[wklen];
+                if (wklen > 0) {
+                    try {
+                        for (int i = 0; i < wklen; i++) {
+                            //wdr[i] = Convert.ToString(wdk[i]).Trim().Replace(' ', '_');
+                            scol = scol + Convert.ToString(wdk[i]).Trim();
+                        }
+                    }
+                    catch {}
+                }
+                scol += "\n";
+            }
+            MessageBox.Show(scol);
+        }
         #endregion
 
 

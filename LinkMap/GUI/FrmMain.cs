@@ -134,7 +134,12 @@ namespace LinkMap
             }
         }
         private void 查看属性表ToolStripMenuItem_Click (object sender, EventArgs e) {
+            if (LinkMapControl1.mapLayerNum == 0) {
+                MessageBox.Show("当前无图层!", "tips", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             GUI.attributeForm attf = new GUI.attributeForm();
+            //目前查看的是当前图层的属性表，想看选中图层的属性表之后再拓展，目前不写
             LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
             DataTable dat = lay.Table;
             if (dat.Rows.Count==0) {
@@ -147,6 +152,21 @@ namespace LinkMap
             attf.Show();
         }
 
+        private void 编辑属性表ToolStripMenuItem_Click (object sender, EventArgs e) {
+            if (LinkMapControl1.mapLayerNum == 0) {
+                MessageBox.Show("当前无图层","tips",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                return;
+            }
+            GUI.editAttForm eAtt = new GUI.editAttForm();
+            
+            LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
+            eAtt.eafDT = lay.Table;
+            if (eAtt.ShowDialog() == DialogResult.Cancel) {
+                DataTable dw = eAtt.eafDT;
+                //LinkMapControl1.dtableToXelm(dw);
+                LinkMapControl1.UpdateTable(dw);
+            }
+        }
         private void 在选定位置添加点ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddPoint ap = new AddPoint();
