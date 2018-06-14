@@ -83,7 +83,7 @@ namespace LinkMapObject {
                     catch {
                         lay.Name = "layer" + numLay.ToString();
                     }
-                    string visibility = "0";
+                    string visibility = "1";
                     try { 
                         visibility = fea["visibility"].InnerText;
                     }catch { }
@@ -92,7 +92,7 @@ namespace LinkMapObject {
                     }else if (visibility == "1") {
                         lay.IsVisble = true;
                     }
-                    else {//kml里这是false
+                    else {//kml里这是false 除0 1之外的数值
                         lay.IsVisble = true;
                     }
 

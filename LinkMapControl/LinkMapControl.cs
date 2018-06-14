@@ -200,7 +200,11 @@ namespace LinkMapObject
                 return wholeMap.getAllLayerName;
             }
         }
-
+        public List<string[]> getAllLayerVisName {
+            get {
+                return wholeMap.getAllLayerVisName;
+            }
+        }
 
         #endregion
 

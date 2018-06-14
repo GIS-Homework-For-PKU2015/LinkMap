@@ -59,6 +59,8 @@ namespace LinkMap
         }
 
         private void btnOKnewMap_Click (object sender, EventArgs e) {
+            _mapName = this.MapNameTextBox.Text;
+            _disc = this.textBox1.Text;
             this.DialogResult = DialogResult.OK;
         }
 

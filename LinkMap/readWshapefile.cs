@@ -76,10 +76,10 @@ namespace LinkMap {
         /// <summary>
         /// 读入shp，并生成一个图层
         /// </summary>
-        public void readShp () {
-            ReadToLayer();
+        public bool readShp () {
+            return ReadToLayer();
             //注意shp得到的多边形起点和终点一样，这个可能和我们画的不一样，要区分好，编辑节点可能有问题
-            //试过了，目前的编辑有合并点的机制，所以这个不影响，也许合并点的机制需要改掉
+            
         }
         public void readDbf () {
             ReadDbfToLayer();
@@ -105,7 +105,7 @@ namespace LinkMap {
 
         #endregion
         #region 私有函数
-        private void ReadToLayer () {
+        private bool ReadToLayer () {
             //1，读入
             OpenFileDialog openShpFD = new OpenFileDialog();
             openShpFD.Filter = "shapefile(*.shp)|*.shp|All files(*.*)|*.*";
@@ -115,7 +115,7 @@ namespace LinkMap {
                 splitPathToName();
             }
             else {
-                return;
+                return false;
             }
             FileStream fs = new FileStream(_fileShp, FileMode.Open);
             BinaryReader brShp = new BinaryReader(fs);
@@ -301,7 +301,7 @@ namespace LinkMap {
 
 
 
-
+            return true;
             //2，展示到mapControl上   应该是生成一个新图层
 
         }

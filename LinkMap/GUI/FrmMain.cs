@@ -82,8 +82,12 @@ namespace LinkMap
                         LinkLayerBox.Nodes[0].Nodes[k].Remove();
                     }
                 }
-                foreach (string w in LinkMapControl1.getAllLayerName) {
-                    LinkLayerBox.Nodes[0].Nodes.Insert(0, w);
+                foreach (string[] w in LinkMapControl1.getAllLayerVisName) {
+                    LinkLayerBox.Nodes[0].Nodes.Insert(0, w[0]);
+                    mjudgementcheckbox = 0;
+                    if (w[1] == "1") {
+                        LinkLayerBox.Nodes[0].Nodes[0].Checked = true;
+                    }//else{}
                 }
 
                 LinkLayerBox.Nodes[0].ExpandAll();
@@ -114,7 +118,9 @@ namespace LinkMap
         {
             
             readWshapefile rwshp = new readWshapefile();
-            rwshp.readShp();
+            if (rwshp.readShp() == false) {
+                return;
+            }
             rwshp.readDbf();
             LinkMapControl1.AddLayer(rwshp.GetShpLayer);
             LinkLayerBox.Nodes[0].Nodes.Insert(0, rwshp.LayerName);//这个应该由LinkMapControl管理吧

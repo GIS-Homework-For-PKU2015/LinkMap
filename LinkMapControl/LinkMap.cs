@@ -94,6 +94,7 @@ namespace LinkMapObject
         /// <returns>a LinkLayer</returns>
         public LinkLayer GetLayerByIndex (int idx) {
             return _items[idx];//不在这里进行idx是否超出的判断
+            
         }
 
 
@@ -118,7 +119,23 @@ namespace LinkMapObject
                 return layNum;
             }
         }
-
+        public List<string[]> getAllLayerVisName {
+            get {
+                List<string[]> layVis = new List<string[]>();
+                for (int i = 0; i < _items.Count; i++) {
+                    string[] layNum = new string[2];
+                    layNum[0] = _items[i].Name;
+                    if (_items[i].IsVisble) {
+                        layNum[1] = "1";
+                    }
+                    else {
+                        layNum[1] = "0";
+                    }
+                    layVis.Add(layNum);
+                }
+                return layVis;
+            }
+        }
 
 
         #endregion

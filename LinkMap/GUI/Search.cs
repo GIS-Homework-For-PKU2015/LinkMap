@@ -12,7 +12,7 @@ namespace LinkMap
     public partial class Search : Form
     {
         private DataTable _innerDT;
-        private string _sqlText = "id=5";
+        private string _sqlText = "ID=5";
         public Search()
         {
             InitializeComponent();
