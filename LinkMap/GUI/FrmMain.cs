@@ -250,7 +250,7 @@ namespace LinkMap
 
         }
 
-        //删除要素
+        //删除要素 目前是删除图层
         private void btnLinkDelete_Click(object sender, EventArgs e)
         {
             for(int i=0;i<LinkLayerBox.Nodes[0].GetNodeCount(false);i++)

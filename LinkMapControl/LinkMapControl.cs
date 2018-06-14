@@ -704,7 +704,7 @@ namespace LinkMapObject
                 case 12:         //编辑要素  移动要素
                     if (e.Button == MouseButtons.Left) {
                         _editNearPoi = 1;
-                    }else if (e.Button == MouseButtons.Right && e.Clicks == 20) {//增加节点
+                    }else if (e.Button == MouseButtons.Middle ) {//增加节点
                         //需要计算加点的位置应该加在哪个节点上，这部分逻辑还需要时间去写，作为暂存功能。
                         _curLayer = wholeMap.GetCurLayer;
                         switch (_curLayer.mapType) {
@@ -721,7 +721,8 @@ namespace LinkMapObject
                                     PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                     for (int k = 0; k < line.PointCount; k++) {
                                         PointD ld = line.getLineByIdx(k);
-                                        if (Math.Abs(md.X - ld.X) < 40 && Math.Abs(md.Y - ld.Y) < 40) {
+                                        double thd = 40 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) <thd && Math.Abs(md.Y - ld.Y) < thd) {
                                             line.insertPoint(k,md);
                                             _curLayer.setFeatureByIdx(i, line);
                                             wholeMap.RefreshCurLayer(_curLayer);
@@ -739,7 +740,8 @@ namespace LinkMapObject
                                     PointD md = ToMapPoint(new PointD(e.Location.X, e.Location.Y));
                                     for (int k = 0; k < line.PointCount; k++) {
                                         PointD ld = line.getPoiByIdx(k);
-                                        if (Math.Abs(md.X - ld.X) < 40 && Math.Abs(md.Y - ld.Y) < 40) {
+                                        double thd = 40 * _DisplayScale;
+                                        if (Math.Abs(md.X - ld.X) < thd && Math.Abs(md.Y - ld.Y) < thd) {
                                             line.insertPoint(k, md);
                                             _curLayer.setFeatureByIdx(i, line);
                                             wholeMap.RefreshCurLayer(_curLayer);
