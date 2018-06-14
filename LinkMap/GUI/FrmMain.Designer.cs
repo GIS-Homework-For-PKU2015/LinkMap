@@ -64,12 +64,14 @@
             this.LinkLayerBox = new System.Windows.Forms.TreeView();
             this.LinkPointLocation = new System.Windows.Forms.Label();
             this.tss2 = new System.Windows.Forms.Label();
-            this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
             this.cmstripLayer = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.重命名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看属性表ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.增加图层ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除图层ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.LinkMapControl1 = new LinkMapObject.LinkMapControl();
+            this.注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.添加注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Linkmenu.SuspendLayout();
             this.ScripLink.SuspendLayout();
             this.cmstripLayer.SuspendLayout();
@@ -82,7 +84,8 @@
             this.LinkFileToolStripMenuItem,
             this.LinkEditToolStripMenuItem,
             this.LinkLayerToolStripMenuItem,
-            this.LinkSearchToolStripMenuItem});
+            this.LinkSearchToolStripMenuItem,
+            this.注记ToolStripMenuItem});
             this.Linkmenu.Location = new System.Drawing.Point(0, 0);
             this.Linkmenu.Name = "Linkmenu";
             this.Linkmenu.Size = new System.Drawing.Size(1252, 39);
@@ -353,8 +356,9 @@
             this.LinkLayerBox.AllowDrop = true;
             this.LinkLayerBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LinkLayerBox.CheckBoxes = true;
+            this.LinkLayerBox.LabelEdit = true;
             this.LinkLayerBox.Location = new System.Drawing.Point(16, 152);
-            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4);
             this.LinkLayerBox.Name = "LinkLayerBox";
             treeNode1.Checked = true;
             treeNode1.Name = "LinkMapNode";
@@ -363,12 +367,13 @@
             treeNode1});
             this.LinkLayerBox.Size = new System.Drawing.Size(304, 602);
             this.LinkLayerBox.TabIndex = 3;
+            this.LinkLayerBox.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.LinkLayerBox_AfterLabelEdit);
             this.LinkLayerBox.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.LinkLayerBox_AfterCheck);
             this.LinkLayerBox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.LinkLayerBox_ItemDrag);
+            this.LinkLayerBox.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.LinkLayerBox_NodeMouseDoubleClick);
             this.LinkLayerBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragDrop);
             this.LinkLayerBox.DragEnter += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragEnter);
             this.LinkLayerBox.DragOver += new System.Windows.Forms.DragEventHandler(this.LinkLayerBox_DragOver);
-            this.LinkLayerBox.MouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventArgs(this.LinkLayerBox_MouseDoubleClick);
             // 
             // LinkPointLocation
             // 
@@ -388,32 +393,6 @@
             this.tss2.Size = new System.Drawing.Size(82, 24);
             this.tss2.TabIndex = 6;
             this.tss2.Text = "1:1.00";
-            // 
-            // LinkMapControl1
-            // 
-            this.LinkMapControl1.BackColor = System.Drawing.Color.White;
-            this.LinkMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.LinkMapControl1.BoundaryColor = System.Drawing.Color.Black;
-            this.LinkMapControl1.DisplayScale = 1D;
-            this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
-            this.LinkMapControl1.Location = new System.Drawing.Point(328, 152);
-            this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.LinkMapControl1.Name = "LinkMapControl1";
-            this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
-            this.LinkMapControl1.SelectedFea = ((System.Collections.Generic.List<object>)(resources.GetObject("LinkMapControl1.SelectedFea")));
-            this.LinkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
-            this.LinkMapControl1.SelfMouseWheel = true;
-            this.LinkMapControl1.Size = new System.Drawing.Size(914, 600);
-            this.LinkMapControl1.TabIndex = 4;
-            this.LinkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
-            this.LinkMapControl1.TrackingFinshed += new LinkMapObject.LinkMapControl.TrackingFinishedHandle(this.LinkMapControl1_TrackingFinshed);
-            this.LinkMapControl1.TrackingPolylineFinshed += new LinkMapObject.LinkMapControl.TrackingPolylineFinishedHandle(this.LinkMapControl1_TrackingPolylineFinshed);
-            this.LinkMapControl1.TrackingPointFinshed += new LinkMapObject.LinkMapControl.TrackingPointFinishedHandle(this.LinkMapControl1_TrackingPointFinshed);
-            this.LinkMapControl1.DispalyCsaleChanged += new LinkMapObject.LinkMapControl.DispalyScaleChangeHandle(this.LinkMapControl1_DispalyCsaleChanged);
-            this.LinkMapControl1.SelectingFinshed += new LinkMapObject.LinkMapControl.SelectingFinishedHandle(this.LinkMapControl1_SelectingFinshed);
-            this.LinkMapControl1.GetTreeViewIndex += new LinkMapObject.LinkMapControl.GetTreeViewIndexHandle(this.LinkMapControl1_GetTreeViewIndex);
-            this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
-            this.LinkMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl1_MouseMove);
             // 
             // cmstripLayer
             // 
@@ -454,6 +433,47 @@
             this.删除图层ToolStripMenuItem1.Text = "删除图层";
             this.删除图层ToolStripMenuItem1.Click += new System.EventHandler(this.删除图层ToolStripMenuItem1_Click);
             // 
+            // LinkMapControl1
+            // 
+            this.LinkMapControl1.BackColor = System.Drawing.Color.White;
+            this.LinkMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.LinkMapControl1.BoundaryColor = System.Drawing.Color.Black;
+            this.LinkMapControl1.DisplayScale = 1D;
+            this.LinkMapControl1.FillColor = System.Drawing.Color.Tomato;
+            this.LinkMapControl1.Location = new System.Drawing.Point(328, 152);
+            this.LinkMapControl1.Margin = new System.Windows.Forms.Padding(2);
+            this.LinkMapControl1.Name = "LinkMapControl1";
+            this.LinkMapControl1.Polygon = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.SelectedFea = ((System.Collections.Generic.List<object>)(resources.GetObject("LinkMapControl1.SelectedFea")));
+            this.LinkMapControl1.SelectedPolygon = new LinkMapObject.Polygon[0];
+            this.LinkMapControl1.SelfMouseWheel = true;
+            this.LinkMapControl1.Size = new System.Drawing.Size(914, 600);
+            this.LinkMapControl1.TabIndex = 4;
+            this.LinkMapControl1.TrackingColor = System.Drawing.Color.DarkGreen;
+            this.LinkMapControl1.TrackingFinshed += new LinkMapObject.LinkMapControl.TrackingFinishedHandle(this.LinkMapControl1_TrackingFinshed);
+            this.LinkMapControl1.TrackingPolylineFinshed += new LinkMapObject.LinkMapControl.TrackingPolylineFinishedHandle(this.LinkMapControl1_TrackingPolylineFinshed);
+            this.LinkMapControl1.TrackingPointFinshed += new LinkMapObject.LinkMapControl.TrackingPointFinishedHandle(this.LinkMapControl1_TrackingPointFinshed);
+            this.LinkMapControl1.DispalyCsaleChanged += new LinkMapObject.LinkMapControl.DispalyScaleChangeHandle(this.LinkMapControl1_DispalyCsaleChanged);
+            this.LinkMapControl1.SelectingFinshed += new LinkMapObject.LinkMapControl.SelectingFinishedHandle(this.LinkMapControl1_SelectingFinshed);
+            this.LinkMapControl1.GetTreeViewIndex += new LinkMapObject.LinkMapControl.GetTreeViewIndexHandle(this.LinkMapControl1_GetTreeViewIndex);
+            this.LinkMapControl1.Load += new System.EventHandler(this.LinkMapControl1_Load);
+            this.LinkMapControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LinkMapControl1_MouseMove);
+            // 
+            // 注记ToolStripMenuItem
+            // 
+            this.注记ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加注记ToolStripMenuItem});
+            this.注记ToolStripMenuItem.Name = "注记ToolStripMenuItem";
+            this.注记ToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
+            this.注记ToolStripMenuItem.Text = "注记";
+            // 
+            // 添加注记ToolStripMenuItem
+            // 
+            this.添加注记ToolStripMenuItem.Name = "添加注记ToolStripMenuItem";
+            this.添加注记ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.添加注记ToolStripMenuItem.Text = "添加注记";
+            this.添加注记ToolStripMenuItem.Click += new System.EventHandler(this.添加注记ToolStripMenuItem_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -468,7 +488,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Linkmenu;
-            this.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
+            this.Margin = new System.Windows.Forms.Padding(8);
             this.MaximizeBox = false;
             this.Name = "FrmMain";
             this.Text = "LinkMap";
@@ -523,6 +543,8 @@
         private System.Windows.Forms.ToolStripMenuItem 查看属性表ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 增加图层ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 删除图层ToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem 注记ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 添加注记ToolStripMenuItem;
     }
 }
 

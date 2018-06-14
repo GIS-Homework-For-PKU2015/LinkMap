@@ -499,9 +499,38 @@ namespace LinkMap
 
         }
 
-        private void LinkLayerBox_MouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void LinkLayerBox_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             e.Node.BeginEdit();
         }
+
+
+        private void LinkLayerBox_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            string sNewName = e.Label;
+            string sOldName = e.Node.Text;
+
+            for (int i = 0;i<LinkMapControl1.mapLayerNum;i++)
+            {
+                LinkMapControl1.GetRealLayerByName(sOldName).Name = sNewName;
+            }
+        }
+
+        private void 添加注记ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //if (LinkMapControl1.mapLayerNum == 0)
+            //    return;
+            //DataTable wd = LinkMapControl1.GetCurlayer().Table;
+            //List<LinkMapControl.BaseLabel> listlabel = new List<LinkMapControl.BaseLabel>();
+            //int sRowCount = wd.Rows.Count;
+            //for(int i=0;i<sRowCount;i++)
+            //{
+            //    LinkMapControl.BaseLabel baselabel=new LinkMapControl.BaseLabel();
+            //    baselabel.Text = wd.Rows[i].ItemArray[0].ToString();
+            //}
+
+
+        }
+
     }
 }
