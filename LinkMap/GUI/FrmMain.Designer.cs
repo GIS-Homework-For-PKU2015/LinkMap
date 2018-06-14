@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("LinkMap");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -382,11 +382,11 @@
             this.LinkLayerBox.Location = new System.Drawing.Point(16, 152);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            treeNode1.Checked = true;
-            treeNode1.Name = "LinkMapNode";
-            treeNode1.Text = "LinkMap";
+            treeNode2.Checked = true;
+            treeNode2.Name = "LinkMapNode";
+            treeNode2.Text = "LinkMap";
             this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.LinkLayerBox.Size = new System.Drawing.Size(304, 602);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.LinkLayerBox_AfterLabelEdit);
