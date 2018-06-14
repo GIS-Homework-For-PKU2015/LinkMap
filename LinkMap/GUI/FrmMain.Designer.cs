@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("LinkMap");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -342,12 +342,12 @@
             this.LinkLayerBox.Location = new System.Drawing.Point(8, 76);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(2);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            treeNode3.Checked = true;
-            treeNode3.Name = "LinkMapNode";
-            treeNode3.Text = "LinkMap";
+            treeNode2.Checked = true;
+            treeNode2.Name = "LinkMapNode";
+            treeNode2.Text = "LinkMap";
             this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3});
-            this.LinkLayerBox.Size = new System.Drawing.Size(153, 302);
+            treeNode2});
+            this.LinkLayerBox.Size = new System.Drawing.Size(272, 600);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.LinkLayerBox_AfterCheck);
             this.LinkLayerBox.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.LinkLayerBox_ItemDrag);
