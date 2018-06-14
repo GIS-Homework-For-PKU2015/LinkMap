@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("LinkMap");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("LinkMap");
             this.Linkmenu = new System.Windows.Forms.MenuStrip();
             this.LinkFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,7 +54,6 @@
             this.注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ScripLink = new System.Windows.Forms.ToolStrip();
-            this.btnLinkIdentity = new System.Windows.Forms.ToolStripButton();
             this.btnLinkZoomIn = new System.Windows.Forms.ToolStripButton();
             this.btnLinkZoomOut = new System.Windows.Forms.ToolStripButton();
             this.btnLinkPan = new System.Windows.Forms.ToolStripButton();
@@ -258,7 +257,6 @@
             this.ScripLink.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.ScripLink.ImeMode = System.Windows.Forms.ImeMode.On;
             this.ScripLink.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnLinkIdentity,
             this.btnLinkZoomIn,
             this.btnLinkZoomOut,
             this.btnLinkPan,
@@ -274,16 +272,6 @@
             this.ScripLink.Size = new System.Drawing.Size(1275, 39);
             this.ScripLink.TabIndex = 1;
             this.ScripLink.Text = "toolStrip1";
-            // 
-            // btnLinkIdentity
-            // 
-            this.btnLinkIdentity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLinkIdentity.Image = ((System.Drawing.Image)(resources.GetObject("btnLinkIdentity.Image")));
-            this.btnLinkIdentity.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLinkIdentity.Name = "btnLinkIdentity";
-            this.btnLinkIdentity.Size = new System.Drawing.Size(36, 36);
-            this.btnLinkIdentity.Text = "Identity";
-            this.btnLinkIdentity.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // btnLinkZoomIn
             // 
@@ -384,11 +372,11 @@
             this.LinkLayerBox.Location = new System.Drawing.Point(16, 152);
             this.LinkLayerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LinkLayerBox.Name = "LinkLayerBox";
-            treeNode2.Checked = true;
-            treeNode2.Name = "LinkMapNode";
-            treeNode2.Text = "LinkMap";
+            treeNode1.Checked = true;
+            treeNode1.Name = "LinkMapNode";
+            treeNode1.Text = "LinkMap";
             this.LinkLayerBox.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode2});
+            treeNode1});
             this.LinkLayerBox.Size = new System.Drawing.Size(304, 602);
             this.LinkLayerBox.TabIndex = 3;
             this.LinkLayerBox.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.LinkLayerBox_AfterLabelEdit);
@@ -523,7 +511,6 @@
         private System.Windows.Forms.ToolStrip ScripLink;
         private System.Windows.Forms.ToolStripButton btnLinkZoomIn;
         private System.Windows.Forms.ToolStripButton btnLinkZoomOut;
-        private System.Windows.Forms.ToolStripButton btnLinkIdentity;
         private System.Windows.Forms.ToolStripButton btnLinkEdit;
         private System.Windows.Forms.ToolStripButton btnLinkSelcet;
         private System.Windows.Forms.ToolStripButton btnLinkDrawPoints;
