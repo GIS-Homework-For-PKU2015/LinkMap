@@ -511,6 +511,20 @@ namespace LinkMapObject
             return -1;
         }
 
+        public LinkLayer GetRealLayerByName(string name)
+        {
+            
+            for (int i = 0; i < wholeMap.LayerNum; i++)
+            {
+                if (wholeMap.GetLayerByIndex(i).Name == name)
+                {
+                    return wholeMap.GetLayerByIndex(i);
+                    break;
+                }
+            }
+            return wholeMap.GetLayerByIndex(0);
+        }
+
         //改变图层可视化状态
         public void MapChangeSelectedLayerVisible(int sLayer)
         {

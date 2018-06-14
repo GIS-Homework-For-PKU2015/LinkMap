@@ -151,6 +151,7 @@ namespace LinkMapObject
         public IEnumerator<object> GetEnumerator () {
             return _items.GetEnumerator();
         }
+
         public DataTable Table {
             get {
                 return _dt;

@@ -152,7 +152,7 @@ namespace LinkMapControl
         /// <param name="priority">Label priority used for collision detection</param>
         /// <param name="collisionbox">Box around label for collision detection</param>
         /// <param name="style">The style of the label</param>
-        protected BaseLabel(string text, float rotation, int priority, LabelBox collisionbox,LabelStyle style)
+        public BaseLabel(string text, float rotation, int priority, LabelBox collisionbox,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
@@ -169,7 +169,7 @@ namespace LinkMapControl
         /// <param name="rotation"></param>
         /// <param name="priority"></param>
         /// <param name="style"></param>
-        protected BaseLabel(string text, float rotation, int priority,LabelStyle style)
+        public BaseLabel(string text, float rotation, int priority,LabelStyle style)
         {
             _Text = text;
             //_LabelPoint = labelpoint;
