@@ -64,7 +64,8 @@ namespace LinkMapObject
 
 
         //渲染类型
-        public int Renderertype = 0; 
+        public int Renderertype = 0;
+        public List<Color> mColorList= new List<Color>();
         #endregion
 
 
@@ -1264,7 +1265,9 @@ namespace LinkMapObject
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             List<int> aw = new List<int>();
 
-            SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+
+            
+
             Pen sPolygonPen = new Pen(_BoundaryColor, mcBoundaryWidth);
 
             foreach (LinkLayer elay in wholeMap)
@@ -1301,9 +1304,9 @@ namespace LinkMapObject
 
                             break;
                         case iType.Polygon:
+                            int sindex = 0;
                             foreach (Polygon pg in elay)
                             {
-                                Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
                                 int sPointCount = pg.PointCount;  //由于绘图必须要用vs自带的PointF，所以要进行转换。
                                 PointF[] sScreenPoints = new PointF[sPointCount];   //新建点数组
                                 for (int j = 0; j < sPointCount; j++)
@@ -1312,10 +1315,48 @@ namespace LinkMapObject
                                     sScreenPoints[j].X = (float)sScreenPoint.X;         //将转换后的点输入数组
                                     sScreenPoints[j].Y = (float)sScreenPoint.Y;
                                 }
+                                if (Renderertype == 0)
+                                {
+                                    Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+                                    g.DrawPolygon(sPen, sScreenPoints);
+                                    g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                    sPen.Dispose();
+                                    sPolygonBrush.Dispose();
+                                }
+                                else if (Renderertype == 1)
+                                {
+                                    Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                        _FillColor = mColorList[sindex];
+                                        sindex++;
+                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+
+
+                                    g.DrawPolygon(sPen, sScreenPoints);
+                                    g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                    sPen.Dispose();
+                                    sPolygonBrush.Dispose();
+                                }
+                                else if (Renderertype == 2)
+                                {
+                                    Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                    SolidBrush sPolygonBrush = new SolidBrush(SystemColors.ActiveBorder);
+                                    g.DrawPolygon(sPen, sScreenPoints);
+                                    g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                    sPen.Dispose();
+                                    sPolygonBrush.Dispose();
+                                }
+                                else
+                                {
+                                    Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
+                                    SolidBrush sPolygonBrush = new SolidBrush(_FillColor);
+                                    g.DrawPolygon(sPen, sScreenPoints);
+                                    g.FillPolygon(sPolygonBrush, sScreenPoints);
+                                    sPen.Dispose();
+                                    sPolygonBrush.Dispose();
+                                }
                                 //绘制多边形
-                                g.DrawPolygon(sPen, sScreenPoints);
-                                g.FillPolygon(sPolygonBrush, sScreenPoints);
-                                sPen.Dispose();
+
                             }
                             break;
                         case iType.MultiPolygon: //drawpath
