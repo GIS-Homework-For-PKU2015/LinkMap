@@ -92,6 +92,12 @@
     <Compile Include="GUI\Identity.Designer.cs">
       <DependentUpon>Identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\renameMapPrioj.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\renameMapPrioj.Designer.cs">
+      <DependentUpon>renameMapPrioj.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GUI\Search.cs">
@@ -124,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\Identity.resx">
       <DependentUpon>Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\renameMapPrioj.resx">
+      <DependentUpon>renameMapPrioj.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

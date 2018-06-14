@@ -36,8 +36,26 @@ namespace LinkMap
         #region 菜单栏事件
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("新建工程会关闭目前工程，确认执行？", "提示", MessageBoxButtons.OKCancel) == DialogResult.Cancel) {
+                return;
+            }
             CreatMap cm = new CreatMap();
-            cm.ShowDialog();
+
+            DialogResult dcm = cm.ShowDialog();
+            if (dcm == DialogResult.OK) {
+                string newName = cm.mapName;
+                string disef = cm.Desc;
+                _mapFile = cm.SavePath;
+                this.Text = newName;
+                int nc = LinkLayerBox.Nodes[0].Nodes.Count;
+                if (nc > 0) {//删掉所有现有节点
+                    for (int k = nc - 1; k >= 0; k--) {
+                        LinkLayerBox.Nodes[0].Nodes[k].Remove();
+                    }
+                }
+                LinkMapControl1.NewAmap(newName, disef);
+                
+            }
         }
         //**打开**按钮会执行的操作
         private void 导入ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -173,7 +191,10 @@ namespace LinkMap
         private void 在选定位置添加点ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AddPoint ap = new AddPoint();
-            ap.ShowDialog();
+            DialogResult diaw= ap.ShowDialog();
+            if (diaw == DialogResult.OK) {
+                LinkMapControl1.AddPointToMap(ap.X, ap.Y);
+            }
         }
 
 
@@ -442,7 +463,7 @@ namespace LinkMap
 
         #endregion
 
-#region 右键菜单栏
+        #region 右键菜单栏
         private void 查看属性表ToolStripMenuItem1_Click (object sender, EventArgs e) {
             if (LinkMapControl1.mapLayerNum == 0) {
                 MessageBox.Show("当前无图层。", "tips", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -497,6 +518,16 @@ namespace LinkMap
 
         private void 重命名ToolStripMenuItem_Click (object sender, EventArgs e) {
 
+        }
+
+        private void 设置地图名称ToolStripMenuItem_Click (object sender, EventArgs e) {
+            GUI.renameMapPrioj rename = new GUI.renameMapPrioj();
+            rename.Rname = this.Text;
+            DialogResult dir = rename.ShowDialog();
+            if (dir == DialogResult.OK) {
+                this.Text = rename.Rname;
+                LinkMapControl1.MapNameSet = this.Text;
+            }
         }
     }
 }

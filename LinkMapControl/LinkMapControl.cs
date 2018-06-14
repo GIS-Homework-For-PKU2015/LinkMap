@@ -661,40 +661,7 @@ namespace LinkMapObject
                     break;
                 case 6:         //add point
                     if (e.Button == MouseButtons.Left) {
-                        //判断当前图层是否是点图层 no->提醒用户；yes，加一个点
-                        //mStartPoint = e.Location;
-                        PointD poiw = new PointD(e.Location.X, e.Location.Y);
-                        PointD mpoiw = ToMapPoint(poiw);
-                        if (wholeMap.LayerNum == 0) {
-                            LinkLayer nlay = new LinkLayer(mpoiw);
-                            nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
-                            nlay.IsVisble = true;
-                            wholeMap.AddLayer(nlay);
-                            _curLayer = wholeMap.GetCurLayer;
-                            if (TrackingPointFinshed != null)
-                            {//进入frmMain的委托事件
-                                TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
-                            }
-                        }
-                        else {
-                            _curLayer = wholeMap.GetCurLayer;
-                            if (_curLayer.mapType == iType.PointD) {
-                                _curLayer.AddPointD(mpoiw);
-                                wholeMap.RefreshCurLayer(_curLayer);
-                            }
-                            else {
-                                LinkLayer nlay = new LinkLayer(mpoiw);
-                                nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
-                                nlay.IsVisble = true;
-                                wholeMap.AddLayer(nlay);
-                                _curLayer = wholeMap.GetCurLayer;
-                                if (TrackingPointFinshed != null)
-                                {//进入frmMain的委托事件
-                                    TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
-                                }
-                            }
-                        }
-                        Refresh();
+                        AddPointToMap(e.Location.X, e.Location.Y);
                     }
 
                     break;
@@ -1596,7 +1563,60 @@ namespace LinkMapObject
                 }
             }
         }
+        public string MapNameSet {
+            get {
+                return wholeMap.MapName;
+            }
+            set {
+                wholeMap.MapName = value;
+            }
+        }
+        public void NewAmap (string n,string d) {
+            wholeMap = new LinkMap();
+            wholeMap.MapName = n;
+            wholeMap.MapDescription = d;
+            _curLayer= wholeMap.GetCurLayer;
+            _SelectedFea.Clear();
+            _selectedMLid.Clear();
+            this.Refresh();
+        }
 
+        public void AddPointToMap (double ix,double iy) {
+            
+                //判断当前图层是否是点图层 no->提醒用户；yes，加一个点
+                //mStartPoint = e.Location;
+                PointD poiw = new PointD(ix, iy);
+                PointD mpoiw = ToMapPoint(poiw);
+                if (wholeMap.LayerNum == 0) {
+                    LinkLayer nlay = new LinkLayer(mpoiw);
+                    nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
+                    nlay.IsVisble = true;
+                    wholeMap.AddLayer(nlay);
+                    _curLayer = wholeMap.GetCurLayer;
+                    if (TrackingPointFinshed != null) {//进入frmMain的委托事件
+                        TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                    }
+                }
+                else {
+                    _curLayer = wholeMap.GetCurLayer;
+                    if (_curLayer.mapType == iType.PointD) {
+                        _curLayer.AddPointD(mpoiw);
+                        wholeMap.RefreshCurLayer(_curLayer);
+                    }
+                    else {
+                        LinkLayer nlay = new LinkLayer(mpoiw);
+                        nlay.Name = "Layer" + wholeMap.LayerNum.ToString();
+                        nlay.IsVisble = true;
+                        wholeMap.AddLayer(nlay);
+                        _curLayer = wholeMap.GetCurLayer;
+                        if (TrackingPointFinshed != null) {//进入frmMain的委托事件
+                            TrackingPointFinshed(this, mpoiw); //触发事件(问题出现在这里),换成mTrackingPolygon就可以填色，但是sTrackingPolygon不行
+                        }
+                    }
+                }
+                Refresh();
+            
+        }
 
         #endregion
 
