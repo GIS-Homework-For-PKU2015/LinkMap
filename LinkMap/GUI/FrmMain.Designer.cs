@@ -50,7 +50,6 @@
             this.编辑属性表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LinkSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.依据属性查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.依据几何查询ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加注记ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.简单符号法ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -192,36 +191,35 @@
             // 添加图层ToolStripMenuItem
             // 
             this.添加图层ToolStripMenuItem.Name = "添加图层ToolStripMenuItem";
-            this.添加图层ToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            this.添加图层ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.添加图层ToolStripMenuItem.Text = "添加图层";
             this.添加图层ToolStripMenuItem.Click += new System.EventHandler(this.添加图层ToolStripMenuItem_Click);
             // 
             // 删除图层ToolStripMenuItem
             // 
             this.删除图层ToolStripMenuItem.Name = "删除图层ToolStripMenuItem";
-            this.删除图层ToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            this.删除图层ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.删除图层ToolStripMenuItem.Text = "删除图层";
             this.删除图层ToolStripMenuItem.Click += new System.EventHandler(this.删除图层ToolStripMenuItem_Click);
             // 
             // 查看属性表ToolStripMenuItem
             // 
             this.查看属性表ToolStripMenuItem.Name = "查看属性表ToolStripMenuItem";
-            this.查看属性表ToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            this.查看属性表ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.查看属性表ToolStripMenuItem.Text = "查看属性表";
             this.查看属性表ToolStripMenuItem.Click += new System.EventHandler(this.查看属性表ToolStripMenuItem_Click);
             // 
             // 编辑属性表ToolStripMenuItem
             // 
             this.编辑属性表ToolStripMenuItem.Name = "编辑属性表ToolStripMenuItem";
-            this.编辑属性表ToolStripMenuItem.Size = new System.Drawing.Size(232, 38);
+            this.编辑属性表ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.编辑属性表ToolStripMenuItem.Text = "编辑属性表";
             this.编辑属性表ToolStripMenuItem.Click += new System.EventHandler(this.编辑属性表ToolStripMenuItem_Click);
             // 
             // LinkSearchToolStripMenuItem
             // 
             this.LinkSearchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.依据属性查询ToolStripMenuItem,
-            this.依据几何查询ToolStripMenuItem});
+            this.依据属性查询ToolStripMenuItem});
             this.LinkSearchToolStripMenuItem.Name = "LinkSearchToolStripMenuItem";
             this.LinkSearchToolStripMenuItem.Size = new System.Drawing.Size(74, 35);
             this.LinkSearchToolStripMenuItem.Text = "查询";
@@ -229,15 +227,9 @@
             // 依据属性查询ToolStripMenuItem
             // 
             this.依据属性查询ToolStripMenuItem.Name = "依据属性查询ToolStripMenuItem";
-            this.依据属性查询ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
+            this.依据属性查询ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.依据属性查询ToolStripMenuItem.Text = "依据属性查询";
             this.依据属性查询ToolStripMenuItem.Click += new System.EventHandler(this.依据属性查询ToolStripMenuItem_Click);
-            // 
-            // 依据几何查询ToolStripMenuItem
-            // 
-            this.依据几何查询ToolStripMenuItem.Name = "依据几何查询ToolStripMenuItem";
-            this.依据几何查询ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
-            this.依据几何查询ToolStripMenuItem.Text = "依据几何查询";
             // 
             // 注记ToolStripMenuItem
             // 
@@ -252,21 +244,21 @@
             // 添加注记ToolStripMenuItem
             // 
             this.添加注记ToolStripMenuItem.Name = "添加注记ToolStripMenuItem";
-            this.添加注记ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
+            this.添加注记ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.添加注记ToolStripMenuItem.Text = "添加注记";
             this.添加注记ToolStripMenuItem.Click += new System.EventHandler(this.添加注记ToolStripMenuItem_Click);
             // 
             // 简单符号法ToolStripMenuItem
             // 
             this.简单符号法ToolStripMenuItem.Name = "简单符号法ToolStripMenuItem";
-            this.简单符号法ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
+            this.简单符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.简单符号法ToolStripMenuItem.Text = "简单符号法";
             this.简单符号法ToolStripMenuItem.Click += new System.EventHandler(this.简单符号法ToolStripMenuItem_Click);
             // 
             // 唯一值符号法ToolStripMenuItem
             // 
             this.唯一值符号法ToolStripMenuItem.Name = "唯一值符号法ToolStripMenuItem";
-            this.唯一值符号法ToolStripMenuItem.Size = new System.Drawing.Size(256, 38);
+            this.唯一值符号法ToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.唯一值符号法ToolStripMenuItem.Text = "唯一值符号法";
             this.唯一值符号法ToolStripMenuItem.Click += new System.EventHandler(this.唯一值符号法ToolStripMenuItem_Click);
             // 
@@ -548,7 +540,6 @@
         private System.Windows.Forms.ToolStripMenuItem 删除图层ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 在选定位置添加点ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 依据属性查询ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 依据几何查询ToolStripMenuItem;
         private System.Windows.Forms.TreeView LinkLayerBox;
         private LinkMapObject.LinkMapControl LinkMapControl1;
         private System.Windows.Forms.Label LinkPointLocation;
