@@ -595,7 +595,12 @@ namespace LinkMap
                                          rnd.Next(0, 255),
                                          rnd.Next(0, 255)));
             }
-            LinkMapControl1.SetValueMapRenderer(1);
+
+
+            GUI.ValueRanderer vr = new GUI.ValueRanderer();
+            vr.ShowDialog();
+            int ValueIndex = vr.valueindex;
+            LinkMapControl1.SetValueMapRenderer(ValueIndex);
             LinkMapControl1.Renderertype = 2;
             Refresh();
         }

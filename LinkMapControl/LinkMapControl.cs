@@ -67,6 +67,7 @@ namespace LinkMapObject
         public int Renderertype = 0;
         public List<Color> mColorList= new List<Color>();
         Dictionary<string, string> sValueDic = new Dictionary<string, string>();
+        int valueindex = 0;
         #endregion
 
 
@@ -575,6 +576,7 @@ namespace LinkMapObject
 
         public void SetValueMapRenderer(int sindex)
         {
+            valueindex = sindex;
             _curLayer = wholeMap.GetCurLayer;
             DataTable scurdatatabel = _curLayer.Table;
             int j = 0;
@@ -1374,7 +1376,7 @@ namespace LinkMapObject
                                     Pen sPen = new Pen(_BoundaryColor, mcBoundaryWidth);
                                     foreach(string key in sValueDic.Keys)
                                     {
-                                        if(elay.Table.Rows[sindex][1].ToString()==key)
+                                        if(elay.Table.Rows[sindex][valueindex].ToString()==key)
                                         {
                                             _FillColor = mColorList[int.Parse(sValueDic[key])];
                                             break;
