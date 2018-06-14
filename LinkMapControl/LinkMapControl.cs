@@ -9,8 +9,7 @@ using System.Windows.Forms;
 
 namespace LinkMapObject
 {
-    public partial class LinkMapControl : UserControl
-    {
+    public partial class LinkMapControl : UserControl {
         #region 字段
         //设计时属性变量
         private Color _FillColor = Color.Tomato;    //多边形填充色
@@ -32,9 +31,10 @@ namespace LinkMapObject
         private double _DisplayScale = 1D;       //显示比例尺倒数
         private List<Polygon> _SelectedPolygons = new List<Polygon>(); //选中多边形集合
         private List<object> _SelectedFea = new List<object>();//选中的要素集合
+        private List<int[]> _selectedMLid = new List<int[]>();//记录选中要素的图层id 要素id 用于删除要素和移动要素
         private iType _selectType = iType.Null;
         private List<string> _str;//?
-        
+
 
         //内部变量
         private double mOffsetX = 0; double mOffsetY = 0;  //窗口左上角偏移量
@@ -66,8 +66,7 @@ namespace LinkMapObject
 
 
         #region 构造函数
-        public LinkMapControl()
-        {
+        public LinkMapControl () {
             InitializeComponent();
             this.MouseWheel += LinkMapControl_MouseWheel;           //创建一个新的mousewheel事件
         }
@@ -80,8 +79,7 @@ namespace LinkMapObject
         /// "获取或设置多边形填充色"
         /// </summary>
         [Browsable(true), Description("获取或设置多边形填充色")] //这个控件显示在右边的属性窗口中，用做开发的用户可看到
-        public Color FillColor
-        {
+        public Color FillColor {
             get { return _FillColor; }
             set { _FillColor = value; }
         }
@@ -110,8 +108,7 @@ namespace LinkMapObject
         /// 获取或设置鼠标滑轮时间是是否自动缩放
         /// </summary>
         [Browsable(true), Description("获取或设置鼠标滑轮时间是是否自动缩放")]
-        public bool SelfMouseWheel
-        {
+        public bool SelfMouseWheel {
             get { return _SelfMouseWheel; }
             set { _SelfMouseWheel = value; }
         }
@@ -119,11 +116,9 @@ namespace LinkMapObject
         /// 获取或设置多边形数组, 这个是在哪里调用的？
         /// </summary>
         [Browsable(false)]
-        public Polygon[] Polygon
-        {
+        public Polygon[] Polygon {
             get { return _SelectedPolygons.ToArray(); }
-            set
-            {
+            set {
                 _Polygon.Clear();
                 _Polygon.AddRange(value);
             }
@@ -133,11 +128,9 @@ namespace LinkMapObject
         /// </summary>
         [Browsable(false)]
 
-        public Polygon[] SelectedPolygon
-        {
+        public Polygon[] SelectedPolygon {
             get { return _SelectedPolygons.ToArray(); }
-            set
-            {
+            set {
                 _SelectedPolygons.Clear();
                 _SelectedPolygons.AddRange(value);
             }
@@ -152,6 +145,32 @@ namespace LinkMapObject
                 _SelectedFea = value;
             }
         }
+        public int SelectedFeaNum{
+            get {
+                return _SelectedFea.Count;
+            }
+        }
+        //public List<int[]> SelectedMapLay {get {return _selectedMLid;}}
+        public bool delSelectedFea () {
+            try {//删除选中要素
+                //_selectedMLid.Sort();
+                for(int k= _selectedMLid.Count-1; k>=0;k--) {//因为删完会越界,需要从后往前删
+                    int[] wk = _selectedMLid[k]; 
+                    wholeMap.delInnerFeaByIdx(wk[0],wk[1]);
+                }
+                _SelectedFea.Clear();
+                _selectType = iType.Null;
+                this.Refresh();
+            }
+            catch {
+
+            }
+
+
+            return false;
+        }
+
+
         public iType SelectedFeaType {
             get {
                 return _selectType;
@@ -417,18 +436,25 @@ namespace LinkMapObject
         public List<object> SelcetByBox(RectangleD box)
         {
             List<object> sSels = new List<object>();
-            _curLayer = wholeMap.GetCurLayer;
+            _curLayer = wholeMap.GetCurLayer; //_items.Last();
+            int hwk = wholeMap.LayerNum - 1;
             sSels.Clear();//之前选中的要清掉
+            _selectedMLid.Clear();
             if (_curLayer.mapType == iType.PointD) {
+                int h = 0;
                 foreach(PointD poi in _curLayer) {
                     if (MapTools.IsPointWithinBox(poi, box)) {
                         sSels.Add(poi);
+                        _selectedMLid.Add(new int[] {hwk,h});
                     }
+                    h++;
                 }
                 _selectType = iType.PointD;
+
             }else if (_curLayer.mapType == iType.MultiPoint) {
 
             }else if (_curLayer.mapType == iType.Polyline) {
+                int h = 0;
                 foreach (Polyline line in _curLayer) {
                     int lcount = line.PointCount;
                     int c = 0;
@@ -438,17 +464,21 @@ namespace LinkMapObject
                         }
                         if (c == lcount) {//不是完备版，目前仅当点都在box内才选中
                             sSels.Add(line);
+                            _selectedMLid.Add(new int[] { hwk, h });
                         }
                     }
+                    h++;
                 }
                 _selectType = iType.Polyline;
             }
             else if (_curLayer.mapType == iType.Polygon) {
-                
+                int h = 0;
                 foreach (Polygon poly in _curLayer) {
                     if (MapTools.IsPolygonCompleteWithinBox(poly, box) == true) {
                         sSels.Add(poly);
+                        _selectedMLid.Add(new int[] { hwk, h });
                     }
+                    h++;
                 }
                 _selectType = iType.Polygon;
             }

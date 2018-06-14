@@ -73,6 +73,7 @@ namespace LinkMapObject
                 return _items.Last();
             }
         }
+        
         /// <summary>
         /// 更新当前图层
         /// </summary>
@@ -181,6 +182,14 @@ namespace LinkMapObject
         {
             _items.RemoveAt(sindex);
         }
+        //删除特定图层id内的特定要素；w：图层id；k：要素id
+        public bool delInnerFeaByIdx (int w, int k) {
+            if (w >= _items.Count)
+                return false;
+            _items[w].delFeaByIdx(k);// try
+            return true;
+        }
+
 
         public iType MapGetDataProperties(int sindex)
         {

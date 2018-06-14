@@ -146,7 +146,7 @@ namespace LinkMap
             LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
             DataTable dat = lay.Table;
             if (dat.Rows.Count==0) {
-                dat.Columns.Add("AttZero", typeof(String));
+                //dat.Columns.Add("AttZero", typeof(String));
                 dat.Rows.Add("目前属性为空");
             }
             attf.SetDGVsource(dat);
@@ -250,21 +250,20 @@ namespace LinkMap
 
         }
 
-        //删除要素 目前是删除图层
+        //删除要素 
         private void btnLinkDelete_Click(object sender, EventArgs e)
         {
-            for(int i=0;i<LinkLayerBox.Nodes[0].GetNodeCount(false);i++)
-            {
-                if(LinkLayerBox.Nodes[0].Nodes[i].IsSelected==true)
-                {
-                    int a = LinkLayerBox.Nodes[0].GetNodeCount(false);
-                    LinkLayerBox.Nodes[0].Nodes[i].Remove();
-                    LinkMapControl1.RemoveLayer(a-i-1);
-                    LinkMapControl1.SortByTreeview(LinkLayerBox.Nodes[0]);
-                    LinkMapControl1.Refresh();
-                    return;
+            if (LinkMapControl1.SelectedFeaNum > 0) {
+                if(MessageBox.Show("删除操作不可逆，确认要删除选中要素么？", "tips",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning)
+                    ==DialogResult.OK) {
+                    LinkMapControl1.delSelectedFea();
+
                 }
             }
+            else {
+                MessageBox.Show("目前无选中要素，要删除要素请先选中要素！","tips");
+            }
+            
         }
         #endregion
 
