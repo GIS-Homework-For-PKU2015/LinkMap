@@ -188,7 +188,7 @@ namespace LinkMap
             
             LinkMapObject.LinkLayer lay = LinkMapControl1.GetCurlayer();
             eAtt.eafDT = lay.Table;
-            if (eAtt.ShowDialog() == DialogResult.Cancel) {
+            if (eAtt.ShowDialog() == DialogResult.OK) {
                 DataTable dw = eAtt.eafDT;
                 //LinkMapControl1.dtableToXelm(dw);
                 LinkMapControl1.UpdateTable(dw);
@@ -373,11 +373,12 @@ namespace LinkMap
 
 
         #region 图层管理界面事件
+        //移动树节点
         private void LinkLayerBox_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
-
+        //图层移动 和DragEnter的区别？
         private void LinkLayerBox_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
@@ -391,6 +392,7 @@ namespace LinkMap
 
         private void LinkLayerBox_DragOver(object sender, DragEventArgs e)
         {
+            int wwd = 0;
             //处理 treeView1控件DragOver事件
             //修改鼠标进入节点的背景色，还原上一个节点的背景色
             //TreeView MyTreeView = (TreeView)sender;
@@ -547,12 +549,14 @@ namespace LinkMap
         }
 
 
-        private void LinkLayerBox_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
-        {
-            string sNewName = e.Label;
-            string sOldName = e.Node.Text;
-            LinkMapControl1.GetRealLayerByName(sOldName).Name = sNewName;
+        private void LinkLayerBox_AfterLabelEdit (object sender, NodeLabelEditEventArgs e) {
+            string sNewName = e.Label;//其实简单debug下就找到原因了，采用的是简单的解决方案
+            if (sNewName != null) {
+                string sOldName = e.Node.Text;
+                LinkMapControl1.GetRealLayerByName(sOldName).Name = sNewName;
+            }
             e.Node.ForeColor = Color.Black;
+            //e.Node.EndEdit(true);
         }
 
         private void 添加注记ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -608,7 +612,7 @@ namespace LinkMap
         }
 
         private void LinkLayerBox_BeforeCheck(object sender, TreeViewCancelEventArgs e)
-        {
+        {//我觉得这个函数还是挺神奇的，目前不少很理解
             if(e.Node.ForeColor == Color.Gray)
             {
                 e.Cancel=true;

@@ -93,12 +93,7 @@ namespace LinkMapObject
         /// <param name="idx"></param>
         /// <returns>a LinkLayer</returns>
         public LinkLayer GetLayerByIndex (int idx) {
-            LinkLayer a = new LinkLayer();
-            if (idx == -1)
-                return a;
-            else
-                return _items[idx];//不在这里进行idx是否超出的判断
-            
+            return _items[idx];//不在这里进行idx是否超出的判断
         }
 
 

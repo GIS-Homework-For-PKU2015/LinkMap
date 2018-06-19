@@ -120,6 +120,7 @@
             this.MaximizeBox = false;
             this.Name = "editAttForm";
             this.Text = "editAttForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.editAttForm_FormClosed);
             this.Load += new System.EventHandler(this.editAttForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.editDataGV)).EndInit();
             this.ResumeLayout(false);

@@ -272,7 +272,10 @@ namespace LinkMapObject
             wholeMap = sclonemap;
         }
 
-
+        /// <summary>
+        /// 通过WholeMap顺序更新TreeNode树节点
+        /// </summary>
+        /// <param name="sNode"></param>
         public void SortByWholeMap(TreeNode sNode)
         {
             TreeNode MyNode = sNode;
